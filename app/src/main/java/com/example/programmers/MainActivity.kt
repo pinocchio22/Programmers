@@ -11,18 +11,27 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
-        solution(123)
+        solution("2a34")
     }
 
-    fun solution(n: Int): Int {
-        var answer = 0
-        var count = n
-        while (count > 0) {
-            answer += count % 10
-            count /= 10
-        }
+    fun solution(s: String): Boolean {
+        var answer = true
+        if (s.length == 4 || s.length == 6) {
+            for (item in s) if (item.isDigit()) answer = true else { answer = false
+                    break }
+        } else answer = false
         return answer
     }
+
+//    fun solution(n: Int): Int {
+//        var answer = 0
+//        var count = n
+//        while (count > 0) {
+//            answer += count % 10
+//            count /= 10
+//        }
+//        return answer
+//    }
 
 //    fun solution(s: String): String {
 //        var answer = ""
