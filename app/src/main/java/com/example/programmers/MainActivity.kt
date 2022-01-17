@@ -11,15 +11,25 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
-        solution("iceCream")
+        solution(123)
     }
 
-    fun solution(s: String): String {
-        var answer = ""
-        val size = s.length
-        answer = if (size%2 == 0) s.substring(size/2-1..size/2) else s[size/2].toString()
+    fun solution(n: Int): Int {
+        var answer = 0
+        var count = n
+        while (count > 0) {
+            answer += count % 10
+            count /= 10
+        }
         return answer
     }
+
+//    fun solution(s: String): String {
+//        var answer = ""
+//        val size = s.length
+//        answer = if (size%2 == 0) s.substring(size/2-1..size/2) else s[size/2].toString()
+//        return answer
+//    }
 
 //    fun solution(arr: IntArray): IntArray {
 //        var answer = intArrayOf()
