@@ -1,23 +1,25 @@
 package com.example.programmers
 
 import android.os.Bundle
-import android.util.Log
 import androidx.appcompat.app.AppCompatActivity
-import kotlin.math.max
-import kotlin.math.min
 
 class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
-        solution("try hello world")
+        solution("TRY  HE WOR")
     }
 
     //이상한 문자 만들기
     fun solution(s: String): String {
         var answer = ""
-        println(s.split(" "))
+        var cnt = 0
+        for (i in s.indices) {
+            if (s[i] == ' ') cnt = -1
+            answer += if (cnt%2 == 0) s[i].toUpperCase() else s[i].toLowerCase()
+            cnt++
+        }
         return answer
     }
 
