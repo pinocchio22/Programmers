@@ -8,22 +8,29 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
-        solution("TRY  HE WOR")
+        solution(5)
     }
 
-    //이상한 문자 만들기
-    fun solution(s: String): String {
-        var answer = ""
-        var cnt = 0
-        for (i in s.indices) {
-            if (s[i] == ' ') cnt = -1
-            answer += if (cnt%2 == 0) s[i].toUpperCase() else s[i].toLowerCase()
-            cnt++
-        }
+    //약수의 합
+    fun solution(n: Int): Int {
+        var answer = 0
+        for(i in 1..n) if (n%i == 0) answer += i
         return answer
     }
 
-//    //자연수 뒤집어 배열로 만들기
+//    //이상한 문자 만들기
+//    fun solution(s: String): String {
+//        var answer = ""
+//        var cnt = 0
+//        for (i in s.indices) {
+//            if (s[i] == ' ') cnt = -1
+//            answer += if (cnt%2 == 0) s[i].toUpperCase() else s[i].toLowerCase()
+//            cnt++
+//        }
+//        return answer
+//    }
+
+    //자연수 뒤집어 배열로 만들기
 //    fun solution(n: Long): IntArray {
 //        var answer = intArrayOf()
 //        n.toString().map { answer += it.toInt() - 48 }
