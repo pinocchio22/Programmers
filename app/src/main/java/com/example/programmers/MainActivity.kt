@@ -8,17 +8,24 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
-        solution(6)
+        solution(arrayOf("kam","kim","kan","kim"))
     }
 
-    //수박수박수박수박수박수?
-    fun solution(n: Int): String {
+    //서울에서 김서방 찾기
+    fun solution(seoul: Array<String>): String {
         var answer = ""
-        val str = "수박"
-        for (i in 1..n/2) answer += str
-        if (n%2 != 0) answer += '수'
+        for ((count, item) in seoul.withIndex()) if (item == "Kim") answer = "김서방은 " + count + "에 있다"
         return answer
     }
+
+//    //수박수박수박수박수박수?
+//    fun solution(n: Int): String {
+//        var answer = ""
+//        val str = "수박"
+//        for (i in 1..n/2) answer += str
+//        if (n%2 != 0) answer += '수'
+//        return answer
+//    }
 
 //    //약수의 합
 //    fun solution(n: Int): Int {
