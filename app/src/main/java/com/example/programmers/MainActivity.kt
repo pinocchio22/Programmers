@@ -8,15 +8,24 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
-        solution(5)
+        solution(6)
     }
 
-    //약수의 합
-    fun solution(n: Int): Int {
-        var answer = 0
-        for(i in 1..n) if (n%i == 0) answer += i
+    //수박수박수박수박수박수?
+    fun solution(n: Int): String {
+        var answer = ""
+        val str = "수박"
+        for (i in 1..n/2) answer += str
+        if (n%2 != 0) answer += '수'
         return answer
     }
+
+//    //약수의 합
+//    fun solution(n: Int): Int {
+//        var answer = 0
+//        for(i in 1..n) if (n%i == 0) answer += i
+//        return answer
+//    }
 
 //    //이상한 문자 만들기
 //    fun solution(s: String): String {
