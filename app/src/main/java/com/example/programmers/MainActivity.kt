@@ -8,15 +8,23 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
-        solution(arrayOf("kam","kim","kan","kim"))
+        solution("Zbcdefg")
     }
 
-    //서울에서 김서방 찾기
-    fun solution(seoul: Array<String>): String {
+    //문자열 내림차순으로 배치하기
+    fun solution(s: String): String {
         var answer = ""
-        for ((count, item) in seoul.withIndex()) if (item == "Kim") answer = "김서방은 " + count + "에 있다"
+        for (item in s.toCharArray().sortedDescending()) answer += item
         return answer
     }
+
+//
+//    //서울에서 김서방 찾기
+//    fun solution(seoul: Array<String>): String {
+//        var answer = ""
+//        for ((count, item) in seoul.withIndex()) if (item == "Kim") answer = "김서방은 " + count + "에 있다"
+//        return answer
+//    }
 
 //    //수박수박수박수박수박수?
 //    fun solution(n: Int): String {
