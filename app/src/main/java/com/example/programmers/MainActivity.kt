@@ -8,15 +8,22 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
-        solution("Zbcdefg")
+        solution(3,1)
     }
 
-    //문자열 내림차순으로 배치하기
-    fun solution(s: String): String {
-        var answer = ""
-        for (item in s.toCharArray().sortedDescending()) answer += item
+    //두 정수 사이의 합
+    fun solution(a: Int, b: Int): Long {
+        var answer: Long = 0
+        if (a > b) for (i in b..a) answer +=i else for (i in a..b) answer += i
         return answer
     }
+
+//    //문자열 내림차순으로 배치하기
+//    fun solution(s: String): String {
+//        var answer = ""
+//        for (item in s.toCharArray().sortedDescending()) answer += item
+//        return answer
+//    }
 
 //
 //    //서울에서 김서방 찾기
