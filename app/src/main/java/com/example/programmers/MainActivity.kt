@@ -2,22 +2,33 @@ package com.example.programmers
 
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
+import java.text.SimpleDateFormat
+import java.util.*
 
 class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
-        solution(intArrayOf(5, 9, 7, 10), 5)
+        solution( 5,24)
     }
 
-    //나누어 떨어지는 숫자 배열
-    fun solution(arr: IntArray, divisor: Int): IntArray {
-        var answer = intArrayOf()
-        for (element in arr) if (element%divisor == 0) answer += element
-        if (answer.isEmpty()) answer += -1 else answer = answer.sorted().toIntArray()
+    //2016년
+    fun solution(a: Int, b: Int): String {
+        var answer = ""
+        var calendar = Calendar.getInstance()
+        calendar.set(2016,a-1,b)
+        answer = SimpleDateFormat("EEE", Locale.ENGLISH).format(calendar.timeInMillis).toUpperCase()
         return answer
     }
+
+//    //나누어 떨어지는 숫자 배열
+//    fun solution(arr: IntArray, divisor: Int): IntArray {
+//        var answer = intArrayOf()
+//        for (element in arr) if (element%divisor == 0) answer += element
+//        if (answer.isEmpty()) answer += -1 else answer = answer.sorted().toIntArray()
+//        return answer
+//    }
 
 //    //두 정수 사이의 합
 //    fun solution(a: Int, b: Int): Long {
