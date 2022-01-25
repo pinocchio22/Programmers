@@ -10,17 +10,24 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
-        solution( 5,24)
+        solution(intArrayOf(1, 5, 2, 6, 3, 7, 4), arrayOf(intArrayOf(2, 5, 3), intArrayOf(4, 4, 1), intArrayOf(1, 7, 3)))
     }
 
-    //2016년
-    fun solution(a: Int, b: Int): String {
-        var answer = ""
-        var calendar = Calendar.getInstance()
-        calendar.set(2016,a-1,b)
-        answer = SimpleDateFormat("EEE", Locale.ENGLISH).format(calendar.timeInMillis).toUpperCase()
+    //K번째수
+    fun solution(array: IntArray, commands: Array<IntArray>): IntArray {
+        var answer = intArrayOf()
+        for (item in commands) answer += array.slice(item[0]-1 until item[1]).sorted()[item[2]-1]
         return answer
     }
+
+//    //2016년
+//    fun solution(a: Int, b: Int): String {
+//        var answer = ""
+//        var calendar = Calendar.getInstance()
+//        calendar.set(2016,a-1,b)
+//        answer = SimpleDateFormat("EEE", Locale.ENGLISH).format(calendar.timeInMillis).toUpperCase()
+//        return answer
+//    }
 
 //    //나누어 떨어지는 숫자 배열
 //    fun solution(arr: IntArray, divisor: Int): IntArray {
