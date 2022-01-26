@@ -10,15 +10,29 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
-        solution(intArrayOf(1, 5, 2, 6, 3, 7, 4), arrayOf(intArrayOf(2, 5, 3), intArrayOf(4, 4, 1), intArrayOf(1, 7, 3)))
+        solution("Z", 10)
     }
 
-    //K번째수
-    fun solution(array: IntArray, commands: Array<IntArray>): IntArray {
-        var answer = intArrayOf()
-        for (item in commands) answer += array.slice(item[0]-1 until item[1]).sorted()[item[2]-1]
+    //시저 암호
+    fun solution(s: String, n: Int): String {
+        var answer = ""
+        for (i in s.indices) {
+            answer += when {
+                s.toCharArray()[i].toInt() + n in 91..96 || s.toCharArray()[i].toInt() + n > 122 -> s.toCharArray()[i] + n - 26
+                s.toCharArray()[i] == ' ' -> ' '
+                s.toCharArray()[i].toInt() in 65..90 && s.toCharArray()[i].toInt() + n > 90 -> s.toCharArray()[i] + n - 26
+                else -> s.toCharArray()[i] + n
+            }
+        }
         return answer
     }
+
+//    //K번째수
+//    fun solution(array: IntArray, commands: Array<IntArray>): IntArray {
+//        var answer = intArrayOf()
+//        for (item in commands) answer += array.slice(item[0]-1 until item[1]).sorted()[item[2]-1]
+//        return answer
+//    }
 
 //    //2016년
 //    fun solution(a: Int, b: Int): String {
