@@ -10,22 +10,29 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
-        solution("Z", 10)
+        solution(arrayOf("abce", "abcd", "cdx"),2)
     }
 
-    //시저 암호
-    fun solution(s: String, n: Int): String {
-        var answer = ""
-        for (i in s.indices) {
-            answer += when {
-                s.toCharArray()[i].toInt() + n in 91..96 || s.toCharArray()[i].toInt() + n > 122 -> s.toCharArray()[i] + n - 26
-                s.toCharArray()[i] == ' ' -> ' '
-                s.toCharArray()[i].toInt() in 65..90 && s.toCharArray()[i].toInt() + n > 90 -> s.toCharArray()[i] + n - 26
-                else -> s.toCharArray()[i] + n
-            }
-        }
+    //문자열 내 마음대로 정렬하기
+    fun solution(strings: Array<String>, n: Int): Array<String> {
+        var answer = arrayOf<String>()
+        answer += strings.sortedWith( compareBy ({it[n]} , {it}))
         return answer
     }
+
+//    //시저 암호
+//    fun solution(s: String, n: Int): String {
+//        var answer = ""
+//        for (i in s.indices) {
+//            answer += when {
+//                s.toCharArray()[i].toInt() + n in 91..96 || s.toCharArray()[i].toInt() + n > 122 -> s.toCharArray()[i] + n - 26
+//                s.toCharArray()[i] == ' ' -> ' '
+//                s.toCharArray()[i].toInt() in 65..90 && s.toCharArray()[i].toInt() + n > 90 -> s.toCharArray()[i] + n - 26
+//                else -> s.toCharArray()[i] + n
+//            }
+//        }
+//        return answer
+//    }
 
 //    //K번째수
 //    fun solution(array: IntArray, commands: Array<IntArray>): IntArray {
