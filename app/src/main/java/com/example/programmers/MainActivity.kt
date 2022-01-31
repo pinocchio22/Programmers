@@ -1,6 +1,7 @@
 package com.example.programmers
 
 import android.os.Bundle
+import android.util.Log
 import androidx.appcompat.app.AppCompatActivity
 import java.text.SimpleDateFormat
 import java.util.*
@@ -10,15 +11,54 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
-        solution(arrayOf("abce", "abcd", "cdx"),2)
+        solution(5, intArrayOf(2,4), intArrayOf(5,3))
     }
 
-    //문자열 내 마음대로 정렬하기
-    fun solution(strings: Array<String>, n: Int): Array<String> {
-        var answer = arrayOf<String>()
-        answer += strings.sortedWith( compareBy ({it[n]} , {it}))
+    //체육복
+    fun solution(n: Int, lost: IntArray, reserve: IntArray): Int {
+        var answer = 0
+        lost.sort()
+        reserve.sort()
+        val lostSet = lost.toMutableSet()
+        val reserveSet = reserve.toMutableSet()
+        // 여벌이 있는데 잃어버린 않은 사람들은 도난, 여벌 목록에서 제거
+        reserve.filter {
+            lostSet.contains(it)
+        }.forEach {
+            reserveSet.remove(it)
+            lostSet.remove(it)
+        }
+        println(lostSet)
+        println(reserveSet)
+        reserveSet.forEach {
+            when {
+                lostSet.contains(it - 1) ->
+                    lostSet.remove(it - 1)
+                lostSet.contains(it + 1) ->
+                    lostSet.remove(it + 1)
+            }
+        }
+        answer = n - lostSet.count()
         return answer
     }
+}
+
+
+//    //두 개 뽑아서 더하기
+//    fun solution(numbers: IntArray): IntArray {
+//        var answer: IntArray = intArrayOf()
+//        for ((index, item) in numbers.withIndex()) for (i in index+1 until numbers.size)  answer += item + numbers[i]
+//        answer = answer.distinct().toIntArray()
+//        answer.sort()
+//        return answer
+//    }
+
+//    //문자열 내 마음대로 정렬하기
+//    fun solution(strings: Array<String>, n: Int): Array<String> {
+//        var answer = arrayOf<String>()
+//        answer += strings.sortedWith( compareBy ({it[n]} , {it}))
+//        return answer
+//    }
 
 //    //시저 암호
 //    fun solution(s: String, n: Int): String {
@@ -108,7 +148,7 @@ class MainActivity : AppCompatActivity() {
 //        return answer
 //    }
 
-    //자연수 뒤집어 배열로 만들기
+//자연수 뒤집어 배열로 만들기
 //    fun solution(n: Long): IntArray {
 //        var answer = intArrayOf()
 //        n.toString().map { answer += it.toInt() - 48 }
@@ -167,7 +207,7 @@ class MainActivity : AppCompatActivity() {
 //        return answer
 //    }
 
-    //    fun solution(n: Int, m: Int): IntArray {
+//    fun solution(n: Int, m: Int): IntArray {
 //        val answer = intArrayOf((gcd(n,m)),(n*m/gcd(n,m)))
 //        return answer
 //    }
@@ -189,4 +229,4 @@ class MainActivity : AppCompatActivity() {
 //        }
 //        return answer
 //    }
-}
+
