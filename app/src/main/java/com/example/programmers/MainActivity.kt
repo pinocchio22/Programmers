@@ -17,8 +17,8 @@ class MainActivity : AppCompatActivity() {
     //최소직사각형
     fun solution(sizes: Array<IntArray>): Int {
         var answer: Int = 0
-        var long = MutableList(sizes.size) { i -> i }
-        var short = MutableList(sizes.size) { i -> i }
+        val long = MutableList(sizes.size) { i -> i }
+        val short = MutableList(sizes.size) { i -> i }
         sizes.forEachIndexed { index, it ->
             if (it[0] > it[1]) {
                 long[index] = it[0]
