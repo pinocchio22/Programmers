@@ -11,17 +11,35 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
-        solution(3,20,4)
+        solution(arrayOf(intArrayOf(60, 50), intArrayOf(30, 70), intArrayOf(60, 30), intArrayOf(80, 40)))
     }
 
-    //부족한 금액 계산하기
-    fun solution(price: Int, money: Int, count: Int): Long {
-        var answer: Long = -1
-        var total : Long = 0
-        for (i in 1..count) total += price.toLong()*i
-        answer = if (total - money < 0) 0 else (total - money)
+    //최소직사각형
+    fun solution(sizes: Array<IntArray>): Int {
+        var answer: Int = 0
+        var long = MutableList(sizes.size) { i -> i }
+        var short = MutableList(sizes.size) { i -> i }
+        sizes.forEachIndexed { index, it ->
+            if (it[0] > it[1]) {
+                long[index] = it[0]
+                short[index] = it[1]
+            } else {
+                long[index] = it[1]
+                short[index] = it[0]
+            }
+        }
+        answer = long.max()!! * short.max()!!
         return answer
     }
+
+//    //부족한 금액 계산하기
+//    fun solution(price: Int, money: Int, count: Int): Long {
+//        var answer: Long = -1
+//        var total : Long = 0
+//        for (i in 1..count) total += price.toLong()*i
+//        answer = if (total - money < 0) 0 else (total - money)
+//        return answer
+//    }
 
 //    //체육복
 //    fun solution(n: Int, lost: IntArray, reserve: IntArray): Int {
