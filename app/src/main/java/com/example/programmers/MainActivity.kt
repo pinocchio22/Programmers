@@ -11,38 +11,45 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
-        solution(5, intArrayOf(2,4), intArrayOf(5,3))
+        solution(3,20,4)
     }
 
-    //체육복
-    fun solution(n: Int, lost: IntArray, reserve: IntArray): Int {
-        var answer = 0
-        lost.sort()
-        reserve.sort()
-        val lostSet = lost.toMutableSet()
-        val reserveSet = reserve.toMutableSet()
-        // 여벌이 있는데 잃어버린 않은 사람들은 도난, 여벌 목록에서 제거
-        reserve.filter {
-            lostSet.contains(it)
-        }.forEach {
-            reserveSet.remove(it)
-            lostSet.remove(it)
-        }
-        println(lostSet)
-        println(reserveSet)
-        reserveSet.forEach {
-            when {
-                lostSet.contains(it - 1) ->
-                    lostSet.remove(it - 1)
-                lostSet.contains(it + 1) ->
-                    lostSet.remove(it + 1)
-            }
-        }
-        answer = n - lostSet.count()
+    //부족한 금액 계산하기
+    fun solution(price: Int, money: Int, count: Int): Long {
+        var answer: Long = -1
+        var total : Long = 0
+        for (i in 1..count) total += price.toLong()*i
+        answer = if (total - money < 0) 0 else (total - money)
         return answer
     }
-}
 
+//    //체육복
+//    fun solution(n: Int, lost: IntArray, reserve: IntArray): Int {
+//        var answer = 0
+//        lost.sort()
+//        reserve.sort()
+//        val lostSet = lost.toMutableSet()
+//        val reserveSet = reserve.toMutableSet()
+//        // 여벌이 있는데 잃어버린 않은 사람들은 도난, 여벌 목록에서 제거
+//        reserve.filter {
+//            lostSet.contains(it)
+//        }.forEach {
+//            reserveSet.remove(it)
+//            lostSet.remove(it)
+//        }
+//        println(lostSet)
+//        println(reserveSet)
+//        reserveSet.forEach {
+//            when {
+//                lostSet.contains(it - 1) ->
+//                    lostSet.remove(it - 1)
+//                lostSet.contains(it + 1) ->
+//                    lostSet.remove(it + 1)
+//            }
+//        }
+//        answer = n - lostSet.count()
+//        return answer
+//    }
 
 //    //두 개 뽑아서 더하기
 //    fun solution(numbers: IntArray): IntArray {
@@ -230,3 +237,4 @@ class MainActivity : AppCompatActivity() {
 //        return answer
 //    }
 
+}
