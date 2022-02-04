@@ -5,32 +5,56 @@ import android.util.Log
 import androidx.appcompat.app.AppCompatActivity
 import java.text.SimpleDateFormat
 import java.util.*
+import kotlin.math.max
 
 class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
-        solution(arrayOf(intArrayOf(60, 50), intArrayOf(30, 70), intArrayOf(60, 30), intArrayOf(80, 40)))
+        solution(intArrayOf(1,3,2,4,2))
     }
 
-    //최소직사각형
-    fun solution(sizes: Array<IntArray>): Int {
-        var answer: Int = 0
-        val long = MutableList(sizes.size) { i -> i }
-        val short = MutableList(sizes.size) { i -> i }
-        sizes.forEachIndexed { index, it ->
-            if (it[0] > it[1]) {
-                long[index] = it[0]
-                short[index] = it[1]
-            } else {
-                long[index] = it[1]
-                short[index] = it[0]
-            }
+    //모의고사
+    fun solution(answers: IntArray): IntArray {
+        var answer = intArrayOf()
+
+        val count = intArrayOf(0,0,0)
+
+        val one = arrayOf(1,2,3,4,5)
+        val two = arrayOf(2,1,2,3,2,4,2,5)
+        val thr = arrayOf(3,3,1,1,2,2,4,4,5,5)
+
+        for (i in answers.indices) {
+            if (one[i%5] == answers[i]) count[0] += 1
+            if (two[i%8] == answers[i]) count[1] += 1
+            if (thr[i%10] == answers[i]) count[2] += 1
         }
-        answer = long.max()!! * short.max()!!
+
+        var max = count.max()
+
+        for (i in 0 until 3) if (max == count[i]) answer = answer.plus(i+1)
+
         return answer
     }
+
+//    //최소직사각형
+//    fun solution(sizes: Array<IntArray>): Int {
+//        var answer: Int = 0
+//        val long = MutableList(sizes.size) { i -> i }
+//        val short = MutableList(sizes.size) { i -> i }
+//        sizes.forEachIndexed { index, it ->
+//            if (it[0] > it[1]) {
+//                long[index] = it[0]
+//                short[index] = it[1]
+//            } else {
+//                long[index] = it[1]
+//                short[index] = it[0]
+//            }
+//        }
+//        answer = long.max()!! * short.max()!!
+//        return answer
+//    }
 
 //    //부족한 금액 계산하기
 //    fun solution(price: Int, money: Int, count: Int): Long {
