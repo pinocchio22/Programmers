@@ -6,37 +6,54 @@ import androidx.appcompat.app.AppCompatActivity
 import java.text.SimpleDateFormat
 import java.util.*
 import kotlin.math.max
+import kotlin.math.pow
 
 class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
-        solution(intArrayOf(1,3,2,4,2))
+        solution(125)
     }
 
-    //모의고사
-    fun solution(answers: IntArray): IntArray {
-        var answer = intArrayOf()
-
-        val count = intArrayOf(0,0,0)
-
-        val one = arrayOf(1,2,3,4,5)
-        val two = arrayOf(2,1,2,3,2,4,2,5)
-        val thr = arrayOf(3,3,1,1,2,2,4,4,5,5)
-
-        for (i in answers.indices) {
-            if (one[i%5] == answers[i]) count[0] += 1
-            if (two[i%8] == answers[i]) count[1] += 1
-            if (thr[i%10] == answers[i]) count[2] += 1
+    //3진법 뒤집기
+    fun solution(n: Int): Int {
+        var answer: Int = 0
+        var a = arrayOf<Int>()
+        var b = n
+        while (b > 0) {
+            a = a.plus(b%3)
+            b /= 3
+            if (b == 1) a.plus(1)
         }
-
-        var max = count.max()
-
-        for (i in 0 until 3) if (max == count[i]) answer = answer.plus(i+1)
-
+        a.reverse()
+        a.forEachIndexed {index, it -> answer += it*3.0.pow(index).toInt() }
         return answer
     }
+
+
+//    //모의고사
+//    fun solution(answers: IntArray): IntArray {
+//        var answer = intArrayOf()
+//
+//        val count = intArrayOf(0,0,0)
+//
+//        val one = arrayOf(1,2,3,4,5)
+//        val two = arrayOf(2,1,2,3,2,4,2,5)
+//        val thr = arrayOf(3,3,1,1,2,2,4,4,5,5)
+//
+//        for (i in answers.indices) {
+//            if (one[i%5] == answers[i]) count[0] += 1
+//            if (two[i%8] == answers[i]) count[1] += 1
+//            if (thr[i%10] == answers[i]) count[2] += 1
+//        }
+//
+//        var max = count.max()
+//
+//        for (i in 0 until 3) if (max == count[i]) answer = answer.plus(i+1)
+//
+//        return answer
+//    }
 
 //    //최소직사각형
 //    fun solution(sizes: Array<IntArray>): Int {
