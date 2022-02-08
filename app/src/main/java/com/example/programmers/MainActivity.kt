@@ -13,23 +13,30 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
-        solution(125)
+        solution(intArrayOf(1,2,3,4), intArrayOf(-3,-1,0,2))
     }
 
-    //3진법 뒤집기
-    fun solution(n: Int): Int {
+    //내적
+    fun solution(a: IntArray, b: IntArray): Int {
         var answer: Int = 0
-        var a = arrayOf<Int>()
-        var b = n
-        while (b > 0) {
-            a = a.plus(b%3)
-            b /= 3
-            if (b == 1) a.plus(1)
-        }
-        a.reverse()
-        a.forEachIndexed {index, it -> answer += it*3.0.pow(index).toInt() }
+        for (i in a.indices) answer += a[i]*b[i]
         return answer
     }
+
+//    //3진법 뒤집기
+//    fun solution(n: Int): Int {
+//        var answer: Int = 0
+//        var a = arrayOf<Int>()
+//        var b = n
+//        while (b > 0) {
+//            a = a.plus(b%3)
+//            b /= 3
+//            if (b == 1) a.plus(1)
+//        }
+//        a.reverse()
+//        a.forEachIndexed {index, it -> answer += it*3.0.pow(index).toInt() }
+//        return answer
+//    }
 
 
 //    //모의고사
