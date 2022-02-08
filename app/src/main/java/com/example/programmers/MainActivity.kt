@@ -13,15 +13,31 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
-        solution(intArrayOf(1,2,3,4), intArrayOf(-3,-1,0,2))
+        solution(13, 17)
     }
 
-    //내적
-    fun solution(a: IntArray, b: IntArray): Int {
+    //약수의 개수와 덧셈
+    fun solution(left: Int, right: Int): Int {
         var answer: Int = 0
-        for (i in a.indices) answer += a[i]*b[i]
+        var cnt = 0
+        for (i in left..right) {
+            for (j in 1..i) if (i % j == 0) cnt += 1
+            if (cnt % 2 == 0) answer += i
+            else {
+                answer -= i
+                cnt = 0
+            }
+        }
         return answer
     }
+
+//
+//    //내적
+//    fun solution(a: IntArray, b: IntArray): Int {
+//        var answer: Int = 0
+//        for (i in a.indices) answer += a[i]*b[i]
+//        return answer
+//    }
 
 //    //3진법 뒤집기
 //    fun solution(n: Int): Int {
