@@ -13,15 +13,24 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
-        solution(intArrayOf(4,7,12), booleanArrayOf(true,false,true))
+        solution(intArrayOf(1,2,3,4,6,7,8,0))
     }
 
-    //음양 더하기
-    fun solution(absolutes: IntArray, signs: BooleanArray): Int {
-        var answer: Int = 0
-        for (i in absolutes.indices) if (signs[i]) answer += absolutes[i] else answer -= absolutes[i]
+    //없는 숫자 더하기
+    fun solution(numbers: IntArray): Int {
+        var answer: Int = -1
+        val num = arrayOf(1,2,3,4,5,6,7,8,9)
+        for (i in num.indices) if (!numbers.contains(num[i]))  answer += num[i]
+        answer += 1
         return answer
     }
+
+//    //음양 더하기
+//    fun solution(absolutes: IntArray, signs: BooleanArray): Int {
+//        var answer: Int = 0
+//        for (i in absolutes.indices) if (signs[i]) answer += absolutes[i] else answer -= absolutes[i]
+//        return answer
+//    }
 
 //    //약수의 개수와 덧셈
 //    fun solution(left: Int, right: Int): Int {
