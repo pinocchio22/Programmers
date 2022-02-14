@@ -1,29 +1,44 @@
 package com.example.programmers
 
 import android.os.Bundle
-import android.util.Log
 import androidx.appcompat.app.AppCompatActivity
-import java.text.SimpleDateFormat
-import java.util.*
-import kotlin.math.max
-import kotlin.math.pow
 
+@Suppress("NAME_SHADOWING")
 class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
-        solution(intArrayOf(1,2,3,4,6,7,8,0))
+        solution(intArrayOf(1, 2, 3, 4))
     }
 
-    //없는 숫자 더하기
-    fun solution(numbers: IntArray): Int {
-        var answer: Int = -1
-        val num = arrayOf(1,2,3,4,5,6,7,8,9)
-        for (i in num.indices) if (!numbers.contains(num[i]))  answer += num[i]
-        answer += 1
+    //소수 만들기
+    fun solution(nums: IntArray): Int {
+        var answer = 0
+        var arr = arrayOf<Int>()
+
+        for (i in 0 until nums.size - 2) {
+            for (j in i + 1 until nums.size - 1) {
+                for (k in j + 1 until nums.size) {
+                    val sum = nums[i] + nums[j] + nums[k]
+                    for (i in 1..sum) if (sum % i == 0) arr = arr.plus(i)
+                    if (arr.size == 2) answer++
+                    arr = arrayOf()
+                }
+            }
+        }
         return answer
     }
+
+
+//    //없는 숫자 더하기
+//    fun solution(numbers: IntArray): Int {
+//        var answer: Int = -1
+//        val num = arrayOf(1,2,3,4,5,6,7,8,9)
+//        for (i in num.indices) if (!numbers.contains(num[i]))  answer += num[i]
+//        answer += 1
+//        return answer
+//    }
 
 //    //음양 더하기
 //    fun solution(absolutes: IntArray, signs: BooleanArray): Int {
