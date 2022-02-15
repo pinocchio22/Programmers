@@ -9,26 +9,97 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
-        solution(intArrayOf(1, 2, 3, 4))
+        solution(5, intArrayOf(2,1,2,4,2,4,3,3))
     }
 
-    //소수 만들기
-    fun solution(nums: IntArray): Int {
-        var answer = 0
-        var arr = arrayOf<Int>()
+    //실패율
+    fun solution(N: Int, stages: IntArray): IntArray {
+        var answer = intArrayOf()
+        val fail: MutableMap<Int, Double> = mutableMapOf()
+        val lose : MutableMap<Int, Int> = mutableMapOf()
+        var user = 0
+        var length = stages.size
 
-        for (i in 0 until nums.size - 2) {
-            for (j in i + 1 until nums.size - 1) {
-                for (k in j + 1 until nums.size) {
-                    val sum = nums[i] + nums[j] + nums[k]
-                    for (i in 1..sum) if (sum % i == 0) arr = arr.plus(i)
-                    if (arr.size == 2) answer++
-                    arr = arrayOf()
-                }
+        for (i in 1..N) {
+            stages.forEach {
+                if (i == it) user++
             }
+            lose[i-1] = user
+            user = 0
         }
+        for (i in 0 until N) {
+            if ((lose[i]?.toDouble()!! /length.toDouble()).isNaN())  fail[i] = 0.0 else  fail[i] = lose[i]?.toDouble()!! /length.toDouble()
+            length -= lose[i]!!
+        }
+        val new = (fail.toList().sortedByDescending { (_, it) -> it })
+        for (item in new) answer = answer.plus(item.first+1)
+
         return answer
     }
+
+//    //실패율
+//    fun solution2(N: Int, stages: IntArray): IntArray {
+//        var answer = intArrayOf()
+//        var user = 0
+//        var length = stages.size
+//        var lose = arrayOf<Int>()
+//        var fail = arrayListOf<Double>()
+//        var max : Double
+//
+//        for (i in 1..N) {
+//            stages.forEach {
+//                if (i == it) {
+//                    user++
+//                }
+//            }
+//            lose = lose.plus(user)
+//            user = 0
+//        }
+//        for (i in 0 until N) {
+//            fail = fail.plus (lose[i].toDouble()/length.toDouble()) as ArrayList<Double>
+//            length -= lose[i]
+//        }
+//        // 실패율이 담긴 배열(fail)까지 완성
+//        max = fail.max()!!
+//        for (i in 0 until fail.size-1) {
+//            if (fail[i] < max) {
+//                if (fail[i] > fail[i+1]) {
+//                    fail[i+1] = fail[i]
+//                    println(fail[i])
+//                    println(fail[i+1])
+//                }
+//            }else {
+//                max = fail[i+1]
+//                println(fail[i+1])
+//            }
+////            answer = answer.plus(fail.indexOf(fail.max())+1)
+////            println(answer.contentToString())
+////            fail.remove(fail.max())
+////            println(fail)
+//        }
+//        return answer
+//    }
+
+//    //소수 만들기
+//    fun solution(nums: IntArray): Int {
+//        var answer = 0
+//        var arr = arrayOf<Int>()
+//
+//        for (i in 0 until nums.size - 2) {
+//            for (j in i + 1 until nums.size - 1) {
+//                for (k in j + 1 until nums.size) {
+//                    val sum = nums[i] + nums[j] + nums[k]
+//                    Log.d("넘버i", i.toString())
+//                    Log.d("넘버j", j.toString())
+//                    Log.d("넘버k", k.toString())
+//                    for (i in 1..sum) if (sum % i == 0) arr = arr.plus(i)
+//                    if (arr.size == 2) answer++
+//                    arr = arrayOf()
+//                }
+//            }
+//        }
+//        return answer
+//    }
 
 
 //    //없는 숫자 더하기
