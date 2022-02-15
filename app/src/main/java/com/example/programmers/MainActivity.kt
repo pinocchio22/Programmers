@@ -37,49 +37,6 @@ class MainActivity : AppCompatActivity() {
         return answer
     }
 
-//    //실패율
-//    fun solution2(N: Int, stages: IntArray): IntArray {
-//        var answer = intArrayOf()
-//        var user = 0
-//        var length = stages.size
-//        var lose = arrayOf<Int>()
-//        var fail = arrayListOf<Double>()
-//        var max : Double
-//
-//        for (i in 1..N) {
-//            stages.forEach {
-//                if (i == it) {
-//                    user++
-//                }
-//            }
-//            lose = lose.plus(user)
-//            user = 0
-//        }
-//        for (i in 0 until N) {
-//            fail = fail.plus (lose[i].toDouble()/length.toDouble()) as ArrayList<Double>
-//            length -= lose[i]
-//        }
-//        // 실패율이 담긴 배열(fail)까지 완성
-//        max = fail.max()!!
-//        for (i in 0 until fail.size-1) {
-//            if (fail[i] < max) {
-//                if (fail[i] > fail[i+1]) {
-//                    fail[i+1] = fail[i]
-//                    println(fail[i])
-//                    println(fail[i+1])
-//                }
-//            }else {
-//                max = fail[i+1]
-//                println(fail[i+1])
-//            }
-////            answer = answer.plus(fail.indexOf(fail.max())+1)
-////            println(answer.contentToString())
-////            fail.remove(fail.max())
-////            println(fail)
-//        }
-//        return answer
-//    }
-
 //    //소수 만들기
 //    fun solution(nums: IntArray): Int {
 //        var answer = 0
