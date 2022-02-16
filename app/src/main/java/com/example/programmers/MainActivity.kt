@@ -9,33 +9,103 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
-        solution(5, intArrayOf(2,1,2,4,2,4,3,3))
+        solution(arrayOf(intArrayOf(0, 0, 0, 0, 0), intArrayOf(0, 0, 1, 0, 3), intArrayOf(0, 2, 5, 0, 1), intArrayOf(4, 2, 4, 4, 2), intArrayOf(3, 5, 1, 3, 1)), intArrayOf(1, 5, 3, 5, 1, 2, 1, 4))
     }
 
-    //실패율
-    fun solution(N: Int, stages: IntArray): IntArray {
-        var answer = intArrayOf()
-        val fail: MutableMap<Int, Double> = mutableMapOf()
-        val lose : MutableMap<Int, Int> = mutableMapOf()
-        var user = 0
-        var length = stages.size
+    //크레인 인형뽑기 게임
+    fun solution(board: Array<IntArray>, moves: IntArray): Int {
+        var answer = 0
+        var new = arrayOf<IntArray>()
+        var temp = arrayOf(0, 0, 0, 0, 0)
+        var pick = arrayListOf<Int>()
 
-        for (i in 1..N) {
-            stages.forEach {
-                if (i == it) user++
+        // 세로줄을 기준으로 새로운 배열 생성
+        for (i in 0..4) {
+            for (j in 0..4) {
+                temp[j] = board[j][i]
             }
-            lose[i-1] = user
-            user = 0
+            new = new.plus(temp.toIntArray())
+            temp = arrayOf(0, 0, 0, 0, 0)
         }
-        for (i in 0 until N) {
-            if ((lose[i]?.toDouble()!! /length.toDouble()).isNaN())  fail[i] = 0.0 else  fail[i] = lose[i]?.toDouble()!! /length.toDouble()
-            length -= lose[i]!!
-        }
-        val new = (fail.toList().sortedByDescending { (_, it) -> it })
-        for (item in new) answer = answer.plus(item.first+1)
 
+        // moves 대로 뽑아서 새로운 배열에 저장하고 기존은 삭제
+        for (it in moves) {
+            for (j in 0..4) {
+                if (new[it - 1][j] != 0) {
+                    pick.add(new[it - 1][j])
+                    new[it - 1][j] = 0
+                    break
+                }
+            }
+        }
+        for (i in 0..4) {
+            println(new[i].contentToString())
+        }
+        println(pick)
+//        for (it in moves) {
+//            for (j in 0..4) {
+//                if (new[it - 1][j] != 0) {
+//                    Log.d("픽new", new[it-1].contentToString())
+////                    Log.d("픽11", pick.toString())
+//                    if (pick.size != 0 && pick.last() == new[it-1][j]) {
+////                        Log.d("픽1", new[it-1][j].toString())
+////                        Log.d("픽2", pick.last().toString())
+//                        pick.remove(pick.last())
+//                    }else {
+//                        Log.d("픽3", new[it-1][j].toString())
+//                        pick.add(new[it - 1][j])
+//                        new[it - 1][j] = 0
+//                    }
+//                    break
+//                }
+//            }
+//        }
+
+
+        //4, 3, 1, 1, 3, 2, 4
+        // 두개가 만나면 터트림
+//        for (i in pick.indices) {
+//            if (i < pick.size) {
+//                if (pick[i] == pick[i + 1]) {
+//                    pick.remove(pick[i])
+//                    pick.remove(pick[i])
+//                }
+//            }
+//        }
+
+
+
+//        for (i in 0..4) {
+//            println(new[i].contentToString())
+//        }
+//        println(pick)
         return answer
     }
+
+//    //실패율
+//    fun solution(N: Int, stages: IntArray): IntArray {
+//        var answer = intArrayOf()
+//        val fail: MutableMap<Int, Double> = mutableMapOf()
+//        val lose : MutableMap<Int, Int> = mutableMapOf()
+//        var user = 0
+//        var length = stages.size
+//
+//        for (i in 1..N) {
+//            stages.forEach {
+//                if (i == it) user++
+//            }
+//            lose[i-1] = user
+//            user = 0
+//        }
+//        for (i in 0 until N) {
+//            if ((lose[i]?.toDouble()!! /length.toDouble()).isNaN())  fail[i] = 0.0 else  fail[i] = lose[i]?.toDouble()!! /length.toDouble()
+//            length -= lose[i]!!
+//        }
+//        val new = (fail.toList().sortedByDescending { (_, it) -> it })
+//        for (item in new) answer = answer.plus(item.first+1)
+//
+//        return answer
+//    }
 
 //    //소수 만들기
 //    fun solution(nums: IntArray): Int {
