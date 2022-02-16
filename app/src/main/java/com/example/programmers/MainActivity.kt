@@ -1,6 +1,7 @@
 package com.example.programmers
 
 import android.os.Bundle
+import android.util.Log
 import androidx.appcompat.app.AppCompatActivity
 
 @Suppress("NAME_SHADOWING")
@@ -28,57 +29,24 @@ class MainActivity : AppCompatActivity() {
             temp = arrayOf(0, 0, 0, 0, 0)
         }
 
-        // moves 대로 뽑아서 새로운 배열에 저장하고 기존은 삭제
+        // moves 대로 뽑아서
         for (it in moves) {
             for (j in 0..4) {
                 if (new[it - 1][j] != 0) {
-                    pick.add(new[it - 1][j])
-                    new[it - 1][j] = 0
+                    // 두개가 만나면 터짐
+                    if (pick.size != 0 && pick.last() == new[it-1][j]) {
+                        pick.remove(pick.last())
+                        new[it - 1][j] = 0
+                        answer += 2
+                    }else {
+                        // 새로운 배열에 저장하고 기존은 삭제
+                        pick.add(new[it - 1][j])
+                        new[it - 1][j] = 0
+                    }
                     break
                 }
             }
         }
-        for (i in 0..4) {
-            println(new[i].contentToString())
-        }
-        println(pick)
-//        for (it in moves) {
-//            for (j in 0..4) {
-//                if (new[it - 1][j] != 0) {
-//                    Log.d("픽new", new[it-1].contentToString())
-////                    Log.d("픽11", pick.toString())
-//                    if (pick.size != 0 && pick.last() == new[it-1][j]) {
-////                        Log.d("픽1", new[it-1][j].toString())
-////                        Log.d("픽2", pick.last().toString())
-//                        pick.remove(pick.last())
-//                    }else {
-//                        Log.d("픽3", new[it-1][j].toString())
-//                        pick.add(new[it - 1][j])
-//                        new[it - 1][j] = 0
-//                    }
-//                    break
-//                }
-//            }
-//        }
-
-
-        //4, 3, 1, 1, 3, 2, 4
-        // 두개가 만나면 터트림
-//        for (i in pick.indices) {
-//            if (i < pick.size) {
-//                if (pick[i] == pick[i + 1]) {
-//                    pick.remove(pick[i])
-//                    pick.remove(pick[i])
-//                }
-//            }
-//        }
-
-
-
-//        for (i in 0..4) {
-//            println(new[i].contentToString())
-//        }
-//        println(pick)
         return answer
     }
 
