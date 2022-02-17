@@ -10,6 +10,7 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
+        //1, 5, 3, 5, 1, 2, 1, 4
         solution(arrayOf(intArrayOf(0, 0, 0, 0, 0), intArrayOf(0, 0, 1, 0, 3), intArrayOf(0, 2, 5, 0, 1), intArrayOf(4, 2, 4, 4, 2), intArrayOf(3, 5, 1, 3, 1)), intArrayOf(1, 5, 3, 5, 1, 2, 1, 4))
     }
 
@@ -17,34 +18,40 @@ class MainActivity : AppCompatActivity() {
     fun solution(board: Array<IntArray>, moves: IntArray): Int {
         var answer = 0
         var new = arrayOf<IntArray>()
-        var temp = arrayOf(0, 0, 0, 0, 0)
+        var temp = arrayOf<Int>()
         var pick = arrayListOf<Int>()
 
+        for (i in board.indices) {
+            temp = temp.plus(0)
+        }
+
         // 세로줄을 기준으로 새로운 배열 생성
-        for (i in 0..4) {
-            for (j in 0..4) {
+        for (i in board.indices) {
+            for (j in board[i].indices) {
                 temp[j] = board[j][i]
             }
             new = new.plus(temp.toIntArray())
-            temp = arrayOf(0, 0, 0, 0, 0)
+            for (i in board.indices) {
+                temp[i] = 0
+            }
         }
 
         // moves 대로 뽑아서
-        for (it in moves) {
-            for (j in 0..4) {
-                if (new[it - 1][j] != 0) {
+        for (i in moves.indices) {
+            for (j in board[0].indices) {
+                if (new[moves[i] - 1][j] != 0) {
                     // 두개가 만나면 터짐
-                    if (pick.size != 0 && pick.last() == new[it-1][j]) {
-                        pick.remove(pick.last())
-                        new[it - 1][j] = 0
+                    if (pick.size != 0 && pick.last() == new[moves[i]-1][j]) {
+                        pick.removeAt(pick.size-1)
+                        new[moves[i] - 1][j] = 0
                         answer += 2
                     }else {
                         // 새로운 배열에 저장하고 기존은 삭제
-                        pick.add(new[it - 1][j])
-                        new[it - 1][j] = 0
+                        pick.add(new[moves[i] - 1][j])
+                        new[moves[i] - 1][j] = 0
                     }
                     break
-                }
+                }else continue
             }
         }
         return answer
