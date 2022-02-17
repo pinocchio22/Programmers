@@ -51,7 +51,7 @@ class MainActivity : AppCompatActivity() {
                         new[moves[i] - 1][j] = 0
                     }
                     break
-                }else continue
+                }
             }
         }
         return answer
