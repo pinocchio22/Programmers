@@ -24,7 +24,6 @@ class MainActivity : AppCompatActivity() {
         for (i in board.indices) {
             temp = temp.plus(0)
         }
-
         // 세로줄을 기준으로 새로운 배열 생성
         for (i in board.indices) {
             for (j in board[i].indices) {
@@ -35,7 +34,6 @@ class MainActivity : AppCompatActivity() {
                 temp[i] = 0
             }
         }
-
         // moves 대로 뽑아서
         for (i in moves.indices) {
             for (j in board[0].indices) {
