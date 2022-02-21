@@ -11,49 +11,99 @@ class MainActivity : AppCompatActivity() {
         setContentView(R.layout.activity_main)
 
         //1, 5, 3, 5, 1, 2, 1, 4
-        solution(arrayOf(intArrayOf(0, 0, 0, 0, 0), intArrayOf(0, 0, 1, 0, 3), intArrayOf(0, 2, 5, 0, 1), intArrayOf(4, 2, 4, 4, 2), intArrayOf(3, 5, 1, 3, 1)), intArrayOf(1, 5, 3, 5, 1, 2, 1, 4))
+        solution(intArrayOf(1, 3, 4, 5, 8, 2, 1, 4, 5, 9, 5), "right")
     }
 
-    //크레인 인형뽑기 게임
-    fun solution(board: Array<IntArray>, moves: IntArray): Int {
-        var answer = 0
-        var new = arrayOf<IntArray>()
+    // [카카오 인턴] 키패드 누르기
+    fun solution(numbers: IntArray, hand: String): String {
+        var answer = ""
         var temp = arrayOf<Int>()
-        var pick = arrayListOf<Int>()
+        //123
+        //456
+        //789
+        //*0#
 
-        for (i in board.indices) {
-            temp = temp.plus(0)
-        }
-        // 세로줄을 기준으로 새로운 배열 생성
-        for (i in board.indices) {
-            for (j in board[i].indices) {
-                temp[j] = board[j][i]
-            }
-            new = new.plus(temp.toIntArray())
-            for (i in board.indices) {
-                temp[i] = 0
-            }
-        }
-        // moves 대로 뽑아서
-        for (i in moves.indices) {
-            for (j in board[0].indices) {
-                if (new[moves[i] - 1][j] != 0) {
-                    // 두개가 만나면 터짐
-                    if (pick.size != 0 && pick.last() == new[moves[i]-1][j]) {
-                        pick.removeAt(pick.size-1)
-                        new[moves[i] - 1][j] = 0
-                        answer += 2
-                    }else {
-                        // 새로운 배열에 저장하고 기존은 삭제
-                        pick.add(new[moves[i] - 1][j])
-                        new[moves[i] - 1][j] = 0
-                    }
-                    break
+        numbers.forEachIndexed { i, it ->
+            when ((it-1)%3) {
+                // 왼쪽 줄
+                0 -> {
+                    answer += "L"
+                    temp = temp.plus(it)
                 }
+
+                // 가운데 줄
+                1 -> {
+                    if (temp.last() != 0 && temp.last()%3 == 0) {
+                        //L
+                        answer += "L"
+                        temp = temp.plus(it)
+                    } else if (temp.last() != 0 && temp.last()%3 == 1) {
+                        //C
+                        answer += "C"
+                        temp = temp.plus(it)
+                    } else {
+                        // R
+                        answer += "R"
+                        temp = temp.plus(it)
+                    }
+                }
+
+                // 오른쪽 줄
+                2 -> {
+                    answer += "R"
+                    temp = temp.plus(it)
+                }
+
             }
         }
+        println(temp.contentToString())
+        println(answer)
         return answer
+        //LRL L*L*R* LL R* R L*
+        //LRL CRR LL C RL
     }
+
+
+//    //크레인 인형뽑기 게임
+//    fun solution(board: Array<IntArray>, moves: IntArray): Int {
+//        var answer = 0
+//        var new = arrayOf<IntArray>()
+//        var temp = arrayOf<Int>()
+//        var pick = arrayListOf<Int>()
+//
+//        for (i in board.indices) {
+//            temp = temp.plus(0)
+//        }
+//        // 세로줄을 기준으로 새로운 배열 생성
+//        for (i in board.indices) {
+//            for (j in board[i].indices) {
+//                temp[j] = board[j][i]
+//            }
+//            new = new.plus(temp.toIntArray())
+//            for (i in board.indices) {
+//                temp[i] = 0
+//            }
+//        }
+//        // moves 대로 뽑아서
+//        for (i in moves.indices) {
+//            for (j in board[0].indices) {
+//                if (new[moves[i] - 1][j] != 0) {
+//                    // 두개가 만나면 터짐
+//                    if (pick.size != 0 && pick.last() == new[moves[i]-1][j]) {
+//                        pick.removeAt(pick.size-1)
+//                        new[moves[i] - 1][j] = 0
+//                        answer += 2
+//                    }else {
+//                        // 새로운 배열에 저장하고 기존은 삭제
+//                        pick.add(new[moves[i] - 1][j])
+//                        new[moves[i] - 1][j] = 0
+//                    }
+//                    break
+//                }
+//            }
+//        }
+//        return answer
+//    }
 
 //    //실패율
 //    fun solution(N: Int, stages: IntArray): IntArray {
