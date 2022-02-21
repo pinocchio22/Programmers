@@ -3,6 +3,7 @@ package com.example.programmers
 import android.os.Bundle
 import android.util.Log
 import androidx.appcompat.app.AppCompatActivity
+import kotlin.math.abs
 
 @Suppress("NAME_SHADOWING")
 class MainActivity : AppCompatActivity() {
@@ -10,57 +11,49 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
-        //1, 5, 3, 5, 1, 2, 1, 4
-        solution(intArrayOf(1, 3, 4, 5, 8, 2, 1, 4, 5, 9, 5), "right")
+        solution(intArrayOf(7, 0, 8, 2, 8, 3, 1, 5, 7, 6, 2), "left")
     }
 
     // [카카오 인턴] 키패드 누르기
     fun solution(numbers: IntArray, hand: String): String {
         var answer = ""
-        var temp = arrayOf<Int>()
-        //123
-        //456
-        //789
-        //*0#
-
-        numbers.forEachIndexed { i, it ->
-            when ((it-1)%3) {
-                // 왼쪽 줄
-                0 -> {
+        var RH = 12
+        var LH = 10
+        for (item in numbers) {
+            if ((item-1)%3 == 0) {
+                // Left
+                LH = item
+                answer += "L"
+            }else if ((item-1)%3 == 2) {
+                // Right
+                RH = item
+                answer += "R"
+            }else {
+                var key = item
+                if (item == 0) key = 11
+                // Center
+                if (abs(RH - key) % 3 + abs(RH - key) / 3 < abs(LH - key) % 3 + abs(LH - key) / 3) {
+                    // right hand close
+                    RH = key
+                    answer += "R"
+                } else if (abs(LH - key) % 3 + abs(LH - key) / 3 < abs(RH - key) % 3 + abs(RH - key) / 3) {
+                    // left hand close
+                    LH = key
                     answer += "L"
-                    temp = temp.plus(it)
-                }
-
-                // 가운데 줄
-                1 -> {
-                    if (temp.last() != 0 && temp.last()%3 == 0) {
-                        //L
-                        answer += "L"
-                        temp = temp.plus(it)
-                    } else if (temp.last() != 0 && temp.last()%3 == 1) {
-                        //C
-                        answer += "C"
-                        temp = temp.plus(it)
-                    } else {
-                        // R
+                } else {// same hand
+                    if (hand == "right") {
+                        // right hand
+                        RH = key
                         answer += "R"
-                        temp = temp.plus(it)
+                    } else {
+                        //left hand
+                        LH = key
+                        answer += "L"
                     }
                 }
-
-                // 오른쪽 줄
-                2 -> {
-                    answer += "R"
-                    temp = temp.plus(it)
-                }
-
             }
         }
-        println(temp.contentToString())
-        println(answer)
         return answer
-        //LRL L*L*R* LL R* R L*
-        //LRL CRR LL C RL
     }
 
 
