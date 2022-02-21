@@ -20,33 +20,28 @@ class MainActivity : AppCompatActivity() {
         var RH = 12
         var LH = 10
         for (item in numbers) {
-            if ((item-1)%3 == 0) {
-                // Left
+            if ((item - 1) % 3 == 0) { // Left
                 LH = item
                 answer += "L"
-            }else if ((item-1)%3 == 2) {
-                // Right
+            } else if ((item - 1) % 3 == 2) { // Right
                 RH = item
                 answer += "R"
-            }else {
+            } else {
                 var key = item
-                if (item == 0) key = 11
-                // Center
-                if (abs(RH - key) % 3 + abs(RH - key) / 3 < abs(LH - key) % 3 + abs(LH - key) / 3) {
-                    // right hand close
+                val RHD = abs(RH - key) % 3 + abs(RH - key) / 3
+                val LHD = abs(LH - key) % 3 + abs(LH - key) / 3
+                if (item == 0) key = 11 // Center
+                if (RHD < LHD) { // right hand close
                     RH = key
                     answer += "R"
-                } else if (abs(LH - key) % 3 + abs(LH - key) / 3 < abs(RH - key) % 3 + abs(RH - key) / 3) {
-                    // left hand close
+                } else if (LHD / 3 < RHD) { // left hand close
                     LH = key
                     answer += "L"
                 } else {// same hand
-                    if (hand == "right") {
-                        // right hand
+                    if (hand == "right") { // right hand
                         RH = key
                         answer += "R"
-                    } else {
-                        //left hand
+                    } else { //left hand
                         LH = key
                         answer += "L"
                     }
