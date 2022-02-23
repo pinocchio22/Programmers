@@ -5,52 +5,106 @@ import android.util.Log
 import androidx.appcompat.app.AppCompatActivity
 import kotlin.math.abs
 
-@Suppress("NAME_SHADOWING")
+@Suppress("NAME_SHADOWING", "TYPE_INFERENCE_ONLY_INPUT_TYPES_WARNING", "CAST_NEVER_SUCCEEDS")
 class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
-        solution(intArrayOf(7, 0, 8, 2, 8, 3, 1, 5, 7, 6, 2), "left")
+        solution("one4seveneight")
+        //one141s1e1v1e1n1e1i1g1h1t1
     }
 
-    // [카카오 인턴] 키패드 누르기
-    fun solution(numbers: IntArray, hand: String): String {
-        var answer = ""
-        var RH = 12
-        var LH = 10
-        for (item in numbers) {
-            if ((item - 1) % 3 == 0) { // Left
-                LH = item
-                answer += "L"
-            } else if ((item - 1) % 3 == 2) { // Right
-                RH = item
-                answer += "R"
-            } else {
-                var key = item
-                val RHD = abs(RH - key) % 3 + abs(RH - key) / 3
-                val LHD = abs(LH - key) % 3 + abs(LH - key) / 3
-                if (item == 0) key = 11 // Center
-                if (RHD < LHD) { // right hand close
-                    RH = key
-                    answer += "R"
-                } else if (LHD / 3 < RHD) { // left hand close
-                    LH = key
-                    answer += "L"
-                } else {// same hand
-                    if (hand == "right") { // right hand
-                        RH = key
-                        answer += "R"
-                    } else { //left hand
-                        LH = key
-                        answer += "L"
-                    }
+    //숫자 문자열과 영단어
+    fun solution(s: String): Int {
+        var answer: Int = 0
+        var temp = ""
+
+        for (item in s) {
+            temp = temp.plus(item)
+            when {
+                temp.contains("zero") -> {
+                    temp = temp.removeRange(temp.length-4,temp.length)
+                    temp = temp.plus(0)
+                }
+                temp.contains("one") -> {
+                    temp = temp.removeRange(temp.length-3,temp.length)
+                    temp = temp.plus(1)
+                }
+                temp.contains("two") ->  {
+                    temp = temp.removeRange(temp.length-3,temp.length)
+                    temp = temp.plus(2)
+                }
+                temp.contains("three") ->  {
+                    temp = temp.removeRange(temp.length-5,temp.length)
+                    temp = temp.plus(3)
+                }
+                temp.contains("four") ->  {
+                    temp = temp.removeRange(temp.length-4,temp.length)
+                    temp = temp.plus(4)
+                }
+                temp.contains("five") ->  {
+                    temp = temp.removeRange(temp.length-4,temp.length)
+                    temp = temp.plus(5)
+                }
+                temp.contains("six") ->  {
+                    temp = temp.removeRange(temp.length-3,temp.length)
+                    temp = temp.plus(6)
+                }
+                temp.contains("seven") ->  {
+                    temp = temp.removeRange(temp.length-5,temp.length)
+                    temp = temp.plus(7)
+                }
+                temp.contains("eight") ->  {
+                    temp = temp.removeRange(temp.length-5,temp.length)
+                    temp = temp.plus(8)
+                }
+                temp.contains("nine") ->  {
+                    temp = temp.removeRange(temp.length-4,temp.length)
+                    temp = temp.plus(9)
                 }
             }
         }
+        answer = temp.toInt()
         return answer
     }
 
+//    // [카카오 인턴] 키패드 누르기
+//    fun solution(numbers: IntArray, hand: String): String {
+//        var answer = ""
+//        var RH = 12
+//        var LH = 10
+//        for (item in numbers) {
+//            if ((item - 1) % 3 == 0) { // Left
+//                LH = item
+//                answer += "L"
+//            } else if ((item - 1) % 3 == 2) { // Right
+//                RH = item
+//                answer += "R"
+//            } else {
+//                var key = item
+//                val RHD = abs(RH - key) % 3 + abs(RH - key) / 3
+//                val LHD = abs(LH - key) % 3 + abs(LH - key) / 3
+//                if (item == 0) key = 11 // Center
+//                if (RHD < LHD) { // right hand close
+//                    RH = key
+//                    answer += "R"
+//                } else if (LHD / 3 < RHD) { // left hand close
+//                    LH = key
+//                    answer += "L"
+//                } else {// same hand
+//                    if (hand == "right") { // right hand
+//                        RH = key
+//                        answer += "R"
+//                    } else { //left hand
+//                        LH = key
+//                        answer += "L"
+//                    }
+//                }
+//            }
+//        }
+//        return answer
+//    }
 
 //    //크레인 인형뽑기 게임
 //    fun solution(board: Array<IntArray>, moves: IntArray): Int {
