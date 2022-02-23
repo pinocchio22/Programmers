@@ -12,62 +12,22 @@ class MainActivity : AppCompatActivity() {
         setContentView(R.layout.activity_main)
 
         solution("one4seveneight")
-        //one141s1e1v1e1n1e1i1g1h1t1
     }
 
     //숫자 문자열과 영단어
     fun solution(s: String): Int {
         var answer: Int = 0
-        var temp = ""
-
-        for (item in s) {
-            temp = temp.plus(item)
-            when {
-                temp.contains("zero") -> {
-                    temp = temp.removeRange(temp.length-4,temp.length)
-                    temp = temp.plus(0)
-                }
-                temp.contains("one") -> {
-                    temp = temp.removeRange(temp.length-3,temp.length)
-                    temp = temp.plus(1)
-                }
-                temp.contains("two") ->  {
-                    temp = temp.removeRange(temp.length-3,temp.length)
-                    temp = temp.plus(2)
-                }
-                temp.contains("three") ->  {
-                    temp = temp.removeRange(temp.length-5,temp.length)
-                    temp = temp.plus(3)
-                }
-                temp.contains("four") ->  {
-                    temp = temp.removeRange(temp.length-4,temp.length)
-                    temp = temp.plus(4)
-                }
-                temp.contains("five") ->  {
-                    temp = temp.removeRange(temp.length-4,temp.length)
-                    temp = temp.plus(5)
-                }
-                temp.contains("six") ->  {
-                    temp = temp.removeRange(temp.length-3,temp.length)
-                    temp = temp.plus(6)
-                }
-                temp.contains("seven") ->  {
-                    temp = temp.removeRange(temp.length-5,temp.length)
-                    temp = temp.plus(7)
-                }
-                temp.contains("eight") ->  {
-                    temp = temp.removeRange(temp.length-5,temp.length)
-                    temp = temp.plus(8)
-                }
-                temp.contains("nine") ->  {
-                    temp = temp.removeRange(temp.length-4,temp.length)
-                    temp = temp.plus(9)
-                }
-            }
-        }
+        val numbers = mapOf("zero" to 0, "one" to 1, "two" to 2, "three" to 3, "four" to 4, "five" to 5, "six" to 6, "seven" to 7, "eight" to 8, "nine" to 9)
+        var temp = s
+        numbers.forEach { (K, V) -> if (K in temp) temp = temp.replace(K, V.toString())}
         answer = temp.toInt()
         return answer
     }
+
+    //for key, value in numdict.items():
+    //if key in s:
+    //s.replace(key, str(value))
+    //answer = s
 
 //    // [카카오 인턴] 키패드 누르기
 //    fun solution(numbers: IntArray, hand: String): String {
