@@ -11,8 +11,8 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
-        solution("123_.def")
-        //	"z--"
+        solution("...!@BaT#*..y.abcdefghijklm")
+        //	"bat.y.abcdefghi"
     }
 
     // 신규 아이디 추천
@@ -24,42 +24,24 @@ class MainActivity : AppCompatActivity() {
         answer = answer.toLowerCase()
 
         // 2. 소문자,숫자,(-),(_),(.) 제외한 모든 문자를 제거
-        answer.forEach {
-            if (it in 'a'..'z' || it in '0'..'9' || it == '-' || it == '_' || it == '.') {
-                temp = temp.plus(it)
-            }
-        }
+        answer.forEach { if (it in 'a'..'z' || it in '0'..'9' || it == '-' || it == '_' || it == '.') temp = temp.plus(it) }
         answer = temp
 
         // 3. (.)가 2번 이상 연속된 부분 -> 하나로 치환
         while (answer.contains("..")) answer = answer.replace("..",".")
 
         // 4. (.)가 처음이나 끝 위치 제거
-        if (answer.first() == '.' ) {
-            answer = answer.substring(1,answer.length)
-        }else if (answer.last() == '.') {
-            answer = answer.substring(0,answer.length-1)
-        }
+        if (answer.first() == '.' ) answer = answer.substring(1,answer.length) else if (answer.last() == '.') answer = answer.substring(0,answer.length-1)
 
         // 5. 빈 문자열이라면 "a"
-        if (answer.isEmpty()) {
-            answer += "a"
-        }
+        if (answer.isEmpty()) answer += "a"
 
         // 6. 길이가 16 이상이면,15개를 제외한 나머지 문자 제거 , 제거 후 (.)가 끝에 위치한다면 (.) 제거
-        if (answer.length > 15) {
-            answer = answer.substring(0,15)
-        }
-        if (answer.last() == '.') {
-            answer = answer.substring(0,answer.length-1)
-        }
+        if (answer.length > 15) answer = answer.substring(0,15)
+        if (answer.last() == '.') answer = answer.substring(0,answer.length-1)
 
         // 7. new_id의 길이가 2이하면, 마지막 문자를 길이가 3이 될 때까지 반복해서 끝에 붙임
-        if (answer.length < 3) {
-            while (answer.length < 3) {
-                answer += answer.last()
-            }
-        }
+        if (answer.length < 3) while (answer.length < 3) answer += answer.last()
 
         return answer
     }
