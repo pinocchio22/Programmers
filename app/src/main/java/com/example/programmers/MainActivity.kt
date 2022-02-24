@@ -22,7 +22,6 @@ class MainActivity : AppCompatActivity() {
         answer = new_id
         // 1. 대문자를 소문자로
         answer = answer.toLowerCase()
-        println(answer)
 
         // 2. 소문자,숫자,(-),(_),(.) 제외한 모든 문자를 제거
         answer.forEach {
@@ -31,22 +30,22 @@ class MainActivity : AppCompatActivity() {
             }
         }
         answer = temp
-        println(answer)
+
         // 3. (.)가 2번 이상 연속된 부분 -> 하나로 치환
         while (answer.contains("..")) answer = answer.replace("..",".")
-        println(answer)
+
         // 4. (.)가 처음이나 끝 위치 제거
         if (answer.first() == '.' ) {
             answer = answer.substring(1,answer.length)
         }else if (answer.last() == '.') {
             answer = answer.substring(0,answer.length-1)
         }
-        println(answer)
+
         // 5. 빈 문자열이라면 "a"
         if (answer.isEmpty()) {
             answer += "a"
         }
-        println(answer)
+
         // 6. 길이가 16 이상이면,15개를 제외한 나머지 문자 제거 , 제거 후 (.)가 끝에 위치한다면 (.) 제거
         if (answer.length > 15) {
             answer = answer.substring(0,15)
@@ -54,14 +53,14 @@ class MainActivity : AppCompatActivity() {
         if (answer.last() == '.') {
             answer = answer.substring(0,answer.length-1)
         }
-        println(answer)
+
         // 7. new_id의 길이가 2이하면, 마지막 문자를 길이가 3이 될 때까지 반복해서 끝에 붙임
         if (answer.length < 3) {
             while (answer.length < 3) {
                 answer += answer.last()
             }
         }
-        println(answer)
+
         return answer
     }
 
