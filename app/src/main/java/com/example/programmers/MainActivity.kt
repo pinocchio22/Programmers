@@ -11,23 +11,69 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
-        solution("one4seveneight")
+        solution("123_.def")
+        //	"z--"
     }
 
-    //숫자 문자열과 영단어
-    fun solution(s: String): Int {
-        var answer: Int = 0
-        val numbers = mapOf("zero" to 0, "one" to 1, "two" to 2, "three" to 3, "four" to 4, "five" to 5, "six" to 6, "seven" to 7, "eight" to 8, "nine" to 9)
-        var temp = s
-        numbers.forEach { (K, V) -> if (K in temp) temp = temp.replace(K, V.toString())}
-        answer = temp.toInt()
+    // 신규 아이디 추천
+    fun solution(new_id: String): String {
+        var answer: String = ""
+        var temp = ""
+        answer = new_id
+        // 1. 대문자를 소문자로
+        answer = answer.toLowerCase()
+        println(answer)
+
+        // 2. 소문자,숫자,(-),(_),(.) 제외한 모든 문자를 제거
+        answer.forEach {
+            if (it in 'a'..'z' || it in '0'..'9' || it == '-' || it == '_' || it == '.') {
+                temp = temp.plus(it)
+            }
+        }
+        answer = temp
+        println(answer)
+        // 3. (.)가 2번 이상 연속된 부분 -> 하나로 치환
+        while (answer.contains("..")) answer = answer.replace("..",".")
+        println(answer)
+        // 4. (.)가 처음이나 끝 위치 제거
+        if (answer.first() == '.' ) {
+            answer = answer.substring(1,answer.length)
+        }else if (answer.last() == '.') {
+            answer = answer.substring(0,answer.length-1)
+        }
+        println(answer)
+        // 5. 빈 문자열이라면 "a"
+        if (answer.isEmpty()) {
+            answer += "a"
+        }
+        println(answer)
+        // 6. 길이가 16 이상이면,15개를 제외한 나머지 문자 제거 , 제거 후 (.)가 끝에 위치한다면 (.) 제거
+        if (answer.length > 15) {
+            answer = answer.substring(0,15)
+        }
+        if (answer.last() == '.') {
+            answer = answer.substring(0,answer.length-1)
+        }
+        println(answer)
+        // 7. new_id의 길이가 2이하면, 마지막 문자를 길이가 3이 될 때까지 반복해서 끝에 붙임
+        if (answer.length < 3) {
+            while (answer.length < 3) {
+                answer += answer.last()
+            }
+        }
+        println(answer)
         return answer
     }
 
-    //for key, value in numdict.items():
-    //if key in s:
-    //s.replace(key, str(value))
-    //answer = s
+//    //숫자 문자열과 영단어
+//    fun solution(s: String): Int {
+//        var answer: Int = 0
+//        val numbers = mapOf("zero" to 0, "one" to 1, "two" to 2, "three" to 3, "four" to 4, "five" to 5, "six" to 6, "seven" to 7, "eight" to 8, "nine" to 9)
+//        var temp = s
+//        numbers.forEach { (K, V) -> if (K in temp) temp = temp.replace(K, V.toString())}
+//        answer = temp.toInt()
+//        return answer
+//    }
 
 //    // [카카오 인턴] 키패드 누르기
 //    fun solution(numbers: IntArray, hand: String): String {
