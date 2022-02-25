@@ -11,40 +11,58 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
-        solution("...!@BaT#*..y.abcdefghijklm")
-        //	"bat.y.abcdefghi"
+        solution(intArrayOf(0, 0, 0, 0, 0, 0), intArrayOf(38, 19, 20, 40, 15, 25))
     }
 
-    // 신규 아이디 추천
-    fun solution(new_id: String): String {
-        var answer: String = ""
-        var temp = ""
-        answer = new_id
-        // 1. 대문자를 소문자로
-        answer = answer.toLowerCase()
+    // 로또의 최고 순위와 최저 순위
+    fun solution(lottos: IntArray, win_nums: IntArray): IntArray {
+        var answer: IntArray = intArrayOf()
+        var best = 0
+        var worst = 0
 
-        // 2. 소문자,숫자,(-),(_),(.) 제외한 모든 문자를 제거
-        answer.forEach { if (it in 'a'..'z' || it in '0'..'9' || it == '-' || it == '_' || it == '.') temp = temp.plus(it) }
-        answer = temp
-
-        // 3. (.)가 2번 이상 연속된 부분 -> 하나로 치환
-        while (answer.contains("..")) answer = answer.replace("..",".")
-
-        // 4. (.)가 처음이나 끝 위치 제거
-        if (answer.first() == '.' ) answer = answer.substring(1,answer.length) else if (answer.last() == '.') answer = answer.substring(0,answer.length-1)
-
-        // 5. 빈 문자열이라면 "a"
-        if (answer.isEmpty()) answer += "a"
-
-        // 6. 길이가 16 이상이면,15개를 제외한 나머지 문자 제거 , 제거 후 (.)가 끝에 위치한다면 (.) 제거
-        if (answer.length > 15) answer = answer.substring(0,15)
-        if (answer.last() == '.') answer = answer.substring(0,answer.length-1)
-
-        // 7. new_id의 길이가 2이하면, 마지막 문자를 길이가 3이 될 때까지 반복해서 끝에 붙임
-        if (answer.length < 3) while (answer.length < 3) answer += answer.last()
-
+        for (i in lottos.indices) {
+            if (win_nums.contains(lottos[i])) {
+                best += 1
+                worst += 1
+            }
+            if (lottos[i] == 0) best += 1
+        }
+        answer = if (best > 1) answer.plus(7 - best) else answer.plus(6)
+        answer = if (worst > 1) answer.plus(7 - worst) else answer.plus(6)
         return answer
     }
+
+//    // 신규 아이디 추천
+//    fun solution(new_id: String): String {
+//        var answer: String = ""
+//        var temp = ""
+//        answer = new_id
+//
+//        // 1. 대문자를 소문자로
+//        answer = answer.toLowerCase()
+//
+//        // 2. 소문자,숫자,(-),(_),(.) 제외한 모든 문자를 제거
+//        answer.forEach { if (it in 'a'..'z' || it in '0'..'9' || it == '-' || it == '_' || it == '.') temp = temp.plus(it) }
+//        answer = temp
+//
+//        // 3. (.)가 2번 이상 연속된 부분 -> 하나로 치환
+//        while (answer.contains("..")) answer = answer.replace("..",".")
+//
+//        // 4. (.)가 처음이나 끝 위치 제거
+//        if (answer.first() == '.' ) answer = answer.substring(1,answer.length) else if (answer.last() == '.') answer = answer.substring(0,answer.length-1)
+//
+//        // 5. 빈 문자열이라면 "a"
+//        if (answer.isEmpty()) answer += "a"
+//
+//        // 6. 길이가 16 이상이면,15개를 제외한 나머지 문자 제거 , 제거 후 (.)가 끝에 위치한다면 (.) 제거
+//        if (answer.length > 15) answer = answer.substring(0,15)
+//        if (answer.last() == '.') answer = answer.substring(0,answer.length-1)
+//
+//        // 7. new_id의 길이가 2이하면, 마지막 문자를 길이가 3이 될 때까지 반복해서 끝에 붙임
+//        if (answer.length < 3) while (answer.length < 3) answer += answer.last()
+//
+//        return answer
+//    }
 
 //    //숫자 문자열과 영단어
 //    fun solution(s: String): Int {
