@@ -3,6 +3,8 @@ package com.example.programmers
 import android.os.Bundle
 import android.util.Log
 import androidx.appcompat.app.AppCompatActivity
+import java.util.*
+import kotlin.collections.HashMap
 import kotlin.math.abs
 
 @Suppress("NAME_SHADOWING", "TYPE_INFERENCE_ONLY_INPUT_TYPES_WARNING", "CAST_NEVER_SUCCEEDS")
@@ -14,33 +16,29 @@ class MainActivity : AppCompatActivity() {
         solution(arrayOf("muzi", "frodo", "apeach", "neo"), arrayOf("muzi frodo","apeach frodo","frodo neo","muzi neo","apeach muzi") , 2)
     }
 
-    //신고 결과 받기
+    // 신고 결과 받기
     fun solution(id_list: Array<String>, report: Array<String>, k: Int): IntArray {
         var answer: IntArray = intArrayOf()
-        var new = HashMap<String, Int>()
-        var reported = arrayOf<String>()
+        val reported = mutableMapOf<String, Int>()
+        val new = mutableMapOf<String, Int>()
 
-        // 중복제거 , 신고자 구분
-        report.toSet().forEach {
-            var a = it.split(" ")
-            if (new.containsKey(a[1])) {
-                new[a[1]] = new[a[1]]!! +1
-            }else {
-                new[a[1]] = 1
-            }
+        report.distinct().forEach {
+            val a = it.split(" ")
+            reported[a[1]] = reported.getOrDefault(a[1], 0) +1
         }
         id_list.forEach {
-            println(it)
-            if (new.containsKey(it) && new.getValue(it) >= k) {
-                answer += new.getValue(it)
-                println(new.getValue(it))
-            }else {
-                answer += 0
-            }
+            new[it] = 0
         }
-        println(answer.contentToString())
+        val b = reported.filterValues { it >= k }
+        report.distinct().forEach {
+            val a = it.split(" ")
+            if (b.contains(it.split(" ")[1])) new[a[0]] = new.getOrDefault(a[0], 0) + 1
+        }
+        answer = new.values.toIntArray()
         return answer
     }
+
+
 
 //    // 로또의 최고 순위와 최저 순위
 //    fun solution(lottos: IntArray, win_nums: IntArray): IntArray {
