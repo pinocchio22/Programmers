@@ -23,16 +23,16 @@ class MainActivity : AppCompatActivity() {
         val new = mutableMapOf<String, Int>()
 
         report.distinct().forEach {
-            val a = it.split(" ")
-            reported[a[1]] = reported.getOrDefault(a[1], 0) +1
+            val a = it.split(" ")[1]
+            reported[a] = reported.getOrDefault(a, 0) +1
         }
         id_list.forEach {
             new[it] = 0
         }
         val b = reported.filterValues { it >= k }
         report.distinct().forEach {
-            val a = it.split(" ")
-            if (b.contains(it.split(" ")[1])) new[a[0]] = new.getOrDefault(a[0], 0) + 1
+            val a = it.split(" ")[0]
+            if (b.contains(it.split(" ")[1])) new[a] = new.getOrDefault(a, 0) + 1
         }
         answer = new.values.toIntArray()
         return answer
