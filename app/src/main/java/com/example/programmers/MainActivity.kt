@@ -11,26 +11,54 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
-        solution(intArrayOf(0, 0, 0, 0, 0, 0), intArrayOf(38, 19, 20, 40, 15, 25))
+        solution(arrayOf("muzi", "frodo", "apeach", "neo"), arrayOf("muzi frodo","apeach frodo","frodo neo","muzi neo","apeach muzi") , 2)
     }
 
-    // 로또의 최고 순위와 최저 순위
-    fun solution(lottos: IntArray, win_nums: IntArray): IntArray {
+    //신고 결과 받기
+    fun solution(id_list: Array<String>, report: Array<String>, k: Int): IntArray {
         var answer: IntArray = intArrayOf()
-        var best = 0
-        var worst = 0
+        var new = HashMap<String, Int>()
+        var reported = arrayOf<String>()
 
-        for (i in lottos.indices) {
-            if (win_nums.contains(lottos[i])) {
-                best += 1
-                worst += 1
+        // 중복제거 , 신고자 구분
+        report.toSet().forEach {
+            var a = it.split(" ")
+            if (new.containsKey(a[1])) {
+                new[a[1]] = new[a[1]]!! +1
+            }else {
+                new[a[1]] = 1
             }
-            if (lottos[i] == 0) best += 1
         }
-        answer = if (best > 1) answer.plus(7 - best) else answer.plus(6)
-        answer = if (worst > 1) answer.plus(7 - worst) else answer.plus(6)
+        id_list.forEach {
+            println(it)
+            if (new.containsKey(it) && new.getValue(it) >= k) {
+                answer += new.getValue(it)
+                println(new.getValue(it))
+            }else {
+                answer += 0
+            }
+        }
+        println(answer.contentToString())
         return answer
     }
+
+//    // 로또의 최고 순위와 최저 순위
+//    fun solution(lottos: IntArray, win_nums: IntArray): IntArray {
+//        var answer: IntArray = intArrayOf()
+//        var best = 0
+//        var worst = 0
+//
+//        for (i in lottos.indices) {
+//            if (win_nums.contains(lottos[i])) {
+//                best += 1
+//                worst += 1
+//            }
+//            if (lottos[i] == 0) best += 1
+//        }
+//        answer = if (best > 1) answer.plus(7 - best) else answer.plus(6)
+//        answer = if (worst > 1) answer.plus(7 - worst) else answer.plus(6)
+//        return answer
+//    }
 
 //    // 신규 아이디 추천
 //    fun solution(new_id: String): String {
