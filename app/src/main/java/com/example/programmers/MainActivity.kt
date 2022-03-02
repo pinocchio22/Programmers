@@ -23,17 +23,14 @@ class MainActivity : AppCompatActivity() {
         var new = intArrayOf()
 
         for (i in arr1.indices) {
-            for (j in arr2.indices) {
-                for (k in arr2[j].indices) {
-                    temp += arr1[i][k] * arr2[k][j]
-                }
+            for (j in arr2[0].indices) {
+                for (k in arr1[0].indices) temp += arr1[i][k] * arr2[k][j]
                 new = new.plus(temp)
                 temp = 0
             }
             answer = answer.plus(new)
             new = intArrayOf()
         }
-        println(answer.contentToString())
         return answer
     }
 
