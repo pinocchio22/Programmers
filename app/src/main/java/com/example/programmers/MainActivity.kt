@@ -13,32 +13,51 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
-        solution(arrayOf("muzi", "frodo", "apeach", "neo"), arrayOf("muzi frodo","apeach frodo","frodo neo","muzi neo","apeach muzi") , 2)
+        solution(arrayOf(intArrayOf(2, 3, 2), intArrayOf(4, 2, 4), intArrayOf(3, 1, 4)), arrayOf(intArrayOf(5, 4), intArrayOf(2, 4), intArrayOf(3, 1)))
     }
 
-    // 신고 결과 받기
-    fun solution(id_list: Array<String>, report: Array<String>, k: Int): IntArray {
-        var answer: IntArray = intArrayOf()
-        val reported = mutableMapOf<String, Int>()
-        val new = mutableMapOf<String, Int>()
+    // 행렬의 곱셈
+    fun solution(arr1: Array<IntArray>, arr2: Array<IntArray>): Array<IntArray> {
+        var answer = arrayOf<IntArray>()
+        var temp = 0
+        var new = intArrayOf()
 
-        report.distinct().forEach {
-            val a = it.split(" ")[1]
-            reported[a] = reported.getOrDefault(a, 0) +1
+        for (i in arr1.indices) {
+            for (j in arr2.indices) {
+                for (k in arr2[j].indices) {
+                    temp += arr1[i][k] * arr2[k][j]
+                }
+                new = new.plus(temp)
+                temp = 0
+            }
+            answer = answer.plus(new)
+            new = intArrayOf()
         }
-        id_list.forEach {
-            new[it] = 0
-        }
-        val b = reported.filterValues { it >= k }
-        report.distinct().forEach {
-            val a = it.split(" ")[0]
-            if (b.contains(it.split(" ")[1])) new[a] = new.getOrDefault(a, 0) + 1
-        }
-        answer = new.values.toIntArray()
+        println(answer.contentToString())
         return answer
     }
 
-
+//    // 신고 결과 받기
+//    fun solution(id_list: Array<String>, report: Array<String>, k: Int): IntArray {
+//        var answer: IntArray = intArrayOf()
+//        val reported = mutableMapOf<String, Int>()
+//        val new = mutableMapOf<String, Int>()
+//
+//        report.distinct().forEach {
+//            val a = it.split(" ")[1]
+//            reported[a] = reported.getOrDefault(a, 0) +1
+//        }
+//        id_list.forEach {
+//            new[it] = 0
+//        }
+//        val b = reported.filterValues { it >= k }
+//        report.distinct().forEach {
+//            val a = it.split(" ")[0]
+//            if (b.contains(it.split(" ")[1])) new[a] = new.getOrDefault(a, 0) + 1
+//        }
+//        answer = new.values.toIntArray()
+//        return answer
+//    }
 
 //    // 로또의 최고 순위와 최저 순위
 //    fun solution(lottos: IntArray, win_nums: IntArray): IntArray {
