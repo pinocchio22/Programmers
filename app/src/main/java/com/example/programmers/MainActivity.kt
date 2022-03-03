@@ -13,26 +13,37 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
-        solution(arrayOf(intArrayOf(2, 3, 2), intArrayOf(4, 2, 4), intArrayOf(3, 1, 4)), arrayOf(intArrayOf(5, 4), intArrayOf(2, 4), intArrayOf(3, 1)))
+        solution(intArrayOf(2,6,8,14))
     }
 
-    // 행렬의 곱셈
-    fun solution(arr1: Array<IntArray>, arr2: Array<IntArray>): Array<IntArray> {
-        var answer = arrayOf<IntArray>()
-        var temp = 0
-        var new = intArrayOf()
-
-        for (i in arr1.indices) {
-            for (j in arr2[0].indices) {
-                for (k in arr1[0].indices) temp += arr1[i][k] * arr2[k][j]
-                new = new.plus(temp)
-                temp = 0
-            }
-            answer = answer.plus(new)
-            new = intArrayOf()
+    // N개의 최소공배수
+    fun solution(arr: IntArray): Int {
+        var answer = 0
+        answer = arr[0]
+        for (i in 0..arr.size-2) {
+            answer = answer*arr[i+1]/gcd(answer,arr[i+1])
         }
         return answer
     }
+    fun gcd(a: Int, b:Int): Int = if(b != 0) gcd(b, a % b) else a
+
+//    // 행렬의 곱셈
+//    fun solution(arr1: Array<IntArray>, arr2: Array<IntArray>): Array<IntArray> {
+//        var answer = arrayOf<IntArray>()
+//        var temp = 0
+//        var new = intArrayOf()
+//
+//        for (i in arr1.indices) {
+//            for (j in arr2[0].indices) {
+//                for (k in arr1[0].indices) temp += arr1[i][k] * arr2[k][j]
+//                new = new.plus(temp)
+//                temp = 0
+//            }
+//            answer = answer.plus(new)
+//            new = intArrayOf()
+//        }
+//        return answer
+//    }
 
 //    // 신고 결과 받기
 //    fun solution(id_list: Array<String>, report: Array<String>, k: Int): IntArray {
