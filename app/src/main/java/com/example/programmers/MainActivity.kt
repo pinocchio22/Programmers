@@ -22,9 +22,7 @@ class MainActivity : AppCompatActivity() {
     fun solution(s: String): String {
         var answer = ""
 
-        answer += s.split(" ").map { it.toInt() }.min()
-        answer += " "
-        answer += s.split(" ").map { it.toInt() }.max()
+        answer = "${s.split(" ").map { it.toInt() }.min()} ${s.split(" ").map { it.toInt() }.max()}"
 
         return answer
     }
