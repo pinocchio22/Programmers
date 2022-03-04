@@ -4,6 +4,7 @@ import android.os.Bundle
 import android.util.Log
 import androidx.appcompat.app.AppCompatActivity
 import java.util.*
+import kotlin.collections.ArrayList
 import kotlin.collections.HashMap
 import kotlin.math.abs
 
@@ -13,19 +14,31 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
-        solution(intArrayOf(2,6,8,14))
+        solution("-1 -2 -3 -4")
     }
+    //2,5,8,11
 
-    // N개의 최소공배수
-    fun solution(arr: IntArray): Int {
-        var answer = 0
-        answer = arr[0]
-        for (i in 0..arr.size-2) {
-            answer = answer*arr[i+1]/gcd(answer,arr[i+1])
-        }
+    // 최댓값과 최솟값
+    fun solution(s: String): String {
+        var answer = ""
+
+        answer += s.split(" ").map { it.toInt() }.min()
+        answer += " "
+        answer += s.split(" ").map { it.toInt() }.max()
+
         return answer
     }
-    fun gcd(a: Int, b:Int): Int = if(b != 0) gcd(b, a % b) else a
+
+//    // N개의 최소공배수
+//    fun solution(arr: IntArray): Int {
+//        var answer = 0
+//        answer = arr[0]
+//        for (i in 0..arr.size-2) {
+//            answer = answer*arr[i+1]/gcd(answer,arr[i+1])
+//        }
+//        return answer
+//    }
+//    fun gcd(a: Int, b:Int): Int = if(b != 0) gcd(b, a % b) else a
 
 //    // 행렬의 곱셈
 //    fun solution(arr1: Array<IntArray>, arr2: Array<IntArray>): Array<IntArray> {
