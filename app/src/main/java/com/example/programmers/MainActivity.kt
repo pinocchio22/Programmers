@@ -1,12 +1,8 @@
 package com.example.programmers
 
 import android.os.Bundle
-import android.util.Log
 import androidx.appcompat.app.AppCompatActivity
 import java.util.*
-import kotlin.collections.ArrayList
-import kotlin.collections.HashMap
-import kotlin.math.abs
 
 @Suppress("NAME_SHADOWING", "TYPE_INFERENCE_ONLY_INPUT_TYPES_WARNING", "CAST_NEVER_SUCCEEDS")
 class MainActivity : AppCompatActivity() {
@@ -14,18 +10,26 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
-        solution("-1 -2 -3 -4")
+        // "3people Unfollowed Me"
+        solution("3people      Unfollowed      Me")
     }
-    //2,5,8,11
 
-    // 최댓값과 최솟값
+    // JadenCase 문자열 만들기
     fun solution(s: String): String {
         var answer = ""
-
-        answer = "${s.split(" ").map { it.toInt() }.min()} ${s.split(" ").map { it.toInt() }.max()}"
-
+        s.split(" ").map { answer += if (it.isNotBlank())  it.first().toUpperCase() + it.substring(1).toLowerCase() + " "  else " " }
+        answer = answer.dropLast(1)
         return answer
     }
+
+//    // 최댓값과 최솟값
+//    fun solution(s: String): String {
+//        var answer = ""
+//
+//        answer = "${s.split(" ").map { it.toInt() }.min()} ${s.split(" ").map { it.toInt() }.max()}"
+//
+//        return answer
+//    }
 
 //    // N개의 최소공배수
 //    fun solution(arr: IntArray): Int {
