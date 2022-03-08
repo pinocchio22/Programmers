@@ -1,8 +1,10 @@
 package com.example.programmers
 
 import android.os.Bundle
+import android.util.Log
 import androidx.appcompat.app.AppCompatActivity
 import java.util.*
+import kotlin.math.sign
 
 @Suppress("NAME_SHADOWING", "TYPE_INFERENCE_ONLY_INPUT_TYPES_WARNING", "CAST_NEVER_SUCCEEDS")
 class MainActivity : AppCompatActivity() {
@@ -10,14 +12,34 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
-        // "3people Unfollowed Me"
-        solution("3people      Unfollowed      Me")
+        // 2
+        solution(5)
+    }
+
+    // 피보나치 수
+    fun solution(n: Int): Int {
+        var answer = 0
+        var one = 0
+        var two = 1
+        var temp = 0
+
+        if (n == 1) return 1
+        for (i in 1 until n) {
+            temp = (one + two) % 1234567
+            one = two
+            two = temp
+        }
+        answer = temp
+        return answer
     }
 
     // JadenCase 문자열 만들기
     fun solution(s: String): String {
         var answer = ""
-        s.split(" ").map { answer += if (it.isNotBlank())  it.first().toUpperCase() + it.substring(1).toLowerCase() + " "  else " " }
+        s.split(" ").map {
+            answer += if (it.isNotBlank()) it.first().toUpperCase() + it.substring(1)
+                .toLowerCase() + " " else " "
+        }
         answer = answer.dropLast(1)
         return answer
     }
