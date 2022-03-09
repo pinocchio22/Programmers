@@ -13,36 +13,48 @@ class MainActivity : AppCompatActivity() {
         setContentView(R.layout.activity_main)
 
         // 2
-        solution(5)
+        solution(intArrayOf(6, 10, 2, 142, 666, 777, 1000))
     }
 
-    // 피보나치 수
-    fun solution(n: Int): Int {
-        var answer = 0
-        var one = 0
-        var two = 1
-        var temp = 0
-
-        if (n == 1) return 1
-        for (i in 1 until n) {
-            temp = (one + two) % 1234567
-            one = two
-            two = temp
-        }
-        answer = temp
-        return answer
-    }
-
-    // JadenCase 문자열 만들기
-    fun solution(s: String): String {
+    // 가장 큰 수
+    fun solution(numbers: IntArray): String {
         var answer = ""
-        s.split(" ").map {
-            answer += if (it.isNotBlank()) it.first().toUpperCase() + it.substring(1)
-                .toLowerCase() + " " else " "
-        }
-        answer = answer.dropLast(1)
+        var new = arrayOf<String>()
+
+        numbers.forEach { new += it.toString() }
+        new.sortWith(Comparator { it1, it2 -> if (it1.length == it2.length) it2.compareTo(it1) else (it2 + it1).compareTo(it1 + it2)} )
+        if (new[0] == "0") return "0"
+        new.forEach { answer += it }
         return answer
     }
+
+//    // 피보나치 수
+//    fun solution(n: Int): Int {
+//        var answer = 0
+//        var one = 0
+//        var two = 1
+//        var temp = 0
+//
+//        if (n == 1) return 1
+//        for (i in 1 until n) {
+//            temp = (one + two) % 1234567
+//            one = two
+//            two = temp
+//        }
+//        answer = temp
+//        return answer
+//    }
+
+//    // JadenCase 문자열 만들기
+//    fun solution(s: String): String {
+//        var answer = ""
+//        s.split(" ").map {
+//            answer += if (it.isNotBlank()) it.first().toUpperCase() + it.substring(1)
+//                .toLowerCase() + " " else " "
+//        }
+//        answer = answer.dropLast(1)
+//        return answer
+//    }
 
 //    // 최댓값과 최솟값
 //    fun solution(s: String): String {
