@@ -4,6 +4,7 @@ import android.os.Bundle
 import android.util.Log
 import androidx.appcompat.app.AppCompatActivity
 import java.util.*
+import kotlin.collections.ArrayList
 import kotlin.math.sign
 
 @Suppress("NAME_SHADOWING", "TYPE_INFERENCE_ONLY_INPUT_TYPES_WARNING", "CAST_NEVER_SUCCEEDS")
@@ -12,21 +13,42 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
-        // 2
-        solution(intArrayOf(6, 10, 2, 142, 666, 777, 1000))
+        // 3
+        solution(intArrayOf(3, 0, 6, 1, 5))
     }
 
-    // 가장 큰 수
-    fun solution(numbers: IntArray): String {
-        var answer = ""
-        var new = arrayOf<String>()
+    // H-Index
+    fun solution(citations: IntArray): Int {
+        var answer = 0
+        var cnt = 0
+        var temp = arrayListOf<Int>()
 
-        numbers.forEach { new += it.toString() }
-        new.sortWith(Comparator { it1, it2 -> if (it1.length == it2.length) it2.compareTo(it1) else (it2 + it1).compareTo(it1 + it2)} )
-        if (new[0] == "0") return "0"
-        new.forEach { answer += it }
+        for (i in 1..citations.size) {
+            citations.forEach {
+                if (i >= it) {
+                    cnt += 1
+                }
+            }
+            if (cnt == i) {
+                temp = temp.plus(cnt) as ArrayList<Int>
+            }
+            cnt = 0
+        }
+        answer += temp.max()!!
         return answer
     }
+
+//    // 가장 큰 수
+//    fun solution(numbers: IntArray): String {
+//        var answer = ""
+//        var new = arrayOf<String>()
+//
+//        numbers.forEach { new += it.toString() }
+//        new.sortWith(Comparator { it1, it2 -> if (it1.length == it2.length) it2.compareTo(it1) else (it2 + it1).compareTo(it1 + it2)} )
+//        if (new[0] == "0") return "0"
+//        new.forEach { answer += it }
+//        return answer
+//    }
 
 //    // 피보나치 수
 //    fun solution(n: Int): Int {
