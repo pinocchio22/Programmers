@@ -22,19 +22,23 @@ class MainActivity : AppCompatActivity() {
         var answer = 0
         var cnt = 0
         var temp = arrayListOf<Int>()
+        var new = citations.sortedDescending()
 
         for (i in 1..citations.size) {
-            citations.forEach {
-                if (i >= it) {
+            new.forEach {
+                if (i <= it) {
                     cnt += 1
                 }
             }
+
             if (cnt == i) {
                 temp = temp.plus(cnt) as ArrayList<Int>
             }
             cnt = 0
         }
-        answer += temp.max()!!
+        if (temp.isEmpty()) return 0
+        answer += temp.maxOrNull()!!
+        println(answer)
         return answer
     }
 
