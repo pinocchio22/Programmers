@@ -14,31 +14,21 @@ class MainActivity : AppCompatActivity() {
         setContentView(R.layout.activity_main)
 
         // 3
-        solution(intArrayOf(3, 0, 6, 1, 5))
+        solution(intArrayOf(10, 10, 10, 10, 10))
     }
 
     // H-Index
     fun solution(citations: IntArray): Int {
         var answer = 0
-        var cnt = 0
-        var temp = arrayListOf<Int>()
         var new = citations.sortedDescending()
 
-        for (i in 1..citations.size) {
-            new.forEach {
-                if (i <= it) {
-                    cnt += 1
-                }
+        if (new[0] == 0) return 0
+        new.forEachIndexed { index, i ->
+            if (index + 1 > i) {
+                return (index)
             }
-
-            if (cnt == i) {
-                temp = temp.plus(cnt) as ArrayList<Int>
-            }
-            cnt = 0
         }
-        if (temp.isEmpty()) return 0
-        answer += temp.maxOrNull()!!
-        println(answer)
+        answer = new.size
         return answer
     }
 
