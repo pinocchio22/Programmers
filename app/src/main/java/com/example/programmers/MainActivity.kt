@@ -1,11 +1,8 @@
 package com.example.programmers
 
 import android.os.Bundle
-import android.util.Log
 import androidx.appcompat.app.AppCompatActivity
 import java.util.*
-import kotlin.collections.ArrayList
-import kotlin.math.sign
 
 @Suppress("NAME_SHADOWING", "TYPE_INFERENCE_ONLY_INPUT_TYPES_WARNING", "CAST_NEVER_SUCCEEDS")
 class MainActivity : AppCompatActivity() {
@@ -14,23 +11,44 @@ class MainActivity : AppCompatActivity() {
         setContentView(R.layout.activity_main)
 
         // 3
-        solution(intArrayOf(10, 10, 10, 10, 10))
+        solution("011")
     }
 
-    // H-Index
-    fun solution(citations: IntArray): Int {
+    // 소수 찾기
+    lateinit var set: MutableSet<Int>
+    fun solution(numbers: String): Int {
         var answer = 0
-        var new = citations.sortedDescending()
-
-        if (new[0] == 0) return 0
-        new.forEachIndexed { index, i ->
-            if (index + 1 > i) {
-                return (index)
-            }
+        set = mutableSetOf()
+        getCombination(numbers,"")
+        set.forEach {
+            var temp = arrayOf<Int>()
+            for (i in 1..it) if (it%i == 0) { temp = temp.plus(i) }
+            if (temp.size == 2) { answer += 1 }
         }
-        answer = new.size
         return answer
     }
+    fun getCombination(numbers: String, result: String) {
+        if (result.isNotEmpty()) set.add(result.toInt())
+        if (numbers.isEmpty()) return
+        numbers.forEachIndexed { index, c ->
+            getCombination(numbers.removeRange(index..index), c.plus(result))
+        }
+    }
+
+//    // H-Index
+//    fun solution(citations: IntArray): Int {
+//        var answer = 0
+//        var new = citations.sortedDescending()
+//
+//        if (new[0] == 0) return 0
+//        new.forEachIndexed { index, i ->
+//            if (index + 1 > i) {
+//                return (index)
+//            }
+//        }
+//        answer = new.size
+//        return answer
+//    }
 
 //    // 가장 큰 수
 //    fun solution(numbers: IntArray): String {
