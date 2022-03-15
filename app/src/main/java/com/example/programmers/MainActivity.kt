@@ -17,27 +17,7 @@ class MainActivity : AppCompatActivity() {
     // 위장
     fun solution(clothes: Array<Array<String>>): Int {
         var answer = 0
-        var kind = mutableMapOf<String, Int>()
-        var number = arrayOf<Int>()
-
-        clothes.forEach {
-            kind[it[1]] = kind.getOrDefault(it[1], 0) + 1
-        }
-        println(kind)
-        // {headgear=2, eyewear=1}
-
-        kind.forEach {
-            number += it.value
-        }
-        println(number.contentToString())
-        // [2, 1]
-        println(number.reduce{it1, it2 -> it1 + it2})
-        // 3
-        println(number.reduce{it1, it2 -> it1 * it2})
-        // 2
-
-        if (number.size == 1) return number[0]
-        answer += number.reduce{it1, it2 -> it1 + it2} + number.reduce{it1, it2 -> it1 * it2}
+        answer = clothes.groupBy { it[1] }.values.map { it.size + 1 }.reduce(Int::times) - 1
         return answer
     }
 
