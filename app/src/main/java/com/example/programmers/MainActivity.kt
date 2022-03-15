@@ -11,29 +11,56 @@ class MainActivity : AppCompatActivity() {
         setContentView(R.layout.activity_main)
 
         // 3
-        solution("011")
+        solution(arrayOf(arrayOf("crowmask", "c"),arrayOf("bluesunglasses", "d"),arrayOf("smoky_makeup", "e"), arrayOf("A","a"), arrayOf("B", "b")))
     }
 
-    // 소수 찾기
-    lateinit var set: MutableSet<Int>
-    fun solution(numbers: String): Int {
+    // 위장
+    fun solution(clothes: Array<Array<String>>): Int {
         var answer = 0
-        set = mutableSetOf()
-        getCombination(numbers,"")
-        set.forEach {
-            var temp = arrayOf<Int>()
-            for (i in 1..it) if (it%i == 0) { temp = temp.plus(i) }
-            if (temp.size == 2) { answer += 1 }
+        var kind = mutableMapOf<String, Int>()
+        var number = arrayOf<Int>()
+
+        clothes.forEach {
+            kind[it[1]] = kind.getOrDefault(it[1], 0) + 1
         }
+        println(kind)
+        // {headgear=2, eyewear=1}
+
+        kind.forEach {
+            number += it.value
+        }
+        println(number.contentToString())
+        // [2, 1]
+        println(number.reduce{it1, it2 -> it1 + it2})
+        // 3
+        println(number.reduce{it1, it2 -> it1 * it2})
+        // 2
+
+        if (number.size == 1) return number[0]
+        answer += number.reduce{it1, it2 -> it1 + it2} + number.reduce{it1, it2 -> it1 * it2}
         return answer
     }
-    fun getCombination(numbers: String, result: String) {
-        if (result.isNotEmpty()) set.add(result.toInt())
-        if (numbers.isEmpty()) return
-        numbers.forEachIndexed { index, c ->
-            getCombination(numbers.removeRange(index..index), c.plus(result))
-        }
-    }
+
+//    // 소수 찾기
+//    lateinit var set: MutableSet<Int>
+//    fun solution(numbers: String): Int {
+//        var answer = 0
+//        set = mutableSetOf()
+//        getCombination(numbers,"")
+//        set.forEach {
+//            var temp = arrayOf<Int>()
+//            for (i in 1..it) if (it%i == 0) { temp = temp.plus(i) }
+//            if (temp.size == 2) { answer += 1 }
+//        }
+//        return answer
+//    }
+//    fun getCombination(numbers: String, result: String) {
+//        if (result.isNotEmpty()) set.add(result.toInt())
+//        if (numbers.isEmpty()) return
+//        numbers.forEachIndexed { index, c ->
+//            getCombination(numbers.removeRange(index..index), c.plus(result))
+//        }
+//    }
 
 //    // H-Index
 //    fun solution(citations: IntArray): Int {
