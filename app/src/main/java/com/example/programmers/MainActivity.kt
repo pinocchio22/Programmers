@@ -3,6 +3,7 @@ package com.example.programmers
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import java.util.*
+import kotlin.math.sqrt
 
 @Suppress("NAME_SHADOWING", "TYPE_INFERENCE_ONLY_INPUT_TYPES_WARNING", "CAST_NEVER_SUCCEEDS")
 class MainActivity : AppCompatActivity() {
@@ -10,16 +11,60 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
-        // 3
-        solution(arrayOf(arrayOf("crowmask", "c"),arrayOf("bluesunglasses", "d"),arrayOf("smoky_makeup", "e"), arrayOf("A","a"), arrayOf("B", "b")))
+        // [4, 3]
+        solution(10, 2)
     }
+    // 카펫
+    fun solution(brown: Int, yellow: Int): IntArray {
+        var answer = intArrayOf()
+        // n의 제곱 가로=세로 1-8 3-3 ,  4-12 4-4, 9-16 4+4*n 즉, 4*(n+1)
+        // 짝수면 가로로 한줄 2-10 , 4-14 네개씩 증가 8+2(n-1)
+        // 홀수면 가로로 한줄 3-12 , 5-16 네개씩 증가
+        var new = sqrt(yellow.toDouble())
+        if (yellow ==1 || new%1 == 0.0) {
+            //제곱일 경우
+            if (4*(new.toInt()+1) == brown) {
+                //가로=세로
+                answer = answer.plus(new.toInt())
+                answer = answer.plus(new.toInt())
 
-    // 위장
-    fun solution(clothes: Array<Array<String>>): Int {
-        var answer = 0
-        answer = clothes.groupBy { it[1] }.values.map { it.size + 1 }.reduce(Int::times) - 1
+            }else {
+                //가로 한줄
+                println("가로 한줄 x")
+            }
+
+        }else {
+            //나머지
+                if (yellow%2 == 0) {
+                    // 짝수 2-10 1,2 6-14 2,3 8-16 2,4 12-18 3,4
+                    4 + 2*div(yellow)[div(yellow).size/2] + 2*div(yellow)[(div(yellow).size/2)-1]
+                }else {
+                    // 홀수 가로한줄
+
+                }
+            8+2*(yellow-1)
+            // 약수 중 가운데 두개
+            println(div(yellow).contentToString())
+        }
         return answer
     }
+
+    fun div(n : Int) : IntArray {
+        var new = intArrayOf()
+        for (i in 1..n) {
+            if (n%i == 0) {
+                new += i
+            }
+        }
+        return new
+    }
+
+//    // 위장
+//    fun solution(clothes: Array<Array<String>>): Int {
+//        var answer = 0
+//        answer = clothes.groupBy { it[1] }.values.map { it.size + 1 }.reduce(Int::times) - 1
+//        return answer
+//    }
 
 //    // 소수 찾기
 //    lateinit var set: MutableSet<Int>
