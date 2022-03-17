@@ -1,33 +1,86 @@
 package com.example.programmers
 
 import android.os.Bundle
+import android.util.Log
 import androidx.appcompat.app.AppCompatActivity
 import java.util.*
 import kotlin.math.sqrt
 
-@Suppress("NAME_SHADOWING", "TYPE_INFERENCE_ONLY_INPUT_TYPES_WARNING", "CAST_NEVER_SUCCEEDS")
+@Suppress(
+    "NAME_SHADOWING", "TYPE_INFERENCE_ONLY_INPUT_TYPES_WARNING", "CAST_NEVER_SUCCEEDS",
+    "RECEIVER_NULLABILITY_MISMATCH_BASED_ON_JAVA_ANNOTATIONS",
+    "NULLABILITY_MISMATCH_BASED_ON_JAVA_ANNOTATIONS"
+)
 class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
-        // [4, 3]
-        solution(24, 24)
+        // 8
+        solution(2, 10, intArrayOf(7, 4, 5, 6))
     }
-    // 카펫
-    fun solution(brown: Int, yellow: Int): IntArray {
-        var answer = intArrayOf()
-        for (i in 1..yellow) {
-             if(4 + i*2 + yellow/i*2 == brown) {
-                 if (i+2 >= yellow/i+2) {
-                     answer = answer.plus(i+2)
-                     answer = answer.plus(yellow/i+2)
-                     break
-                 }
-             }
+
+    // 다리를 지나는 트럭
+    fun solution(bridge_length: Int, weight: Int, truck_weights: IntArray): Int {
+        var answer = 0
+        var bridge = LinkedList<Int>() as Queue<Int>
+        var number = 0
+        var bridge_weight = 0
+
+        while (true) {
+            // 시간 1초 증가
+            answer += 1
+
+            // 다리위에 트럭이 다리 길이보다 클경우 즉, 다리위의 트럭을 빼야하는 경우
+            if (bridge.size >= bridge_length) {
+                var poll = bridge.poll()
+
+                // 다리위에서 트럭을 하나 뺀 경우
+                if (poll >= 0) {
+
+                    // 다리위의 무게에서 출발선의 첫번째 트럭 무게만큼 제거
+                    bridge_weight -= truck_weights[poll]
+
+                    if (poll == truck_weights.size - 1) {
+                        // 마지막으로 빠져나온 트럭의 크기가 마지막으로 출발한 트럭의 크기와 같을 경우 즉, 모든 트럭이 건너온경우
+                        break
+                    }
+                }
+            }
+            // 출발한 트럭의 수 < 전체 트럭수 && 다리위의 무게 + 방금 출발한 트럭의 무게 <= 다리가 견딜 수 있는 무게
+            if (number < truck_weights.size && bridge_weight + truck_weights[number] <= weight) {
+
+                // 다리에 트럭의 순서 추가
+                bridge.add(number)
+
+                // 다리위의 무게에 방금 출발한 트럭의 무게를 더함
+                bridge_weight += truck_weights[number]
+
+                // 현재 트럭번호 +1
+                number += 1
+            }
+            // 현재 트럭이 다리에 올라가지 못하는 경우
+            else {
+                bridge.add(-1)
+            }
         }
         return answer
     }
+
+//    // 카펫
+//    fun solution(brown: Int, yellow: Int): IntArray {
+//        var answer = intArrayOf()
+//        for (i in 1..yellow) {
+//             if(4 + i*2 + yellow/i*2 == brown) {
+//                 if (i+2 >= yellow/i+2) {
+//                     answer = answer.plus(i+2)
+//                     answer = answer.plus(yellow/i+2)
+//                     break
+//                 }
+//             }
+//        }
+//        return answer
+//    }
 
 //    // 위장
 //    fun solution(clothes: Array<Array<String>>): Int {
