@@ -24,26 +24,24 @@ class MainActivity : AppCompatActivity() {
     // 큰 수 만들기
     fun solution(number: String, k: Int): String {
         var answer = ""
-        var temp = arrayListOf<Int>()
-        var set = mutableSetOf<Int>()
-        //        for(i in 1..k) {
-//            new.add(number.minOrNull())
-//
-//        }
-//        println(new)
-        number.chunked(1).map { temp.plusAssign(it.toInt()) }
-        var new: ArrayList<Int> = temp.distinct() as ArrayList<Int>
-        for (i in 1..k) {
-            var min = new.minOrNull()
-            println(min)
-            set.add(min!!)
-            new.remove(min)
-            println(new)
-            println(set)
-        }
-//        new.forEach { answer += it }
-//        println(answer)
+        var temp = 0
 
+        for (i in 0 until number.length - k) {
+            // 각 자리수
+            var max = '0'
+            for (j in temp..i + k) {
+                Log.d("로그 j", (temp..i + k).toString())
+                if (max < number[j]) {
+                    max = number[j]
+                    temp = j + 1
+//                    Log.d("로그 max", max.toString())
+//                    Log.d("로그 temp", temp.toString())
+                }
+//                else Log.d("로그 예외", j.toString())
+            }
+            answer += max
+        }
+//        Log.d("로그 answer", answer)
         return answer
     }
 
