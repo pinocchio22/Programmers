@@ -18,7 +18,7 @@ class MainActivity : AppCompatActivity() {
         setContentView(R.layout.activity_main)
 
         // "775841"
-        solution("4177252841"	, 4)
+        solution("1368825332123"	, 5)
     }
 
     // 큰 수 만들기
@@ -26,22 +26,20 @@ class MainActivity : AppCompatActivity() {
         var answer = ""
         var temp = 0
 
+        // 각 자리수
         for (i in 0 until number.length - k) {
-            // 각 자리수
+            // 각 자리마다 max 초기화
             var max = '0'
+            // max 값이 바뀌면 max+1부터 다시 반복
             for (j in temp..i + k) {
-                Log.d("로그 j", (temp..i + k).toString())
+                // 뒤에 더 작은 수가 나오면 max로
                 if (max < number[j]) {
                     max = number[j]
                     temp = j + 1
-//                    Log.d("로그 max", max.toString())
-//                    Log.d("로그 temp", temp.toString())
                 }
-//                else Log.d("로그 예외", j.toString())
             }
             answer += max
         }
-//        Log.d("로그 answer", answer)
         return answer
     }
 
