@@ -4,6 +4,7 @@ import android.os.Bundle
 import android.util.Log
 import androidx.appcompat.app.AppCompatActivity
 import java.util.*
+import kotlin.collections.ArrayList
 import kotlin.math.sqrt
 
 @Suppress(
@@ -16,49 +17,75 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
-        // 8
-        solution(2, 10, intArrayOf(7, 4, 5, 6))
+        // "775841"
+        solution("4177252841"	, 4)
     }
 
-    // 다리를 지나는 트럭
-    fun solution(bridge_length: Int, weight: Int, truck_weights: IntArray): Int {
-        var answer = 0
-        var bridge = LinkedList<Int>() as Queue<Int>
-        var number = 0
-        var bridge_weight = 0
-
-        while (true) {
-            // 시간 1초 증가
-            answer += 1
-            // 다리위에 트럭이 다리 길이보다 클경우 즉, 다리위의 트럭을 빼야하는 경우
-            if (bridge.size >= bridge_length) {
-                var poll = bridge.poll()
-                // 다리위에서 트럭을 하나 뺀 경우
-                if (poll >= 0) {
-                    // 다리위의 무게에서 출발선의 첫번째 트럭 무게만큼 제거
-                    bridge_weight -= truck_weights[poll]
-                    if (poll == truck_weights.size - 1) {
-                        // 마지막으로 빠져나온 트럭의 크기가 마지막으로 출발한 트럭의 크기와 같을 경우 즉, 모든 트럭이 건너온경우
-                        break
-                    }
-                }
-            }
-            // 출발한 트럭의 수 < 전체 트럭수 && 다리위의 무게 + 방금 출발한 트럭의 무게 <= 다리가 견딜 수 있는 무게
-            if (number < truck_weights.size && bridge_weight + truck_weights[number] <= weight) {
-                // 다리에 트럭의 순서 추가
-                bridge.add(number)
-                // 다리위의 무게에 방금 출발한 트럭의 무게를 더함
-                bridge_weight += truck_weights[number]
-                // 현재 트럭번호 +1
-                number += 1
-            }
-            // 현재 트럭이 다리에 올라가지 못하는 경우
-            else {
-                bridge.add(-1)
-            }
+    // 큰 수 만들기
+    fun solution(number: String, k: Int): String {
+        var answer = ""
+        var temp = arrayListOf<Int>()
+        var set = mutableSetOf<Int>()
+        //        for(i in 1..k) {
+//            new.add(number.minOrNull())
+//
+//        }
+//        println(new)
+        number.chunked(1).map { temp.plusAssign(it.toInt()) }
+        var new: ArrayList<Int> = temp.distinct() as ArrayList<Int>
+        for (i in 1..k) {
+            var min = new.minOrNull()
+            println(min)
+            set.add(min!!)
+            new.remove(min)
+            println(new)
+            println(set)
         }
+//        new.forEach { answer += it }
+//        println(answer)
+
         return answer
     }
+
+//    // 다리를 지나는 트럭
+//    fun solution(bridge_length: Int, weight: Int, truck_weights: IntArray): Int {
+//        var answer = 0
+//        var bridge = LinkedList<Int>() as Queue<Int>
+//        var number = 0
+//        var bridge_weight = 0
+//
+//        while (true) {
+//            // 시간 1초 증가
+//            answer += 1
+//            // 다리위에 트럭이 다리 길이보다 클경우 즉, 다리위의 트럭을 빼야하는 경우
+//            if (bridge.size >= bridge_length) {
+//                var poll = bridge.poll()
+//                // 다리위에서 트럭을 하나 뺀 경우
+//                if (poll >= 0) {
+//                    // 다리위의 무게에서 출발선의 첫번째 트럭 무게만큼 제거
+//                    bridge_weight -= truck_weights[poll]
+//                    if (poll == truck_weights.size - 1) {
+//                        // 마지막으로 빠져나온 트럭의 크기가 마지막으로 출발한 트럭의 크기와 같을 경우 즉, 모든 트럭이 건너온경우
+//                        break
+//                    }
+//                }
+//            }
+//            // 출발한 트럭의 수 < 전체 트럭수 && 다리위의 무게 + 방금 출발한 트럭의 무게 <= 다리가 견딜 수 있는 무게
+//            if (number < truck_weights.size && bridge_weight + truck_weights[number] <= weight) {
+//                // 다리에 트럭의 순서 추가
+//                bridge.add(number)
+//                // 다리위의 무게에 방금 출발한 트럭의 무게를 더함
+//                bridge_weight += truck_weights[number]
+//                // 현재 트럭번호 +1
+//                number += 1
+//            }
+//            // 현재 트럭이 다리에 올라가지 못하는 경우
+//            else {
+//                bridge.add(-1)
+//            }
+//        }
+//        return answer
+//    }
 
 //    // 카펫
 //    fun solution(brown: Int, yellow: Int): IntArray {
