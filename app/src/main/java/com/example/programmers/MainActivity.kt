@@ -18,30 +18,58 @@ class MainActivity : AppCompatActivity() {
         setContentView(R.layout.activity_main)
 
         // "775841"
-        solution("1368825332123"	, 5)
+        solution(intArrayOf(96, 99, 98, 97), intArrayOf(1,1,1,1))
     }
 
-    // 큰 수 만들기
-    fun solution(number: String, k: Int): String {
-        var answer = ""
-        var temp = 0
+    // 기능개발
+    fun solution(progresses: IntArray, speeds: IntArray): IntArray {
+        var answer = intArrayOf()
+        var complete = intArrayOf()
+        var day = 1
 
-        // 각 자리수
-        for (i in 0 until number.length - k) {
-            // 각 자리마다 max 초기화
-            var max = '0'
-            // max 값이 바뀌면 max+1부터 다시 반복
-            for (j in temp..i + k) {
-                // 뒤에 더 작은 수가 나오면 max로
-                if (max < number[j]) {
-                    max = number[j]
-                    temp = j + 1
+        // 완성까지 걸리는 날짜
+        for (i in progresses.indices) {
+            for (j in 1..100) {
+                if (100 <= progresses[i] + speeds[i]*j) {
+                    complete += j
+                    break
                 }
             }
-            answer += max
+        }
+
+        // 배포되는 작업의 개수
+        for (i in 1 until complete.size) {
+            if (complete[i - 1] >= complete[i]) day += 1
+            else {
+                answer += day
+                day = 1
+            }
+            if (i == complete.size-1) answer += day
         }
         return answer
     }
+
+//    // 큰 수 만들기
+//    fun solution(number: String, k: Int): String {
+//        var answer = StringBuilder()
+//        var temp = 0
+//
+//        // 각 자리수
+//        for (i in 0 until number.length - k) {
+//            // 각 자리마다 max 초기화
+//            var max = '0'
+//            // max 값이 바뀌면 max+1부터 다시 반복
+//            for (j in temp..i + k) {
+//                // 뒤에 더 작은 수가 나오면 max로
+//                if (max < number[j]) {
+//                    max = number[j]
+//                    temp = j + 1
+//                }
+//            }
+//            answer.append(max)
+//        }
+//        return answer.toString()
+//    }
 
 //    // 다리를 지나는 트럭
 //    fun solution(bridge_length: Int, weight: Int, truck_weights: IntArray): Int {
