@@ -25,29 +25,17 @@ class MainActivity : AppCompatActivity() {
     // 프린터
     fun solution(priorities: IntArray, location: Int): Int {
         var answer = 0
-        var print : Queue<Pair<Int,Int>> = LinkedList()
-
+        val print : Queue<Pair<Int,Int>> = LinkedList()
         var complete = intArrayOf()
-
-        for (i in priorities.indices) {
-            print.add(Pair(i,priorities[i]))
-        }
+        // Queue에 (index, priorities) 형태로 add
+        for (i in priorities.indices) print.add(Pair(i,priorities[i]))
         while (print.isNotEmpty()) {
-            var max = (print.sortedByDescending { it.second }).first()
+            val max = (print.sortedByDescending { it.second }).first()
             val start = print.poll()
-
-            // 대기목록에 중요도가 더 높은 작업이 있으면 맨뒤로
-            if (start != max) {
-                print.add(start)
-            } else {
-                // 없으면 출력
-                complete = complete.plus(start.first)
-            }
+            // 대기목록에 중요도가 더 높은 작업이 있으면 맨뒤로 , 없으면 출력
+            if (start != max) print.add(start) else complete = complete.plus(start.first)
         }
-
         answer += (complete.indexOf(location) + 1)
-        Log.d("프린트 answer", answer.toString())
-
         return answer
     }
 
