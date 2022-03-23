@@ -19,37 +19,34 @@ class MainActivity : AppCompatActivity() {
         setContentView(R.layout.activity_main)
 
         // "775841"
-        solution(intArrayOf(2, 1, 3, 2), 2)
+        solution(intArrayOf(1, 1, 9, 1, 1, 1), 0)
     }
 
     // 프린터
     fun solution(priorities: IntArray, location: Int): Int {
         var answer = 0
-        var print = LinkedList<Int>() as Queue<MutableMap<Int,Int>>
+        var print : Queue<Pair<Int,Int>> = LinkedList()
+
         var complete = intArrayOf()
 
         for (i in priorities.indices) {
-            print.add(mutableMapOf(i to priorities[i]))
+            print.add(Pair(i,priorities[i]))
         }
-        //[{0=2}, {1=1}, {2=3}, {3=2}]
-
         while (print.isNotEmpty()) {
-            var max = (print.sortedByDescending { it }).first()
+            var max = (print.sortedByDescending { it.second }).first()
             val start = print.poll()
-
-            Log.d("프린트 max", max.toString())
-            Log.d("프린트 start", start.toString())
 
             // 대기목록에 중요도가 더 높은 작업이 있으면 맨뒤로
             if (start != max) {
                 print.add(start)
             } else {
-                Log.d("프린트 start[0]", start[0].toString())
-                complete.plus(start[0]!!)
+                // 없으면 출력
+                complete = complete.plus(start.first)
             }
-            Log.d("프린트 print", print.toString())
-            Log.d("프린트 complete", complete.contentToString())
         }
+
+        answer += (complete.indexOf(location) + 1)
+        Log.d("프린트 answer", answer.toString())
 
         return answer
     }
