@@ -6,6 +6,7 @@ import androidx.appcompat.app.AppCompatActivity
 import java.util.*
 import kotlin.collections.ArrayList
 import kotlin.math.sqrt
+import kotlin.time.seconds
 
 @Suppress(
     "NAME_SHADOWING", "TYPE_INFERENCE_ONLY_INPUT_TYPES_WARNING", "CAST_NEVER_SUCCEEDS",
@@ -18,34 +19,66 @@ class MainActivity : AppCompatActivity() {
         setContentView(R.layout.activity_main)
 
         // "775841"
-        solution(intArrayOf(95, 90, 99, 99, 80, 99), intArrayOf(1, 1, 1, 1, 1, 1))
+        solution(intArrayOf(2, 1, 3, 2), 2)
     }
 
-    // 기능개발 2
-    fun solution(progresses: IntArray, speeds: IntArray): IntArray {
-        var answer = intArrayOf()
-        var during = LinkedList<Int>() as Queue<Int>
+    // 프린터
+    fun solution(priorities: IntArray, location: Int): Int {
+        var answer = 0
+        var print = LinkedList<Int>() as Queue<MutableMap<Int,Int>>
+        var complete = intArrayOf()
 
-        // 완성까지 걸리는 날짜
-        for (i in progresses.indices) {
-            for (j in 1..100) {
-                if (100 <= progresses[i] + speeds[i]*j) {
-                    during.add(j)
-                    break
-                }
-            }
+        for (i in priorities.indices) {
+            print.add(mutableMapOf(i to priorities[i]))
         }
-        while (during.isNotEmpty()) {
-            var time = 1
-            val start = during.poll()
-            while (during.isNotEmpty() && start >= during.peek()) {
-                time += 1
-                during.remove()
+        //[{0=2}, {1=1}, {2=3}, {3=2}]
+
+        while (print.isNotEmpty()) {
+            var max = (print.sortedByDescending { it }).first()
+            val start = print.poll()
+
+            Log.d("프린트 max", max.toString())
+            Log.d("프린트 start", start.toString())
+
+            // 대기목록에 중요도가 더 높은 작업이 있으면 맨뒤로
+            if (start != max) {
+                print.add(start)
+            } else {
+                Log.d("프린트 start[0]", start[0].toString())
+                complete.plus(start[0]!!)
             }
-            answer = answer.plus(time)
+            Log.d("프린트 print", print.toString())
+            Log.d("프린트 complete", complete.contentToString())
         }
+
         return answer
     }
+
+//    // 기능개발 2
+//    fun solution(progresses: IntArray, speeds: IntArray): IntArray {
+//        var answer = intArrayOf()
+//        var during = LinkedList<Int>() as Queue<Int>
+//
+//        // 완성까지 걸리는 날짜
+//        for (i in progresses.indices) {
+//            for (j in 1..100) {
+//                if (100 <= progresses[i] + speeds[i]*j) {
+//                    during.add(j)
+//                    break
+//                }
+//            }
+//        }
+//        while (during.isNotEmpty()) {
+//            var time = 1
+//            val start = during.poll()
+//            while (during.isNotEmpty() && start >= during.peek()) {
+//                time += 1
+//                during.remove()
+//            }
+//            answer = answer.plus(time)
+//        }
+//        return answer
+//    }
 
 //    // 큰 수 만들기
 //    fun solution(number: String, k: Int): String {
