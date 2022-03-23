@@ -47,35 +47,6 @@ class MainActivity : AppCompatActivity() {
         return answer
     }
 
-
-//    // 기능개발 1
-//    fun solution(progresses: IntArray, speeds: IntArray): IntArray {
-//        var answer = intArrayOf()
-//        var complete = intArrayOf()
-//        var day = 1
-//
-//        // 완성까지 걸리는 날짜
-//        for (i in progresses.indices) {
-//            for (j in 1..100) {
-//                if (100 <= progresses[i] + speeds[i]*j) {
-//                    complete += j
-//                    break
-//                }
-//            }
-//        }
-//
-//        // 배포되는 작업의 개수
-//        for (i in 1 until complete.size) {
-//            if (complete[i - 1] >= complete[i]) day += 1
-//            else {
-//                answer += day
-//                day = 1
-//            }
-//            if (i == complete.size-1) answer += day
-//        }
-//        return answer
-//    }
-
 //    // 큰 수 만들기
 //    fun solution(number: String, k: Int): String {
 //        var answer = StringBuilder()
