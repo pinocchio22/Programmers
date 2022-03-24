@@ -18,26 +18,42 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
-        // "775841"
-        solution(intArrayOf(1, 1, 9, 1, 1, 1), 0)
+        // 56
+        solution("JEROEN")
     }
-
-    // 프린터
-    fun solution(priorities: IntArray, location: Int): Int {
+    // 조이스틱
+    fun solution(name: String): Int {
         var answer = 0
-        val print : Queue<Pair<Int,Int>> = LinkedList()
-        var complete = intArrayOf()
-        // Queue에 (index, priorities) 형태로 add
-        for (i in priorities.indices) print.add(Pair(i,priorities[i]))
-        while (print.isNotEmpty()) {
-            val max = (print.sortedByDescending { it.second }).first()
-            val start = print.poll()
-            // 대기목록에 중요도가 더 높은 작업이 있으면 맨뒤로 , 없으면 출력
-            if (start != max) print.add(start) else complete = complete.plus(start.first)
+        var move = 0
+
+        // 알파벳 총 이동거리
+        for (i in name.indices) {
+            answer += (name[i] - 'A').coerceAtMost('Z' - name[i] + 1)
         }
-        answer += (complete.indexOf(location) + 1)
+
+        // 칸수 이동거리
+        answer += name.length -1
         return answer
     }
+
+//    // 프린터
+//    fun solution(priorities: IntArray, location: Int): Int {
+//        var answer = 0
+//        val print : Queue<Pair<Int,Int>> = LinkedList()
+//        var complete = intArrayOf()
+//
+//        // Queue에 (index, priorities) 형태로 add
+//        for (i in priorities.indices) print.add(Pair(i,priorities[i]))
+//        while (print.isNotEmpty()) {
+//            val max = (print.sortedByDescending { it.second }).first()
+//            val start = print.poll()
+//
+//            // 대기목록에 중요도가 더 높은 작업이 있으면 맨뒤로 , 없으면 출력
+//            if (start != max) print.add(start) else complete = complete.plus(start.first)
+//        }
+//        answer += (complete.indexOf(location) + 1)
+//        return answer
+//    }
 
 //    // 기능개발 2
 //    fun solution(progresses: IntArray, speeds: IntArray): IntArray {
