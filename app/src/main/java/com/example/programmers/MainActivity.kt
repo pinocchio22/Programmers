@@ -19,20 +19,22 @@ class MainActivity : AppCompatActivity() {
         setContentView(R.layout.activity_main)
 
         // 56
-        solution("JEROEN")
+        solution("JAN")
     }
     // 조이스틱
     fun solution(name: String): Int {
         var answer = 0
-        var move = 0
-
+        var length = name.length-1
         // 알파벳 총 이동거리
         for (i in name.indices) {
+            var index = i + 1
             answer += (name[i] - 'A').coerceAtMost('Z' - name[i] + 1)
+            while (index < name.length && name[index] == 'A')
+                index++
+            length = length.coerceAtMost(i*2 + name.length - index)
         }
-
         // 칸수 이동거리
-        answer += name.length -1
+        answer += length
         return answer
     }
 
