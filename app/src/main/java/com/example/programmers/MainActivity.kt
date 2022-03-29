@@ -5,6 +5,7 @@ import android.util.Log
 import androidx.appcompat.app.AppCompatActivity
 import java.util.*
 import kotlin.collections.ArrayList
+import kotlin.math.min
 import kotlin.math.sqrt
 import kotlin.time.seconds
 
@@ -19,22 +20,28 @@ class MainActivity : AppCompatActivity() {
         setContentView(R.layout.activity_main)
 
         // 56
-        solution("JAN")
+        solution("BBBBAAAABA")
     }
+
     // 조이스틱
     fun solution(name: String): Int {
         var answer = 0
-        var length = name.length-1
-        // 알파벳 총 이동거리
-        for (i in name.indices) {
-            var index = i + 1
-            answer += (name[i] - 'A').coerceAtMost('Z' - name[i] + 1)
-            while (index < name.length && name[index] == 'A')
-                index++
-            length = length.coerceAtMost(i*2 + name.length - index)
+        var move = name.length-1
+
+        // 하나씩 왼쪽에서 오른쪽으로 이동하는 횟수(기본)
+        for(i in name.indices){
+            var next = i + 1
+            while(next<name.length && name[next] == 'A') next++
+            move = min(move,i+name.length-next +i)
+
+            // (i+name.length-next+i)이거는 해당 문자 기준에서 다시 뒤로 돌아가는 경우
+            if(name[i].equals('A').not()){
+                var temp = name[i].toInt()-65
+                if(temp>=13) temp = (26-temp)
+                answer +=temp
+            }
         }
-        // 칸수 이동거리
-        answer += length
+        answer +=move
         return answer
     }
 
