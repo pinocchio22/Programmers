@@ -19,31 +19,49 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
-        // 56
-        solution("BBBBAAAABA")
+        // 5
+        solution(intArrayOf(1, 1, 1, 1, 1), 3)
     }
 
-    // 조이스틱
-    fun solution(name: String): Int {
+    // 타겟 넘버
+    fun solution(numbers: IntArray, target: Int): Int {
         var answer = 0
-        var move = name.length-1
+        var temp = arrayListOf(0)
 
-        // 하나씩 왼쪽에서 오른쪽으로 이동하는 횟수(기본)
-        for(i in name.indices){
-            var next = i + 1
-            while(next<name.length && name[next] == 'A') next++
-            move = min(move,i+name.length-next +i)
-
-            // (i+name.length-next+i)이거는 해당 문자 기준에서 다시 뒤로 돌아가는 경우
-            if(name[i].equals('A').not()){
-                var temp = name[i].toInt()-65
-                if(temp>=13) temp = (26-temp)
-                answer +=temp
+        numbers.forEach { it1 ->
+            var node = arrayListOf<Int>()
+            temp.forEach{ it2 ->
+                node.add(it2 + it1)
+                node.add(it2 - it1)
             }
+            temp = node
         }
-        answer +=move
+        answer = temp.filter { it == target }.count()
+
         return answer
     }
+
+//    // 조이스틱
+//    fun solution(name: String): Int {
+//        var answer = 0
+//        var move = name.length-1
+//
+//        // 하나씩 왼쪽에서 오른쪽으로 이동하는 횟수(기본)
+//        for(i in name.indices){
+//            var next = i + 1
+//            while(next<name.length && name[next] == 'A') next++
+//            move = min(move,i+name.length-next +i)
+//
+//            // (i+name.length-next+i)이거는 해당 문자 기준에서 다시 뒤로 돌아가는 경우
+//            if(name[i].equals('A').not()){
+//                var temp = name[i].toInt()-65
+//                if(temp>=13) temp = (26-temp)
+//                answer +=temp
+//            }
+//        }
+//        answer +=move
+//        return answer
+//    }
 
 //    // 프린터
 //    fun solution(priorities: IntArray, location: Int): Int {
