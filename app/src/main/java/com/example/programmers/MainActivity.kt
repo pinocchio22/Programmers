@@ -28,16 +28,15 @@ class MainActivity : AppCompatActivity() {
         var answer = 0
         var temp = arrayListOf(0)
 
-        numbers.forEach { it1 ->
+        numbers.forEach { first ->
             var node = arrayListOf<Int>()
-            temp.forEach{ it2 ->
-                node.add(it2 + it1)
-                node.add(it2 - it1)
+            temp.forEach{ second ->
+                node.add(second + first)
+                node.add(second - first)
             }
             temp = node
         }
         answer = temp.filter { it == target }.count()
-
         return answer
     }
 
