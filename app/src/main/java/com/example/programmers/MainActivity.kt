@@ -23,26 +23,51 @@ class MainActivity : AppCompatActivity() {
         solution(4)
     }
 
-    //삼각 달팽이
+    // 삼각 달팽이
     fun solution(n: Int): IntArray {
         var answer: IntArray = intArrayOf()
-        var sum = 0
-        var str = ""
-        var temp = ""
 
-        for (i in 1..n) {
-            sum += i
-        }
-        for (i in 1..sum) {
-            str += i.toString()
-        }
-        for (i in n..0) {
-            temp += str.chunked(i)
-            temp += ","
-        }
+        var arr = Array(n){IntArray(n)}
+        var direction = 0
+        var x = 0
+        var y = 0
+        var count = 1
 
-        println(temp)
+        for (i in n downTo 1) {
+            if (direction == 0) {
+                // 아래방향
+                    for (j in 1..i) {
+                        arr[x][y] = count
+                        count++
+                        x++
+                    }
+                x--
+                y++
+            }else if (direction == 1) {
+                // 오른쪽방향
+                    for (j in 1..i) {
+                        arr[x][y] = count
+                        count++
+                        y++
+                    }
+                x--
+                y
+            }else {
+                // 위대각방향
 
+                    for (j in 1..i) {
+                        arr[x][y] = count
+                        count++
+                        x--
+                        y--
+                    }
+                x
+                y
+            }
+            direction++
+            if (direction == 3) direction = 0
+        }
+        println(arr.contentToString())
         return answer
     }
 
