@@ -19,26 +19,49 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
-        // 5
-        solution(intArrayOf(1, 1, 1, 1, 1), 3)
+        // [1,2,9,3,10,8,4,5,6,7]
+        solution(4)
     }
 
-    // 타겟 넘버
-    fun solution(numbers: IntArray, target: Int): Int {
-        var answer = 0
-        var temp = arrayListOf(0)
+    //삼각 달팽이
+    fun solution(n: Int): IntArray {
+        var answer: IntArray = intArrayOf()
+        var sum = 0
+        var str = ""
+        var temp = ""
 
-        numbers.forEach { first ->
-            var node = arrayListOf<Int>()
-            temp.forEach{ second ->
-                node.add(second + first)
-                node.add(second - first)
-            }
-            temp = node
+        for (i in 1..n) {
+            sum += i
         }
-        answer = temp.filter { it == target }.count()
+        for (i in 1..sum) {
+            str += i.toString()
+        }
+        for (i in n..0) {
+            temp += str.chunked(i)
+            temp += ","
+        }
+
+        println(temp)
+
         return answer
     }
+
+//    // 타겟 넘버
+//    fun solution(numbers: IntArray, target: Int): Int {
+//        var answer = 0
+//        var temp = arrayListOf(0)
+//
+//        numbers.forEach { first ->
+//            var node = arrayListOf<Int>()
+//            temp.forEach{ second ->
+//                node.add(second + first)
+//                node.add(second - first)
+//            }
+//            temp = node
+//        }
+//        answer = temp.filter { it == target }.count()
+//        return answer
+//    }
 
 //    // 조이스틱
 //    fun solution(name: String): Int {
