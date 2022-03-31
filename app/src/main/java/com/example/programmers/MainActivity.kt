@@ -29,8 +29,8 @@ class MainActivity : AppCompatActivity() {
 
         var arr = Array(n){IntArray(n)}
         var direction = 0
-        var x = 0
-        var y = 0
+        var x = 0 //세로
+        var y = 0 //가로
         var count = 1
 
         for (i in n downTo 1) {
@@ -51,7 +51,8 @@ class MainActivity : AppCompatActivity() {
                         y++
                     }
                 x--
-                y
+                y--
+                y--
             }else {
                 // 위대각방향
 
@@ -61,13 +62,16 @@ class MainActivity : AppCompatActivity() {
                         x--
                         y--
                     }
-                x
-                y
+                x++
+                x++
+                y++
             }
             direction++
             if (direction == 3) direction = 0
         }
-        println(arr.contentToString())
+        arr.forEach {
+            println(it.contentToString())
+        }
         return answer
     }
 
