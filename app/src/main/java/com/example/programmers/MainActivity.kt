@@ -25,20 +25,22 @@ class MainActivity : AppCompatActivity() {
 
     // 삼각 달팽이
     fun solution(n: Int): IntArray {
-        var answer: IntArray = intArrayOf()
+        val size = (n*(n+1))/2
+        val answer = IntArray(size)
         val arr = Array(n){IntArray(n)}
         var direction = 0
         var x = 0 //세로
         var y = 0 //가로
         var count = 1
+        var index = 0
 
         for (i in n downTo 1) {
             when (direction) {
                 0 -> { // 아래방향
                     for (j in 1..i) {
                         arr[x][y] = count
-                        count++
                         x++
+                        count++
                     }
                     x -= 1
                     y += 1
@@ -46,8 +48,8 @@ class MainActivity : AppCompatActivity() {
                 1 -> { // 오른쪽방향
                     for (j in 1..i) {
                         arr[x][y] = count
-                        count++
                         y++
+                        count++
                     }
                     x -= 1
                     y -= 2
@@ -55,9 +57,9 @@ class MainActivity : AppCompatActivity() {
                 else -> { // 위대각방향
                     for (j in 1..i) {
                         arr[x][y] = count
-                        count++
                         x--
                         y--
+                        count++
                     }
                     x += 2
                     y += 1
@@ -66,10 +68,12 @@ class MainActivity : AppCompatActivity() {
             direction++
             if (direction == 3) direction = 0
         }
-        arr.forEach { it1 ->
-            for (item in it1) {
-                if (item == 0) break
-                answer += item
+        arr.forEach {
+            it.forEach {
+                if (it != 0) {
+                    answer[index] = it
+                    index++
+                }
             }
         }
         return answer
