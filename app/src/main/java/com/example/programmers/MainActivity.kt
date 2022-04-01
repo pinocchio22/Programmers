@@ -20,7 +20,7 @@ class MainActivity : AppCompatActivity() {
         setContentView(R.layout.activity_main)
 
         // [1,2,9,3,10,8,4,5,6,7]
-        solution(4)
+        solution(6)
     }
 
     // 삼각 달팽이
@@ -33,43 +33,43 @@ class MainActivity : AppCompatActivity() {
         var count = 1
 
         for (i in n downTo 1) {
-            if (direction == 0) {
-                // 아래방향
+            when (direction) {
+                0 -> { // 아래방향
                     for (j in 1..i) {
                         arr[x][y] = count
                         count++
                         x++
                     }
-                x -= 1
-                y += 1
-            }else if (direction == 1) {
-                // 오른쪽방향
+                    x -= 1
+                    y += 1
+                }
+                1 -> { // 오른쪽방향
                     for (j in 1..i) {
                         arr[x][y] = count
                         count++
                         y++
                     }
-                x -= 1
-                y -= 2
-            }else {
-                // 위대각방향
+                    x -= 1
+                    y -= 2
+                }
+                else -> { // 위대각방향
                     for (j in 1..i) {
                         arr[x][y] = count
                         count++
                         x--
                         y--
                     }
-                x += 2
-                y += 1
+                    x += 2
+                    y += 1
+                }
             }
             direction++
             if (direction == 3) direction = 0
         }
-        arr.forEach {
-            it.forEach {
-                if (it != 0) {
-                    answer += it
-                }
+        arr.forEach { it1 ->
+            for (item in it1) {
+                if (item == 0) break
+                answer += item
             }
         }
         return answer
