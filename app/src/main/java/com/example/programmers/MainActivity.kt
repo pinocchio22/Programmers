@@ -23,6 +23,7 @@ class MainActivity : AppCompatActivity() {
         lateinit var isVisit: BooleanArray
         var answer: Int = -1
         var max = 0
+
         fun solution(k: Int, dungeons: Array<IntArray>): Int {
             isVisit = BooleanArray(dungeons.size)
             dungeonCountComputing(dungeons, k, 1)
@@ -35,10 +36,7 @@ class MainActivity : AppCompatActivity() {
                 if (!isVisit[i]) {
                     isVisit[i] = true
                     if (k >= dungeons[i][0]) {
-                        Log.d("던전 max",max.toString())
-                        Log.d("던전 depth",depth.toString())
-                        max = Math.max(max, depth)
-                        Log.d("던전 isVisit",isVisit.contentToString())
+                        max = max.coerceAtLeast(depth)
                         dungeonCountComputing(dungeons, k - dungeons[i][1], depth + 1)
                     }
                     isVisit[i] = false
