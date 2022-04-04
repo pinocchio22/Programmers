@@ -4,10 +4,6 @@ import android.os.Bundle
 import android.util.Log
 import androidx.appcompat.app.AppCompatActivity
 import java.util.*
-import kotlin.collections.ArrayList
-import kotlin.math.min
-import kotlin.math.sqrt
-import kotlin.time.seconds
 
 @Suppress(
     "NAME_SHADOWING", "TYPE_INFERENCE_ONLY_INPUT_TYPES_WARNING", "CAST_NEVER_SUCCEEDS",
@@ -19,65 +15,93 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
-        // [1,2,9,3,10,8,4,5,6,7]
-        solution(6)
+        // 3
+        solution(80, arrayOf(intArrayOf(80, 20), intArrayOf(50, 40), intArrayOf(30, 10)))
     }
 
-    // 삼각 달팽이
-    fun solution(n: Int): IntArray {
-        val size = (n*(n+1))/2
-        val answer = IntArray(size)
-        val arr = Array(n){IntArray(n)}
-        var direction = 0
-        var x = 0 //세로
-        var y = 0 //가로
-        var count = 1
-        var index = 0
-
-        for (i in n downTo 1) {
-            when (direction) {
-                0 -> { // 아래방향
-                    for (j in 1..i) {
-                        arr[x][y] = count
-                        x++
-                        count++
-                    }
-                    x -= 1
-                    y += 1
-                }
-                1 -> { // 오른쪽방향
-                    for (j in 1..i) {
-                        arr[x][y] = count
-                        y++
-                        count++
-                    }
-                    x -= 1
-                    y -= 2
-                }
-                else -> { // 위대각방향
-                    for (j in 1..i) {
-                        arr[x][y] = count
-                        x--
-                        y--
-                        count++
-                    }
-                    x += 2
-                    y += 1
-                }
-            }
-            direction++
-            if (direction == 3) direction = 0
+    // 피로도
+        lateinit var isVisit: BooleanArray
+        var answer: Int = -1
+        var max = 0
+        fun solution(k: Int, dungeons: Array<IntArray>): Int {
+            isVisit = BooleanArray(dungeons.size)
+            dungeonCountComputing(dungeons, k, 1)
+            answer = max
+            return answer
         }
-        arr.forEach {
-            it.forEach {
-                if (it != 0) {
-                    answer[index] = it
-                    index++
+
+        fun dungeonCountComputing(dungeons: Array<IntArray>, k: Int, depth: Int) {
+            for (i in dungeons.indices) {
+                if (!isVisit[i]) {
+                    isVisit[i] = true
+                    if (k >= dungeons[i][0]) {
+                        Log.d("던전 max",max.toString())
+                        Log.d("던전 depth",depth.toString())
+                        max = Math.max(max, depth)
+                        Log.d("던전 isVisit",isVisit.contentToString())
+                        dungeonCountComputing(dungeons, k - dungeons[i][1], depth + 1)
+                    }
+                    isVisit[i] = false
                 }
             }
         }
-        return answer
-    }
+
+
+//    // 삼각 달팽이
+//    fun solution(n: Int): IntArray {
+//        val size = (n*(n+1))/2
+//        val answer = IntArray(size)
+//        val arr = Array(n){IntArray(n)}
+//        var direction = 0
+//        var x = 0 //세로
+//        var y = 0 //가로
+//        var count = 1
+//        var index = 0
+//
+//        for (i in n downTo 1) {
+//            when (direction) {
+//                0 -> { // 아래방향
+//                    for (j in 1..i) {
+//                        arr[x][y] = count
+//                        x++
+//                        count++
+//                    }
+//                    x -= 1
+//                    y += 1
+//                }
+//                1 -> { // 오른쪽방향
+//                    for (j in 1..i) {
+//                        arr[x][y] = count
+//                        y++
+//                        count++
+//                    }
+//                    x -= 1
+//                    y -= 2
+//                }
+//                else -> { // 위대각방향
+//                    for (j in 1..i) {
+//                        arr[x][y] = count
+//                        x--
+//                        y--
+//                        count++
+//                    }
+//                    x += 2
+//                    y += 1
+//                }
+//            }
+//            direction++
+//            if (direction == 3) direction = 0
+//        }
+//        arr.forEach {
+//            it.forEach {
+//                if (it != 0) {
+//                    answer[index] = it
+//                    index++
+//                }
+//            }
+//        }
+//        return answer
+//    }
 
 //    // 타겟 넘버
 //    fun solution(numbers: IntArray, target: Int): Int {
