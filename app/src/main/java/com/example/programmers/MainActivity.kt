@@ -22,22 +22,22 @@ class MainActivity : AppCompatActivity() {
     // 피로도
         lateinit var isVisit: BooleanArray
         var answer: Int = -1
-        var max = 0
+        var count = 0
 
         fun solution(k: Int, dungeons: Array<IntArray>): Int {
             isVisit = BooleanArray(dungeons.size)
-            dungeonCountComputing(dungeons, k, 1)
-            answer = max
+            Counting(dungeons, k, 1)
+            answer = count
             return answer
         }
 
-        fun dungeonCountComputing(dungeons: Array<IntArray>, k: Int, depth: Int) {
+        fun Counting(dungeons:Array<IntArray>, k:Int, Lv:Int) {
             for (i in dungeons.indices) {
                 if (!isVisit[i]) {
                     isVisit[i] = true
                     if (k >= dungeons[i][0]) {
-                        max = max.coerceAtLeast(depth)
-                        dungeonCountComputing(dungeons, k - dungeons[i][1], depth + 1)
+                        count = count.coerceAtLeast(Lv)
+                        Counting(dungeons, k-dungeons[i][1], Lv+1)
                     }
                     isVisit[i] = false
                 }
