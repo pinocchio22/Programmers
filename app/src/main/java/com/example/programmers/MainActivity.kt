@@ -22,49 +22,27 @@ class MainActivity : AppCompatActivity() {
     // 모음 사전
     fun solution(word: String): Int {
         var answer = 0
-
         word.forEachIndexed { index, it ->
-            if (it != 'A') { // A가 아닐때
+            if (it != 'A') {
                 when (index) {
-                    0 -> {
-                        answer += alphabet(it)*781
-                    }
-                    1 -> {
-                        answer += alphabet(it)*156
-                    }
-                    2 -> {
-                        answer += alphabet(it)*31
-                    }
-                    3 -> {
-                        answer += alphabet(it)*6
-                    }
-                    4 -> {
-                        answer += alphabet(it)
-                    }
+                    0 -> answer += alphabet(it)*781
+                    1 -> answer += alphabet(it)*156
+                    2 -> answer += alphabet(it)*31
+                    3 -> answer += alphabet(it)*6
+                    4 -> answer += alphabet(it)
                 }
-            }else { // A일때
-                answer++
             }
         }
-        answer ++
+        answer += word.length
         return answer
     }
-
     fun alphabet (it : Char): Int {
         var num = 0
         when (it) {
-            'E' -> {
-                num = 1
-            }
-            'I' -> {
-                num = 2
-            }
-            'O' -> {
-                num = 3
-            }
-            'U' -> {
-                num = 4
-            }
+            'E' -> num = 1
+            'I' -> num = 2
+            'O' -> num = 3
+            'U' -> num = 4
         }
         return num
     }
