@@ -15,35 +15,84 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
-        // 3
-        solution(80, arrayOf(intArrayOf(80, 20), intArrayOf(50, 40), intArrayOf(30, 10)))
+        // 6
+        solution("I")
     }
 
-    // 피로도
-        lateinit var isVisit: BooleanArray
-        var answer: Int = -1
-        var count = 0
+    // 모음 사전
+    fun solution(word: String): Int {
+        var answer = 0
 
-        fun solution(k: Int, dungeons: Array<IntArray>): Int {
-            isVisit = BooleanArray(dungeons.size)
-            Counting(dungeons, k, 1)
-            answer = count
-            return answer
-        }
-
-        fun Counting(dungeons:Array<IntArray>, k:Int, Lv:Int) {
-            for (i in dungeons.indices) {
-                if (!isVisit[i]) {
-                    isVisit[i] = true
-                    if (k >= dungeons[i][0]) {
-                        count = count.coerceAtLeast(Lv)
-                        Counting(dungeons, k-dungeons[i][1], Lv+1)
+        word.forEachIndexed { index, it ->
+            if (it != 'A') { // A가 아닐때
+                when (index) {
+                    0 -> {
+                        answer += alphabet(it)*781
                     }
-                    isVisit[i] = false
+                    1 -> {
+                        answer += alphabet(it)*156
+                    }
+                    2 -> {
+                        answer += alphabet(it)*31
+                    }
+                    3 -> {
+                        answer += alphabet(it)*6
+                    }
+                    4 -> {
+                        answer += alphabet(it)
+                    }
                 }
+            }else { // A일때
+                answer++
             }
         }
+        answer ++
+        return answer
+    }
 
+    fun alphabet (it : Char): Int {
+        var num = 0
+        when (it) {
+            'E' -> {
+                num = 1
+            }
+            'I' -> {
+                num = 2
+            }
+            'O' -> {
+                num = 3
+            }
+            'U' -> {
+                num = 4
+            }
+        }
+        return num
+    }
+
+//    // 피로도
+//        lateinit var isVisit: BooleanArray
+//        var answer: Int = -1
+//        var count = 0
+//
+//        fun solution(k: Int, dungeons: Array<IntArray>): Int {
+//            isVisit = BooleanArray(dungeons.size)
+//            Counting(dungeons, k, 1)
+//            answer = count
+//            return answer
+//        }
+//
+//        fun Counting(dungeons:Array<IntArray>, k:Int, Lv:Int) {
+//            for (i in dungeons.indices) {
+//                if (!isVisit[i]) {
+//                    isVisit[i] = true
+//                    if (k >= dungeons[i][0]) {
+//                        count = count.coerceAtLeast(Lv)
+//                        Counting(dungeons, k-dungeons[i][1], Lv+1)
+//                    }
+//                    isVisit[i] = false
+//                }
+//            }
+//        }
 
 //    // 삼각 달팽이
 //    fun solution(n: Int): IntArray {
