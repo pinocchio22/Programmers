@@ -16,36 +16,57 @@ class MainActivity : AppCompatActivity() {
         setContentView(R.layout.activity_main)
 
         // 6
-        solution("I")
+        solution(3,2,5)
     }
 
-    // 모음 사전
-    fun solution(word: String): Int {
-        var answer = 0
-        word.forEachIndexed { index, it ->
-            if (it != 'A') {
-                when (index) {
-                    0 -> answer += alphabet(it)*781
-                    1 -> answer += alphabet(it)*156
-                    2 -> answer += alphabet(it)*31
-                    3 -> answer += alphabet(it)*6
-                    4 -> answer += alphabet(it)
-                }
+    // n^2 배열 자르기
+    fun solution(n: Int, left: Long, right: Long): IntArray {
+        var answer: IntArray = intArrayOf()
+        val arr = Array(n){IntArray(n)}
+        var temp = intArrayOf()
+
+        for (i in 0 until n) {
+            for (j in 0 until n) {
+                arr[i][j] = j + 1
+                if (i>j) arr[i][j] = i + 1
             }
         }
-        answer += word.length
+        arr.forEach {
+            it.forEach {
+                temp += it
+            }
+        }
+        answer += temp.slice(left.toInt()..right.toInt())
         return answer
     }
-    fun alphabet (it : Char): Int {
-        var num = 0
-        when (it) {
-            'E' -> num = 1
-            'I' -> num = 2
-            'O' -> num = 3
-            'U' -> num = 4
-        }
-        return num
-    }
+
+//    // 모음 사전
+//    fun solution(word: String): Int {
+//        var answer = 0
+//        word.forEachIndexed { index, it ->
+//            if (it != 'A') {
+//                when (index) {
+//                    0 -> answer += alphabet(it)*781
+//                    1 -> answer += alphabet(it)*156
+//                    2 -> answer += alphabet(it)*31
+//                    3 -> answer += alphabet(it)*6
+//                    4 -> answer += alphabet(it)
+//                }
+//            }
+//        }
+//        answer += word.length
+//        return answer
+//    }
+//    fun alphabet (it : Char): Int {
+//        var num = 0
+//        when (it) {
+//            'E' -> num = 1
+//            'I' -> num = 2
+//            'O' -> num = 3
+//            'U' -> num = 4
+//        }
+//        return num
+//    }
 
 //    // 피로도
 //        lateinit var isVisit: BooleanArray
