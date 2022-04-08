@@ -1,6 +1,7 @@
 package com.example.programmers
 
 import android.os.Bundle
+import android.util.Log
 import androidx.appcompat.app.AppCompatActivity
 import java.util.*
 
@@ -15,12 +16,12 @@ class MainActivity : AppCompatActivity() {
         setContentView(R.layout.activity_main)
 
         // 6
-        solution(3, 2, 5)
+        solution(3,2,5)
     }
 
     // n^2 배열 자르기
     fun solution(n: Int, left: Long, right: Long): IntArray {
-        var answer = intArrayOf()
+        var answer: IntArray = intArrayOf()
         for (i in left..right) answer += (i/n).toInt().coerceAtLeast((i%n).toInt()) + 1
         return answer
     }
