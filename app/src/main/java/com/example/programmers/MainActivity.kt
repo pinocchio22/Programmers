@@ -16,46 +16,17 @@ class MainActivity : AppCompatActivity() {
         setContentView(R.layout.activity_main)
 
         // 6
-        solution(4,7,14)
+        solution(3,2,5)
     }
 
     // n^2 배열 자르기
     fun solution(n: Int, left: Long, right: Long): IntArray {
         var answer: IntArray = intArrayOf()
-        val arr = Array(n){IntArray(n)}
-        var temp = intArrayOf()
-        var R = right.toInt()
-        var L = left.toInt()
-        var count = 0
+        val R = right.toInt()
+        val L = left.toInt()
 
-        for (x in 0 until n) {
-            for (y in 0 until n) {
-                if (x > L/n || x+y >= L/n + L%n) {
-                    arr[x][y] = y + 1
-                    if (x>y) {
-                        arr[x][y] = x + 1
-                    }
-                    if (x == R/n && y == R%n) {
-                        count++
-                        break
-                    }
-                }
-            }
-            if (count == 1) break
-        }
+        for (i in L..R) answer += (i/n).coerceAtLeast(i%n) + 1
 
-        arr.forEach {
-            it.forEach {
-                if (it != 0) answer += it
-            }
-        }
-
-//        arr.forEach {
-//            it.forEach {
-//                temp += it
-//            }
-//        }
-//        answer += temp.slice(left.toInt()..right.toInt())
         return answer
     }
 
