@@ -20,24 +20,18 @@ class MainActivity : AppCompatActivity() {
     // 이진 변환 반복하기
     fun solution(s: String): IntArray {
         var answer: IntArray = intArrayOf()
-        var count = 1
+        var count = 0
+        var zero = 0
         var temp = s
-        var zero = s.count { it == '0' }
 
-        while (true) {
-            if (trans(temp) != "1") {
-                temp = trans(temp)
-                count++
-                zero += temp.count { it == '0' }
-            }else break
+        while (temp != "1") {
+            count++
+            zero += temp.count { it == '0' }
+            temp = temp.replace("0","").length.toString(2)
         }
         answer += count
         answer += zero
         return answer
-    }
-    fun trans(s : String): String {
-        val binary = s.replace("0","").length
-        return binary.toString(2)
     }
 
 //    // n^2 배열 자르기
