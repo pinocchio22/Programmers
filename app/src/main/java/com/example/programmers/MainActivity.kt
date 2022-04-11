@@ -1,9 +1,7 @@
 package com.example.programmers
 
 import android.os.Bundle
-import android.util.Log
 import androidx.appcompat.app.AppCompatActivity
-import java.util.*
 
 @Suppress(
     "NAME_SHADOWING", "TYPE_INFERENCE_ONLY_INPUT_TYPES_WARNING", "CAST_NEVER_SUCCEEDS",
@@ -15,16 +13,39 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
-        // 6
-        solution(3,2,5)
+        // [3,8]
+        solution("1111111")
     }
 
-    // n^2 배열 자르기
-    fun solution(n: Int, left: Long, right: Long): IntArray {
+    // 이진 변환 반복하기
+    fun solution(s: String): IntArray {
         var answer: IntArray = intArrayOf()
-        for (i in left..right) answer += (i/n).toInt().coerceAtLeast((i%n).toInt()) + 1
+        var count = 1
+        var temp = s
+        var zero = s.count { it == '0' }
+
+        while (true) {
+            if (trans(temp) != "1") {
+                temp = trans(temp)
+                count++
+                zero += temp.count { it == '0' }
+            }else break
+        }
+        answer += count
+        answer += zero
         return answer
     }
+    fun trans(s : String): String {
+        val binary = s.replace("0","").length
+        return binary.toString(2)
+    }
+
+//    // n^2 배열 자르기
+//    fun solution(n: Int, left: Long, right: Long): IntArray {
+//        var answer: IntArray = intArrayOf()
+//        for (i in left..right) answer += (i/n).toInt().coerceAtLeast((i%n).toInt()) + 1
+//        return answer
+//    }
 
 //    // 모음 사전
 //    fun solution(word: String): Int {
