@@ -22,26 +22,46 @@ class MainActivity : AppCompatActivity() {
     fun solution(numbers: LongArray): LongArray {
         var answer: LongArray = longArrayOf()
 
-        numbers.forEachIndexed { index, it ->
+        numbers.forEach { num ->
             var i = 0
-            while (answer.size != 2) {
-                var count = 0
-                i++
-                for (j in it.toString(2).indices) {
-                    if (it.toString(2)[j] != (it+i).toString(2)[j]) {
-                        count++
-                    }
+            while (answer.size != numbers.size) {
+                if (num%2 == 0L) {
+                    answer += num+1
+                    break
                 }
-                if (count <= 2) {
-                    answer += it+i.toLong()
+                i++
+                if(((num xor num+i).toString(2).count{ it == '1'}) <= 2) {
+                    answer += num+i
                     break
                 }
             }
         }
-        println(answer.contentToString())
-
         return answer
     }
+
+//    fun solution(numbers: LongArray): LongArray {
+//        var answer: LongArray = longArrayOf()
+//
+//        numbers.forEachIndexed { index, it ->
+//            var i = 0
+//            while (answer.size != 2) {
+//                var count = 0
+//                i++
+//                for (j in it.toString(2).indices) {
+//                    if (it.toString(2)[j] != (it+i).toString(2)[j]) {
+//                        count++
+//                    }
+//                }
+//                if (count <= 2) {
+//                    answer += it+i.toLong()
+//                    break
+//                }
+//            }
+//        }
+//        println(answer.contentToString())
+//
+//        return answer
+//    }
 
 //    // 이진 변환 반복하기
 //    fun solution(s: String): IntArray {
