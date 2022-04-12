@@ -1,6 +1,7 @@
 package com.example.programmers
 
 import android.os.Bundle
+import android.util.Log
 import androidx.appcompat.app.AppCompatActivity
 
 @Suppress(
@@ -13,26 +14,51 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
-        // [3,8]
-        solution("1111111")
+        // [3,11]
+        solution(longArrayOf(2, 7))
     }
 
-    // 이진 변환 반복하기
-    fun solution(s: String): IntArray {
-        var answer: IntArray = intArrayOf()
-        var count = 0
-        var zero = 0
-        var temp = s
+    // 2개 이하로 다른 비트
+    fun solution(numbers: LongArray): LongArray {
+        var answer: LongArray = longArrayOf()
 
-        while (temp != "1") {
-            count++
-            zero += temp.count { it == '0' }
-            temp = temp.replace("0","").length.toString(2)
+        numbers.forEachIndexed { index, it ->
+            var i = 0
+            while (answer.size != 2) {
+                var count = 0
+                i++
+                for (j in it.toString(2).indices) {
+                    if (it.toString(2)[j] != (it+i).toString(2)[j]) {
+                        count++
+                    }
+                }
+                if (count <= 2) {
+                    answer += it+i.toLong()
+                    break
+                }
+            }
         }
-        answer += count
-        answer += zero
+        println(answer.contentToString())
+
         return answer
     }
+
+//    // 이진 변환 반복하기
+//    fun solution(s: String): IntArray {
+//        var answer: IntArray = intArrayOf()
+//        var count = 0
+//        var zero = 0
+//        var temp = s
+//
+//        while (temp != "1") {
+//            count++
+//            zero += temp.count { it == '0' }
+//            temp = temp.replace("0","").length.toString(2)
+//        }
+//        answer += count
+//        answer += zero
+//        return answer
+//    }
 
 //    // n^2 배열 자르기
 //    fun solution(n: Int, left: Long, right: Long): IntArray {
