@@ -1,8 +1,8 @@
 package com.example.programmers
 
 import android.os.Bundle
-import android.util.Log
 import androidx.appcompat.app.AppCompatActivity
+import java.lang.StringBuilder
 
 @Suppress(
     "NAME_SHADOWING", "TYPE_INFERENCE_ONLY_INPUT_TYPES_WARNING", "CAST_NEVER_SUCCEEDS",
@@ -15,27 +15,13 @@ class MainActivity : AppCompatActivity() {
         setContentView(R.layout.activity_main)
 
         // [3,11]
-        solution(longArrayOf(2, 7))
+        solution(longArrayOf(2, 7, 9))
     }
 
     // 2개 이하로 다른 비트
     fun solution(numbers: LongArray): LongArray {
         var answer: LongArray = longArrayOf()
-
-        numbers.forEach { num ->
-            var i = 0
-            while (answer.size != numbers.size) {
-                if (num%2 == 0L) {
-                    answer += num+1
-                    break
-                }
-                i++
-                if(((num xor num+i).toString(2).count{ it == '1'}) <= 2) {
-                    answer += num+i
-                    break
-                }
-            }
-        }
+        answer = numbers.map { n -> (n.inv() and n+1).let { n or it and (it shr 1).inv() } }.toLongArray()
         return answer
     }
 
