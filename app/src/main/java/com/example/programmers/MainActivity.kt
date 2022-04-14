@@ -1,6 +1,7 @@
 package com.example.programmers
 
 import android.os.Bundle
+import android.util.Log
 import androidx.appcompat.app.AppCompatActivity
 import java.lang.StringBuilder
 
@@ -14,16 +15,62 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
-        // [3,11]
-        solution(longArrayOf(2, 7, 9))
+        // [4,9]
+        solution(arrayOf(intArrayOf(1,1,0,0), intArrayOf(1,0,0,0), intArrayOf(1,0,0,1), intArrayOf(1,1,1,1)))
     }
 
-    // 2개 이하로 다른 비트
-    fun solution(numbers: LongArray): LongArray {
-        var answer: LongArray = longArrayOf()
-        answer = numbers.map { n -> (n.inv() and n+1).let { n or it and (it shr 1).inv() } }.toLongArray()
+    // 쿼드압축 후 개수 세기
+    fun solution(arr: Array<IntArray>): IntArray {
+        var answer: IntArray = intArrayOf(0,0)
+        var length = (arr[0].size-1)/2
+
+        var one = arrayOf<Int>()
+        var two = arrayOf<Int>()
+        var three = arrayOf<Int>()
+        var four = arrayOf<Int>()
+
+        println(length)
+        for (y in arr[0].indices) {
+            for (x in arr[0].indices) {
+                when {
+                    x <= length &&  y <= length -> {
+                        // 1사분면
+//                        Log.d("1사분면", arr[y][x].toString())
+                        one += arr[y][x]
+                    }
+                    x > length && y <= length -> {
+                        // 2사분면
+//                        Log.d("2사분면", arr[y][x].toString())
+                        two += arr[y][x]
+                    }
+                    x <= length && y > length -> {
+                        // 3사분면
+//                        Log.d("3사분면", arr[y][x].toString())
+                        three += arr[y][x]
+                    }
+                    x > length && y > length -> {
+                        // 4사분면
+//                        Log.d("4사분면", arr[y][x].toString())
+                        four += arr[y][x]
+                    }
+                }
+                if (one.all { it == 0 }) {
+                    answer[0]++
+                }else if (one.all { it == 1 }) {
+                    answer[1]++
+                }
+            }
+        }
+
         return answer
     }
+
+//    // 2개 이하로 다른 비트
+//    fun solution(numbers: LongArray): LongArray {
+//        var answer: LongArray = longArrayOf()
+//        answer = numbers.map { n -> (n.inv() and n+1).let { n or it and (it shr 1).inv() } }.toLongArray()
+//        return answer
+//    }
 
 //    fun solution(numbers: LongArray): LongArray {
 //        var answer: LongArray = longArrayOf()
