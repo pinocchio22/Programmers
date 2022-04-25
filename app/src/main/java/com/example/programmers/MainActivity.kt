@@ -20,48 +20,34 @@ class MainActivity : AppCompatActivity() {
     }
 
     // 쿼드압축 후 개수 세기
-    fun solution(arr: Array<IntArray>): IntArray {
-        var answer: IntArray = intArrayOf(0,0)
-        var length = (arr[0].size-1)/2
+    val answer = IntArray(2){0}
 
-        var one = arrayOf<Int>()
-        var two = arrayOf<Int>()
-        var three = arrayOf<Int>()
-        var four = arrayOf<Int>()
-
-        println(length)
-        for (y in arr[0].indices) {
-            for (x in arr[0].indices) {
-                when {
-                    x <= length &&  y <= length -> {
-                        // 1사분면
-//                        Log.d("1사분면", arr[y][x].toString())
-                        one += arr[y][x]
-                    }
-                    x > length && y <= length -> {
-                        // 2사분면
-//                        Log.d("2사분면", arr[y][x].toString())
-                        two += arr[y][x]
-                    }
-                    x <= length && y > length -> {
-                        // 3사분면
-//                        Log.d("3사분면", arr[y][x].toString())
-                        three += arr[y][x]
-                    }
-                    x > length && y > length -> {
-                        // 4사분면
-//                        Log.d("4사분면", arr[y][x].toString())
-                        four += arr[y][x]
-                    }
-                }
-                if (one.all { it == 0 }) {
-                    answer[0]++
-                }else if (one.all { it == 1 }) {
-                    answer[1]++
-                }
+    fun dfs(r : Int, c : Int, size : Int, arr : Array<IntArray>){
+        var zero = true
+        var one = true
+        for(i in r until r+size){
+            for(j in c until c+size){
+                if(arr[i][j]==0) one = false
+                if(arr[i][j]==1) zero = false
             }
         }
+        if(zero){
+            answer[0]++
+            return
+        }
+        if(one){
+            answer[1]++
+            return
+        }
+        dfs(r,c,size/2,arr)
+        dfs(r,c+size/2,size/2,arr)
+        dfs(r+size/2,c,size/2,arr)
+        dfs(r+size/2,c+size/2,size/2,arr)
 
+    }
+
+    fun solution(arr: Array<IntArray>): IntArray {
+        dfs(0,0,arr.size,arr)
         return answer
     }
 
