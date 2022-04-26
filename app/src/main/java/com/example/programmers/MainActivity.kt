@@ -4,6 +4,7 @@ import android.os.Bundle
 import android.util.Log
 import androidx.appcompat.app.AppCompatActivity
 import java.lang.StringBuilder
+import kotlin.math.ceil
 
 @Suppress(
     "NAME_SHADOWING", "TYPE_INFERENCE_ONLY_INPUT_TYPES_WARNING", "CAST_NEVER_SUCCEEDS",
@@ -15,41 +16,60 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
-        // [4,9]
-        solution(arrayOf(intArrayOf(1,1,0,0), intArrayOf(1,0,0,0), intArrayOf(1,0,0,1), intArrayOf(1,1,1,1)))
+        // 3
+        solution(8,4,7)
     }
 
-    // 쿼드압축 후 개수 세기
-    val answer = IntArray(2){0}
+    // 예상 대진표
+    fun solution(n: Int, a: Int, b: Int): Int {
+        var answer = 0
+        var first = a.toDouble()
+        var second = b.toDouble()
 
-    fun dfs(r : Int, c : Int, size : Int, arr : Array<IntArray>){
-        var zero = true
-        var one = true
-        for(i in r until r+size){
-            for(j in c until c+size){
-                if(arr[i][j]==0) one = false
-                if(arr[i][j]==1) zero = false
+        while (true) {
+            if (first.toInt()%2 == 0) {
+                if (first-1 == second) break
+            }else {
+                if (first+1 == second) break
             }
+            first = ceil((first/2))
+            second = ceil((second/2))
+            answer++
         }
-        if(zero){
-            answer[0]++
-            return
-        }
-        if(one){
-            answer[1]++
-            return
-        }
-        dfs(r,c,size/2,arr)
-        dfs(r,c+size/2,size/2,arr)
-        dfs(r+size/2,c,size/2,arr)
-        dfs(r+size/2,c+size/2,size/2,arr)
-
+        return answer+1
     }
 
-    fun solution(arr: Array<IntArray>): IntArray {
-        dfs(0,0,arr.size,arr)
-        return answer
-    }
+//    // 쿼드압축 후 개수 세기
+//    val answer = IntArray(2){0}
+//
+//    fun dfs(r : Int, c : Int, size : Int, arr : Array<IntArray>){
+//        var zero = true
+//        var one = true
+//        for(i in r until r+size){
+//            for(j in c until c+size){
+//                if(arr[i][j]==0) one = false
+//                if(arr[i][j]==1) zero = false
+//            }
+//        }
+//        if(zero){
+//            answer[0]++
+//            return
+//        }
+//        if(one){
+//            answer[1]++
+//            return
+//        }
+//        dfs(r,c,size/2,arr)
+//        dfs(r,c+size/2,size/2,arr)
+//        dfs(r+size/2,c,size/2,arr)
+//        dfs(r+size/2,c+size/2,size/2,arr)
+//
+//    }
+//
+//    fun solution(arr: Array<IntArray>): IntArray {
+//        dfs(0,0,arr.size,arr)
+//        return answer
+//    }
 
 //    // 2개 이하로 다른 비트
 //    fun solution(numbers: LongArray): LongArray {
