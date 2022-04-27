@@ -37,15 +37,11 @@ class MainActivity : AppCompatActivity() {
             list[wires[i][0]]!!.add(wires[i][1])
             list[wires[i][1]]!!.add(wires[i][0])
         }
+        // list : [[], [3], [3], [1, 2, 4], [3, 5, 6, 7], [4], [4], [4, 8, 9], [7], [7]]
         for (i in wires.indices) {
-            answer = Math.min(
-                answer, Math.abs(
-                    getNodeCount(
-                        wires[i][0],
-                        wires[i][1]
-                    ) - getNodeCount(wires[i][1], wires[i][0])
-                )
-            )
+            answer = answer.coerceAtMost(abs(getNodeCount(wires[i][0], wires[i][1]) - getNodeCount(wires[i][1], wires[i][0])))
+            println("탐색끝")
+            println(answer)
         }
         return answer
     }
@@ -53,11 +49,15 @@ class MainActivity : AppCompatActivity() {
     fun getNodeCount(target: Int, exceptNumber: Int): Int {
         var result = 1
         val targetList = list[target]
+        println(targetList)
+        println(exceptNumber)
         for (i in 0 until targetList!!.size) {
-            if (targetList[i] !== exceptNumber) {
+            if (targetList[i] != exceptNumber) {
+                println("T")
                 result += getNodeCount(targetList[i], target)
             }
         }
+        println("$result" + "  result")
         return result
     }
 
