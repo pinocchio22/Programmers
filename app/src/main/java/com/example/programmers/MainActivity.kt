@@ -4,7 +4,9 @@ import android.os.Bundle
 import android.util.Log
 import androidx.appcompat.app.AppCompatActivity
 import java.lang.StringBuilder
+import kotlin.math.abs
 import kotlin.math.ceil
+import kotlin.math.max
 
 @Suppress(
     "NAME_SHADOWING", "TYPE_INFERENCE_ONLY_INPUT_TYPES_WARNING", "CAST_NEVER_SUCCEEDS",
@@ -17,27 +19,54 @@ class MainActivity : AppCompatActivity() {
         setContentView(R.layout.activity_main)
 
         // 3
-        solution(8,4,7)
+        solution(9, arrayOf(intArrayOf(1,3),intArrayOf(2,3),
+            intArrayOf(3,4), intArrayOf(4,5),intArrayOf(4,6),intArrayOf(4,7),intArrayOf(7,8),intArrayOf(7,9)))
     }
+    // 전력망을 둘로 나누기
+    fun solution(n: Int, wires: Array<IntArray>): Int {
+        var answer: Int = -1
+        var max : Int
+        val arr = Array<MutableList<Int>>(n){mutableListOf()}
+        var num = 0
+        var temp = arrayOf<Int>()
 
-    // 예상 대진표
-    fun solution(n: Int, a: Int, b: Int): Int {
-        var answer = 0
-        var first = a.toDouble()
-        var second = b.toDouble()
-
-        while (true) {
-            if (first.toInt()%2 == 0) {
-                if (first-1 == second) break
-            }else {
-                if (first+1 == second) break
-            }
-            first = ceil((first/2))
-            second = ceil((second/2))
-            answer++
+        wires.forEach{
+            arr[it[0] - 1].add(it[1])
+            arr[it[1] - 1].add(it[0])
         }
-        return answer+1
+        max = arr.map { it.size }.max()!!
+
+        wires.forEach {
+            num++
+            if (it[0] == max || it[1] == max) {
+                temp = temp.plus((abs(num-(n-num))))
+                println(temp.plus((abs(num-(n-num)))).contentToString())
+            }
+        }
+
+        println(arr.contentToString())
+
+        return answer
     }
+
+//    // 예상 대진표
+//    fun solution(n: Int, a: Int, b: Int): Int {
+//        var answer = 0
+//        var first = a.toDouble()
+//        var second = b.toDouble()
+//
+//        while (true) {
+//            if (first.toInt()%2 == 0) {
+//                if (first-1 == second) break
+//            }else {
+//                if (first+1 == second) break
+//            }
+//            first = ceil((first/2))
+//            second = ceil((second/2))
+//            answer++
+//        }
+//        return answer+1
+//    }
 
 //    // 쿼드압축 후 개수 세기
 //    val answer = IntArray(2){0}
