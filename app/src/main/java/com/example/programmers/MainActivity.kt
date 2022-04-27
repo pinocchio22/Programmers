@@ -1,17 +1,13 @@
 package com.example.programmers
 
 import android.os.Bundle
-import android.util.Log
 import androidx.appcompat.app.AppCompatActivity
-import java.lang.StringBuilder
 import kotlin.math.abs
-import kotlin.math.ceil
-import kotlin.math.max
 
 @Suppress(
     "NAME_SHADOWING", "TYPE_INFERENCE_ONLY_INPUT_TYPES_WARNING", "CAST_NEVER_SUCCEEDS",
     "RECEIVER_NULLABILITY_MISMATCH_BASED_ON_JAVA_ANNOTATIONS",
-    "NULLABILITY_MISMATCH_BASED_ON_JAVA_ANNOTATIONS"
+    "NULLABILITY_MISMATCH_BASED_ON_JAVA_ANNOTATIONS", "DEPRECATED_IDENTITY_EQUALS"
 )
 class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -19,34 +15,50 @@ class MainActivity : AppCompatActivity() {
         setContentView(R.layout.activity_main)
 
         // 3
-        solution(9, arrayOf(intArrayOf(1,3),intArrayOf(2,3),
-            intArrayOf(3,4), intArrayOf(4,5),intArrayOf(4,6),intArrayOf(4,7),intArrayOf(7,8),intArrayOf(7,9)))
+        solution(9, arrayOf(
+                intArrayOf(1, 3),
+                intArrayOf(2, 3),
+                intArrayOf(3, 4),
+                intArrayOf(4, 5),
+                intArrayOf(4, 6),
+                intArrayOf(4, 7),
+                intArrayOf(7, 8),
+                intArrayOf(7, 9)
+            )
+        )
     }
     // 전력망을 둘로 나누기
+    lateinit var list: Array<ArrayList<Int>?>
     fun solution(n: Int, wires: Array<IntArray>): Int {
-        var answer: Int = -1
-        var max : Int
-        val arr = Array<MutableList<Int>>(n){mutableListOf()}
-        var num = 0
-        var temp = arrayOf<Int>()
-
-        wires.forEach{
-            arr[it[0] - 1].add(it[1])
-            arr[it[1] - 1].add(it[0])
+        var answer = Int.MAX_VALUE
+        list = arrayOfNulls(n + 1)
+        for (i in list.indices) list[i] = ArrayList() //초기화
+        for (i in wires.indices) {
+            list[wires[i][0]]!!.add(wires[i][1])
+            list[wires[i][1]]!!.add(wires[i][0])
         }
-        max = arr.map { it.size }.max()!!
+        for (i in wires.indices) {
+            answer = Math.min(
+                answer, Math.abs(
+                    getNodeCount(
+                        wires[i][0],
+                        wires[i][1]
+                    ) - getNodeCount(wires[i][1], wires[i][0])
+                )
+            )
+        }
+        return answer
+    }
 
-        wires.forEach {
-            num++
-            if (it[0] == max || it[1] == max) {
-                temp = temp.plus((abs(num-(n-num))))
-                println(temp.plus((abs(num-(n-num)))).contentToString())
+    fun getNodeCount(target: Int, exceptNumber: Int): Int {
+        var result = 1
+        val targetList = list[target]
+        for (i in 0 until targetList!!.size) {
+            if (targetList[i] !== exceptNumber) {
+                result += getNodeCount(targetList[i], target)
             }
         }
-
-        println(arr.contentToString())
-
-        return answer
+        return result
     }
 
 //    // 예상 대진표
