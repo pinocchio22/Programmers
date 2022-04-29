@@ -27,6 +27,7 @@ class MainActivity : AppCompatActivity() {
             )
         )
     }
+
     // 전력망을 둘로 나누기
     lateinit var list: Array<ArrayList<Int>?>
     fun solution(n: Int, wires: Array<IntArray>): Int {
@@ -37,11 +38,8 @@ class MainActivity : AppCompatActivity() {
             list[wires[i][0]]!!.add(wires[i][1])
             list[wires[i][1]]!!.add(wires[i][0])
         }
-        // list : [[], [3], [3], [1, 2, 4], [3, 5, 6, 7], [4], [4], [4, 8, 9], [7], [7]]
         for (i in wires.indices) {
             answer = answer.coerceAtMost(abs(getNodeCount(wires[i][0], wires[i][1]) - getNodeCount(wires[i][1], wires[i][0])))
-            println("탐색끝")
-            println(answer)
         }
         return answer
     }
@@ -49,15 +47,11 @@ class MainActivity : AppCompatActivity() {
     fun getNodeCount(target: Int, exceptNumber: Int): Int {
         var result = 1
         val targetList = list[target]
-        println(targetList)
-        println(exceptNumber)
         for (i in 0 until targetList!!.size) {
             if (targetList[i] != exceptNumber) {
-                println("T")
                 result += getNodeCount(targetList[i], target)
             }
         }
-        println("$result" + "  result")
         return result
     }
 
