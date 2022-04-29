@@ -37,8 +37,8 @@ class MainActivity : AppCompatActivity() {
             for (j in i+1 until line.size) {
                 val a = line[i]
                 val b = line[j]
-                val A = a[1].toLong() * b[2].toLong() - a[2].toLong() * b[1].toLong()
-                val B = b[0].toLong() * a[2].toLong() - a[0].toLong() * b[2].toLong()
+                val A = a[1].toLong()*b[2].toLong() - a[2].toLong()*b[1].toLong()
+                val B = b[0].toLong()*a[2].toLong() - a[0].toLong()*b[2].toLong()
                 val C = a[0].toLong()*b[1].toLong() - a[1].toLong()*b[0].toLong()
 
                 if (C.toInt() != 0)  if ((A%C).toInt() == 0 && (B%C).toInt() == 0) intArrayOf((A/C).toInt(), (B/C).toInt()).let { coordinate.add(it) }
@@ -48,7 +48,7 @@ class MainActivity : AppCompatActivity() {
             x.add(it[0])
             y.add(it[1])
         }
-        val init = Array(y.maxOrNull()!! - y.minOrNull()!! + 1) { Array(x.maxOrNull()!! - x.minOrNull()!! + 1) { "." } }
+        val init = Array(y.maxOrNull()!! - y.minOrNull()!!+1) {Array(x.maxOrNull()!! - x.minOrNull()!!+1) {"."}}
 
         coordinate.forEach{
             init[y.maxOrNull()!! - it[1]][it[0] - x.minOrNull()!!] = "*"
