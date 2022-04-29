@@ -37,9 +37,9 @@ class MainActivity : AppCompatActivity() {
             for (j in i+1 until line.size) {
                 val a = line[i]
                 val b = line[j]
-                val A : Long = a[1].toLong() * b[2].toLong() - a[2].toLong() * b[1].toLong()
-                val B : Long= b[0].toLong() * a[2].toLong() - a[0].toLong() * b[2].toLong()
-                val C : Long = a[0].toLong()*b[1].toLong() - a[1].toLong()*b[0].toLong()
+                val A = a[1].toLong() * b[2].toLong() - a[2].toLong() * b[1].toLong()
+                val B = b[0].toLong() * a[2].toLong() - a[0].toLong() * b[2].toLong()
+                val C = a[0].toLong()*b[1].toLong() - a[1].toLong()*b[0].toLong()
 
                 if (C.toInt() != 0)  if ((A%C).toInt() == 0 && (B%C).toInt() == 0) intArrayOf((A/C).toInt(), (B/C).toInt()).let { coordinate.add(it) }
             }
