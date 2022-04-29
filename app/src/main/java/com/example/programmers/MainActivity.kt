@@ -14,46 +14,79 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
-        // 3
-        solution(9, arrayOf(
-                intArrayOf(1, 3),
-                intArrayOf(2, 3),
-                intArrayOf(3, 4),
-                intArrayOf(4, 5),
-                intArrayOf(4, 6),
-                intArrayOf(4, 7),
-                intArrayOf(7, 8),
-                intArrayOf(7, 9)
-            )
-        )
+        // "....*....",
+        // ".........",
+        // ".........",
+        // "*.......*",
+        // ".........",
+        // ".........",
+        // ".........",
+        // ".........",
+        // "*.......*"
+        solution(arrayOf(intArrayOf(2, -1, 4), intArrayOf(-2, -1, 4), intArrayOf(0, -1, 1), intArrayOf(5, -8, -12), intArrayOf(5, 8, 12)))
     }
 
-    // 전력망을 둘로 나누기
-    lateinit var list: Array<ArrayList<Int>?>
-    fun solution(n: Int, wires: Array<IntArray>): Int {
-        var answer = Int.MAX_VALUE
-        list = arrayOfNulls(n + 1)
-        for (i in list.indices) list[i] = ArrayList() //초기화
-        for (i in wires.indices) {
-            list[wires[i][0]]!!.add(wires[i][1])
-            list[wires[i][1]]!!.add(wires[i][0])
+    // 교점에 별 만들기
+    fun solution(line: Array<IntArray>): Array<String> {
+        var answer: Array<String> = arrayOf<String>()
+        val coordinate : ArrayList<IntArray> = ArrayList()
+        val x = arrayListOf<Int>()
+        val y = arrayListOf<Int>()
+
+        for (i in line.indices) {
+            for (j in i+1 until line.size) {
+                val a = line[i]
+                val b = line[j]
+                val A : Long = a[1].toLong() * b[2].toLong() - a[2].toLong() * b[1].toLong()
+                val B : Long= b[0].toLong() * a[2].toLong() - a[0].toLong() * b[2].toLong()
+                val C : Long = a[0].toLong()*b[1].toLong() - a[1].toLong()*b[0].toLong()
+
+                if (C.toInt() != 0)  if ((A%C).toInt() == 0 && (B%C).toInt() == 0) intArrayOf((A/C).toInt(), (B/C).toInt()).let { coordinate.add(it) }
+            }
         }
-        for (i in wires.indices) {
-            answer = answer.coerceAtMost(abs(getNodeCount(wires[i][0], wires[i][1]) - getNodeCount(wires[i][1], wires[i][0])))
+        coordinate.forEach{
+            x.add(it[0])
+            y.add(it[1])
+        }
+        val init = Array(y.maxOrNull()!! - y.minOrNull()!! + 1) { Array(x.maxOrNull()!! - x.minOrNull()!! + 1) { "." } }
+
+        coordinate.forEach{
+            init[y.maxOrNull()!! - it[1]][it[0] - x.minOrNull()!!] = "*"
+        }
+        init.forEach {
+            var temp = "\""
+            it.forEach { temp += it }
+            answer += "$temp\""
         }
         return answer
     }
 
-    fun getNodeCount(target: Int, exceptNumber: Int): Int {
-        var result = 1
-        val targetList = list[target]
-        for (i in 0 until targetList!!.size) {
-            if (targetList[i] != exceptNumber) {
-                result += getNodeCount(targetList[i], target)
-            }
-        }
-        return result
-    }
+//    // 전력망을 둘로 나누기
+//    lateinit var list: Array<ArrayList<Int>?>
+//    fun solution(n: Int, wires: Array<IntArray>): Int {
+//        var answer = Int.MAX_VALUE
+//        list = arrayOfNulls(n + 1)
+//        for (i in list.indices) list[i] = ArrayList() //초기화
+//        for (i in wires.indices) {
+//            list[wires[i][0]]!!.add(wires[i][1])
+//            list[wires[i][1]]!!.add(wires[i][0])
+//        }
+//        for (i in wires.indices) {
+//            answer = answer.coerceAtMost(abs(getNodeCount(wires[i][0], wires[i][1]) - getNodeCount(wires[i][1], wires[i][0])))
+//        }
+//        return answer
+//    }
+//
+//    fun getNodeCount(target: Int, exceptNumber: Int): Int {
+//        var result = 1
+//        val targetList = list[target]
+//        for (i in 0 until targetList!!.size) {
+//            if (targetList[i] != exceptNumber) {
+//                result += getNodeCount(targetList[i], target)
+//            }
+//        }
+//        return result
+//    }
 
 //    // 예상 대진표
 //    fun solution(n: Int, a: Int, b: Int): Int {
