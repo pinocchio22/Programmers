@@ -2,6 +2,7 @@ package com.example.programmers
 
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
+import java.util.*
 import kotlin.math.abs
 
 @Suppress(
@@ -14,52 +15,68 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
-        // "....*....",
-        // ".........",
-        // ".........",
-        // "*.......*",
-        // ".........",
-        // ".........",
-        // ".........",
-        // ".........",
-        // "*.......*"
-        solution(arrayOf(intArrayOf(2, -1, 4), intArrayOf(-2, -1, 4), intArrayOf(0, -1, 1), intArrayOf(5, -8, -12), intArrayOf(5, 8, 12)))
+        // 3
+        solution("[](){}")
     }
+    // 괄호 회전하기
+    fun solution(s: String): Int {
+        var answer: Int = -1
+        var bracket = arrayOf("[]","()","{}")
+        var arr = LinkedList<String>() as Queue<String>
+        var arr2 = ""
 
-    // 교점에 별 만들기
-    fun solution(line: Array<IntArray>): Array<String> {
-        var answer: Array<String> = arrayOf<String>()
-        val coordinate : ArrayList<IntArray> = ArrayList()
-        val x = arrayListOf<Int>()
-        val y = arrayListOf<Int>()
-
-        for (i in line.indices) {
-            for (j in i+1 until line.size) {
-                val a = line[i]
-                val b = line[j]
-                val A = a[1].toLong()*b[2].toLong() - a[2].toLong()*b[1].toLong()
-                val B = b[0].toLong()*a[2].toLong() - a[0].toLong()*b[2].toLong()
-                val C = a[0].toLong()*b[1].toLong() - a[1].toLong()*b[0].toLong()
-
-                if (C.toInt() != 0)  if ((A%C).toInt() == 0 && (B%C).toInt() == 0) intArrayOf((A/C).toInt(), (B/C).toInt()).let { coordinate.add(it) }
+        s.forEach {
+            arr.add(it.toString())
+            arr2 += it
+            bracket.forEach {
+                if (arr2.contains(it)) {
+                    println("ss")
+                }
             }
         }
-        coordinate.forEach{
-            x.add(it[0])
-            y.add(it[1])
+        for (i in 1 until arr2.length) {
+            arr2 += arr2[0]
+            arr2 = arr2.removeRange(0,1)
+            println(arr2)
         }
-        val init = Array(y.maxOrNull()!! - y.minOrNull()!!+1) {Array(x.maxOrNull()!! - x.minOrNull()!!+1) {"."}}
 
-        coordinate.forEach{
-            init[y.maxOrNull()!! - it[1]][it[0] - x.minOrNull()!!] = "*"
-        }
-        init.forEach {
-            var temp = "\""
-            it.forEach { temp += it }
-            answer += "$temp\""
-        }
         return answer
     }
+
+//    // 교점에 별 만들기
+//    fun solution(line: Array<IntArray>): Array<String> {
+//        var answer: Array<String> = arrayOf<String>()
+//        val coordinate : ArrayList<IntArray> = ArrayList()
+//        val x = arrayListOf<Int>()
+//        val y = arrayListOf<Int>()
+//
+//        for (i in line.indices) {
+//            for (j in i+1 until line.size) {
+//                val a = line[i]
+//                val b = line[j]
+//                val A = a[1].toLong()*b[2].toLong() - a[2].toLong()*b[1].toLong()
+//                val B = b[0].toLong()*a[2].toLong() - a[0].toLong()*b[2].toLong()
+//                val C = a[0].toLong()*b[1].toLong() - a[1].toLong()*b[0].toLong()
+//
+//                if (C.toInt() != 0)  if ((A%C).toInt() == 0 && (B%C).toInt() == 0) intArrayOf((A/C).toInt(), (B/C).toInt()).let { coordinate.add(it) }
+//            }
+//        }
+//        coordinate.forEach{
+//            x.add(it[0])
+//            y.add(it[1])
+//        }
+//        val init = Array(y.maxOrNull()!! - y.minOrNull()!!+1) {Array(x.maxOrNull()!! - x.minOrNull()!!+1) {"."}}
+//
+//        coordinate.forEach{
+//            init[y.maxOrNull()!! - it[1]][it[0] - x.minOrNull()!!] = "*"
+//        }
+//        init.forEach {
+//            var temp = "\""
+//            it.forEach { temp += it }
+//            answer += "$temp\""
+//        }
+//        return answer
+//    }
 
 //    // 전력망을 둘로 나누기
 //    lateinit var list: Array<ArrayList<Int>?>
