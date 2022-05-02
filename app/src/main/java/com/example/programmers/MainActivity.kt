@@ -16,7 +16,7 @@ class MainActivity : AppCompatActivity() {
         setContentView(R.layout.activity_main)
 
         // 3
-        solution("[](){}")
+        solution("}]()[{")
     }
     // 괄호 회전하기
     fun solution(s: String): Int {
@@ -26,13 +26,15 @@ class MainActivity : AppCompatActivity() {
         for (i in arr.indices) {
             val stack = Stack<Char>()
             arr.forEach {
-                if (it == '[' || it == '{' || it == '(') {
+                if (stack.empty()) {
                     stack.push(it)
-                } else if (stack.empty()) {
+                } else if (it == '[' || it == '{' || it == '(') {
                     stack.push(it)
                 } else {
-                    if ((stack.peek() == '[' && it == ']') || (stack.peek() == '{' && it == '}') || (stack.peek() == '(' && it == ')')) {
-                        stack.pop()
+                    when {
+                        stack.peek() == '[' && it == ']' -> stack.pop()
+                        stack.peek() == '{' && it == '}' -> stack.pop()
+                        stack.peek() == '(' && it == ')' -> stack.pop()
                     }
                 }
             }
