@@ -21,25 +21,27 @@ class MainActivity : AppCompatActivity() {
     // 괄호 회전하기
     fun solution(s: String): Int {
         var answer: Int = -1
-        var bracket = arrayOf("[]","()","{}")
-        var arr = LinkedList<String>() as Queue<String>
-        var arr2 = ""
+        var arr = s
 
-        s.forEach {
-            arr.add(it.toString())
-            arr2 += it
-            bracket.forEach {
-                if (arr2.contains(it)) {
-                    println("ss")
+        for (i in arr.indices) {
+            var stack = Stack<Char>()
+            for (item in arr) {
+                if (item == '[' || item == '{' || item == '(') {
+                    stack.push(item)
+                } else if (stack.empty()) {
+                    stack.push(item)
+                } else {
+                    if ((stack.peek() == '[' && item == ']') || (stack.peek() == '{' && item == '}') || (stack.peek() == '(' && item == ')')) {
+                        stack.pop()
+                    }
                 }
             }
+            if (stack.empty()) {
+                answer++
+            }
+            arr += arr[0]
+            arr = arr.removeRange(0,1)
         }
-        for (i in 1 until arr2.length) {
-            arr2 += arr2[0]
-            arr2 = arr2.removeRange(0,1)
-            println(arr2)
-        }
-
         return answer
     }
 
