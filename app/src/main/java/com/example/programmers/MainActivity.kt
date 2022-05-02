@@ -24,21 +24,19 @@ class MainActivity : AppCompatActivity() {
         var arr = s
 
         for (i in arr.indices) {
-            var stack = Stack<Char>()
-            for (item in arr) {
-                if (item == '[' || item == '{' || item == '(') {
-                    stack.push(item)
+            val stack = Stack<Char>()
+            arr.forEach {
+                if (it == '[' || it == '{' || it == '(') {
+                    stack.push(it)
                 } else if (stack.empty()) {
-                    stack.push(item)
+                    stack.push(it)
                 } else {
-                    if ((stack.peek() == '[' && item == ']') || (stack.peek() == '{' && item == '}') || (stack.peek() == '(' && item == ')')) {
+                    if ((stack.peek() == '[' && it == ']') || (stack.peek() == '{' && it == '}') || (stack.peek() == '(' && it == ')')) {
                         stack.pop()
                     }
                 }
             }
-            if (stack.empty()) {
-                answer++
-            }
+            if (stack.empty()) answer++
             arr += arr[0]
             arr = arr.removeRange(0,1)
         }
