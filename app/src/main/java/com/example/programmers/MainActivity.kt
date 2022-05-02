@@ -15,9 +15,10 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
-        // 3
+        // 2
         solution("}]()[{")
     }
+
     // 괄호 회전하기
     fun solution(s: String): Int {
         var answer: Int = -1
@@ -42,7 +43,7 @@ class MainActivity : AppCompatActivity() {
             arr += arr[0]
             arr = arr.removeRange(0,1)
         }
-        return answer
+        return answer + 1
     }
 
 //    // 교점에 별 만들기
