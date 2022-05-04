@@ -15,36 +15,74 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
-        // 2
-        solution("}]()[{")
+        // [16]
+        solution(arrayOf("SL","LR"))
     }
 
-    // 괄호 회전하기
-    fun solution(s: String): Int {
-        var answer: Int = -1
-        var arr = s
+    // 빛의 경로 사이클
+    val dx = intArrayOf(0, 1, 0, -1)
+    val dy = intArrayOf(-1, 0, 1, 0)
 
-        for (i in arr.indices) {
-            val stack = Stack<Char>()
-            arr.forEach {
-                if (stack.empty()) {
-                    stack.push(it)
-                } else if (it == '[' || it == '{' || it == '(') {
-                    stack.push(it)
-                } else {
-                    when {
-                        stack.peek() == '[' && it == ']' -> stack.pop()
-                        stack.peek() == '{' && it == '}' -> stack.pop()
-                        stack.peek() == '(' && it == ')' -> stack.pop()
-                    }
-                }
+    fun solution(grid: Array<String>): IntArray {
+        var answer: IntArray = intArrayOf()
+        val isvisited = Array<Array<BooleanArray>>(grid.size){ Array<BooleanArray>(grid[it].length){ BooleanArray(4) } }
+
+        return answer
+    }
+
+    fun cycle(grid : Array<String>, isvisited : Array<Array<BooleanArray>>, j : Int , i : Int, direction : Int) : Int {
+        var j = j
+        var i = i
+        var direction = direction
+        var count = 0
+
+        while (true) {
+            if (!isvisited[i][j][direction]) break
+            count++
+            isvisited[i][j][direction] = true
+            when(grid[i][j]) {
+                'L' -> direction = correct(direction - 1)
+                'R' -> direction = correct(direction + 1)
             }
-            if (stack.empty()) answer++
-            arr += arr[0]
-            arr = arr.removeRange(0,1)
+            i = (i + dy[direction] + grid.size) % grid.size
+            j = (j + dx[direction] + grid[0].length) % grid[0].length
+
         }
-        return answer + 1
+
+        return 1
     }
+    fun correct(direction: Int) : Int {
+        return if (direction < 0) {
+            3
+        } else direction % 4
+    }
+
+//    // 괄호 회전하기
+//    fun solution(s: String): Int {
+//        var answer: Int = -1
+//        var arr = s
+//
+//        for (i in arr.indices) {
+//            val stack = Stack<Char>()
+//            arr.forEach {
+//                if (stack.empty()) {
+//                    stack.push(it)
+//                } else if (it == '[' || it == '{' || it == '(') {
+//                    stack.push(it)
+//                } else {
+//                    when {
+//                        stack.peek() == '[' && it == ']' -> stack.pop()
+//                        stack.peek() == '{' && it == '}' -> stack.pop()
+//                        stack.peek() == '(' && it == ')' -> stack.pop()
+//                    }
+//                }
+//            }
+//            if (stack.empty()) answer++
+//            arr += arr[0]
+//            arr = arr.removeRange(0,1)
+//        }
+//        return answer + 1
+//    }
 
 //    // 교점에 별 만들기
 //    fun solution(line: Array<IntArray>): Array<String> {
