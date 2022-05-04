@@ -27,6 +27,14 @@ class MainActivity : AppCompatActivity() {
         var answer: IntArray = intArrayOf()
         val isvisited = Array<Array<BooleanArray>>(grid.size){ Array<BooleanArray>(grid[it].length){ BooleanArray(4) } }
 
+        for (i in grid.indices) {
+            for (j in grid[i].indices) {
+                for (direction in 0 until 4) {
+                    println(cycle(grid, isvisited, j, i, direction))
+                }
+            }
+        }
+
         return answer
     }
 
@@ -46,7 +54,6 @@ class MainActivity : AppCompatActivity() {
             }
             i = (i + dy[direction] + grid.size) % grid.size
             j = (j + dx[direction] + grid[0].length) % grid[0].length
-
         }
 
         return 1
