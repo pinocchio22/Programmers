@@ -23,10 +23,8 @@ class MainActivity : AppCompatActivity() {
     val dy = intArrayOf(-1, 0, 1, 0)
 
     fun solution(grid: Array<String>): IntArray {
-        var answer: IntArray = intArrayOf()
-        val isvisited = Array<Array<BooleanArray>>(grid.size){ Array<BooleanArray>(grid[it].length){ BooleanArray(
-            4
-        ) } }
+        var answer: IntArray
+        val isvisited = Array(grid.size){ Array(grid[it].length){ BooleanArray(4) } }
         var arr = ArrayList<Int>()
 
         for (i in grid.indices) {
@@ -45,13 +43,7 @@ class MainActivity : AppCompatActivity() {
         return answer
     }
 
-    fun cycle(
-        grid: Array<String>,
-        isvisited: Array<Array<BooleanArray>>,
-        j: Int,
-        i: Int,
-        direction: Int
-    ) : Int {
+    fun cycle(grid: Array<String>, isvisited: Array<Array<BooleanArray>>, j: Int, i: Int, direction: Int) : Int {
         var j = j
         var i = i
         var direction = direction
