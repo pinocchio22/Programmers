@@ -3,7 +3,6 @@ package com.example.programmers
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import java.util.*
-import kotlin.math.abs
 
 @Suppress(
     "NAME_SHADOWING", "TYPE_INFERENCE_ONLY_INPUT_TYPES_WARNING", "CAST_NEVER_SUCCEEDS",
@@ -16,7 +15,7 @@ class MainActivity : AppCompatActivity() {
         setContentView(R.layout.activity_main)
 
         // [16]
-        solution(arrayOf("SL","LR"))
+        solution(arrayOf("SL", "LR"))
     }
 
     // 빛의 경로 사이클
@@ -25,27 +24,40 @@ class MainActivity : AppCompatActivity() {
 
     fun solution(grid: Array<String>): IntArray {
         var answer: IntArray = intArrayOf()
-        val isvisited = Array<Array<BooleanArray>>(grid.size){ Array<BooleanArray>(grid[it].length){ BooleanArray(4) } }
+        val isvisited = Array<Array<BooleanArray>>(grid.size){ Array<BooleanArray>(grid[it].length){ BooleanArray(
+            4
+        ) } }
+        var arr = ArrayList<Int>()
 
         for (i in grid.indices) {
             for (j in grid[i].indices) {
                 for (direction in 0 until 4) {
-                    println(cycle(grid, isvisited, j, i, direction))
+                    if (!isvisited[i][j][direction]) {
+                        arr.add(cycle(grid, isvisited, j, i, direction))
+                    }
                 }
             }
         }
+        arr.sort()
+        answer = IntArray(arr.size)
+        for (i in answer.indices) answer[i] = arr[i]
 
         return answer
     }
 
-    fun cycle(grid : Array<String>, isvisited : Array<Array<BooleanArray>>, j : Int , i : Int, direction : Int) : Int {
+    fun cycle(
+        grid: Array<String>,
+        isvisited: Array<Array<BooleanArray>>,
+        j: Int,
+        i: Int,
+        direction: Int
+    ) : Int {
         var j = j
         var i = i
         var direction = direction
         var count = 0
 
-        while (true) {
-            if (!isvisited[i][j][direction]) break
+        while (!isvisited[i][j][direction]) {
             count++
             isvisited[i][j][direction] = true
             when(grid[i][j]) {
@@ -55,13 +67,10 @@ class MainActivity : AppCompatActivity() {
             i = (i + dy[direction] + grid.size) % grid.size
             j = (j + dx[direction] + grid[0].length) % grid[0].length
         }
-
-        return 1
+        return count
     }
     fun correct(direction: Int) : Int {
-        return if (direction < 0) {
-            3
-        } else direction % 4
+        return if (direction < 0) 3 else direction % 4
     }
 
 //    // 괄호 회전하기
