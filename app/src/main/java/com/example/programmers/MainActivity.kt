@@ -15,55 +15,88 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
-        // [16]
-        solution(arrayOf("SL", "LR"))
+        // "Prodo님이 들어왔습니다.", "Ryan님이 들어왔습니다.", "Prodo님이 나갔습니다.", "Prodo님이 들어왔습니다."
+        solution(arrayOf("Enter uid1234 Muzi", "Enter uid4567 Prodo","Leave uid1234","Enter uid1234 Prodo","Change uid4567 Ryan"))
     }
 
-    // 빛의 경로 사이클
-    val x = intArrayOf(0, 1, 0, -1)
-    val y = intArrayOf(-1, 0, 1, 0)
+    // 오픈채팅방
+    fun solution(record: Array<String>): Array<String> {
+        var answer = arrayOf<String>()
+        var data = mutableMapOf<String, String>()
 
-    fun solution(grid: Array<String>): IntArray {
-        var answer: IntArray
-        val isvisited = Array(grid.size){ Array(grid[it].length){ BooleanArray(4) } }
-        val arr = ArrayList<Int>()
+        record.forEach {
+            var delimeter = it.split(' ')[0]
+            var uid = it.split(' ')[1]
 
-        for (i in grid.indices) {
-            for (j in grid[i].indices) {
-                for (direction in 0 until 4) {
-                    if (!isvisited[i][j][direction]) {
-                        arr.add(cycle(grid, isvisited, j, i, direction))
+            when(delimeter) {
+                "Enter" -> {
+                    // uid님이 들어왔습니다.
+                    data[uid] = it.split(' ')[2]
+                    answer += "$uid" + "님이 들어왔습니다."
+                }
+                "Leave" -> {
+                    // uid님이 나갔습니다.
+                    if (it.split(' ').size == 3) {
+                        data[uid] = it.split(' ')[2]
                     }
+                    answer += "$uid" + "님이 나갔습니다."
+                }
+                "Change" -> {
+                    // uid에 따라서 name 변경
+                    data[uid] = it.split(' ')[2]
                 }
             }
         }
-        arr.sort()
-        answer = IntArray(arr.size)
-        for (i in answer.indices) answer[i] = arr[i]
+        println(answer.contentToString())
+
         return answer
     }
 
-    fun cycle(grid: Array<String>, isvisited: Array<Array<BooleanArray>>, j: Int, i: Int, direction: Int) : Int {
-        var j = j
-        var i = i
-        var direction = direction
-        var count = 0
-
-        while (!isvisited[i][j][direction]) {
-            count++
-            isvisited[i][j][direction] = true
-            when(grid[i][j]) {
-                'L' -> direction = correct(direction - 1)
-                'R' -> direction = correct(direction + 1)
-            }
-            i = (i + y[direction] + grid.size) % grid.size
-            j = (j + x[direction] + grid[0].length) % grid[0].length
-        }
-        return count
-    }
-    fun correct(direction: Int) : Int {
-        return if (direction < 0) 3 else direction % 4
-    }
+//    // 빛의 경로 사이클
+//    val x = intArrayOf(0, 1, 0, -1)
+//    val y = intArrayOf(-1, 0, 1, 0)
+//
+//    fun solution(grid: Array<String>): IntArray {
+//        var answer: IntArray
+//        val isvisited = Array(grid.size){ Array(grid[it].length){ BooleanArray(4) } }
+//        val arr = ArrayList<Int>()
+//
+//        for (i in grid.indices) {
+//            for (j in grid[i].indices) {
+//                for (direction in 0 until 4) {
+//                    if (!isvisited[i][j][direction]) {
+//                        arr.add(cycle(grid, isvisited, j, i, direction))
+//                    }
+//                }
+//            }
+//        }
+//        arr.sort()
+//        answer = IntArray(arr.size)
+//        for (i in answer.indices) answer[i] = arr[i]
+//        return answer
+//    }
+//
+//    fun cycle(grid: Array<String>, isvisited: Array<Array<BooleanArray>>, j: Int, i: Int, direction: Int) : Int {
+//        var j = j
+//        var i = i
+//        var direction = direction
+//        var count = 0
+//
+//        while (!isvisited[i][j][direction]) {
+//            count++
+//            isvisited[i][j][direction] = true
+//            when(grid[i][j]) {
+//                'L' -> direction = correct(direction - 1)
+//                'R' -> direction = correct(direction + 1)
+//            }
+//            i = (i + y[direction] + grid.size) % grid.size
+//            j = (j + x[direction] + grid[0].length) % grid[0].length
+//        }
+//        return count
+//    }
+//    fun correct(direction: Int) : Int {
+//        return if (direction < 0) 3 else direction % 4
+//    }
 
 //    // 괄호 회전하기
 //    fun solution(s: String): Int {
