@@ -20,8 +20,8 @@ class MainActivity : AppCompatActivity() {
     }
 
     // 빛의 경로 사이클
-    val dx = intArrayOf(0, 1, 0, -1)
-    val dy = intArrayOf(-1, 0, 1, 0)
+    val x = intArrayOf(0, 1, 0, -1)
+    val y = intArrayOf(-1, 0, 1, 0)
 
     fun solution(grid: Array<String>): IntArray {
         var answer: IntArray
@@ -29,13 +29,9 @@ class MainActivity : AppCompatActivity() {
         val arr = ArrayList<Int>()
 
         for (i in grid.indices) {
-            // y좌표
             for (j in grid[i].indices) {
-                // x좌표
                 for (direction in 0 until 4) {
-                    // 방향
                     if (!isvisited[i][j][direction]) {
-                        // 방문하지 않은 좌표에 대해서만 cycle함수 실행
                         arr.add(cycle(grid, isvisited, j, i, direction))
                     }
                 }
@@ -54,21 +50,18 @@ class MainActivity : AppCompatActivity() {
         var count = 0
 
         while (!isvisited[i][j][direction]) {
-            // 방문하지 않았던 좌표+방향에 대해서 반복문 실행
-            count++ // 사이클
-            isvisited[i][j][direction] = true // 방문
+            count++
+            isvisited[i][j][direction] = true
             when(grid[i][j]) {
-                // 입력받은 방향
-                'L' -> direction = correct(direction - 1) // 반시계방향으로 회전
-                'R' -> direction = correct(direction + 1) // 시계방향으로 회전
+                'L' -> direction = correct(direction - 1)
+                'R' -> direction = correct(direction + 1)
             }
-            i = (i + dy[direction] + grid.size) % grid.size // 다음 도착하는 y좌표
-            j = (j + dx[direction] + grid[0].length) % grid[0].length // 다음 도착하는 x좌표
+            i = (i + y[direction] + grid.size) % grid.size
+            j = (j + x[direction] + grid[0].length) % grid[0].length
         }
         return count
     }
     fun correct(direction: Int) : Int {
-        // 0보다 작거나 3보다 크면 계산
         return if (direction < 0) 3 else direction % 4
     }
 
