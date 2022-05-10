@@ -1,6 +1,7 @@
 package com.example.programmers
 
 import android.os.Bundle
+import android.util.Log
 import androidx.appcompat.app.AppCompatActivity
 import java.util.*
 
@@ -25,12 +26,16 @@ class MainActivity : AppCompatActivity() {
     fun solution(grid: Array<String>): IntArray {
         var answer: IntArray
         val isvisited = Array(grid.size){ Array(grid[it].length){ BooleanArray(4) } }
-        var arr = ArrayList<Int>()
+        val arr = ArrayList<Int>()
 
         for (i in grid.indices) {
+            // y좌표
             for (j in grid[i].indices) {
+                // x좌표
                 for (direction in 0 until 4) {
+                    // 방향
                     if (!isvisited[i][j][direction]) {
+                        // 방문하지 않은 좌표에 대해서만 cycle함수 실행
                         arr.add(cycle(grid, isvisited, j, i, direction))
                     }
                 }
@@ -39,7 +44,6 @@ class MainActivity : AppCompatActivity() {
         arr.sort()
         answer = IntArray(arr.size)
         for (i in answer.indices) answer[i] = arr[i]
-
         return answer
     }
 
@@ -50,18 +54,21 @@ class MainActivity : AppCompatActivity() {
         var count = 0
 
         while (!isvisited[i][j][direction]) {
-            count++
-            isvisited[i][j][direction] = true
+            // 방문하지 않았던 좌표+방향에 대해서 반복문 실행
+            count++ // 사이클
+            isvisited[i][j][direction] = true // 방문
             when(grid[i][j]) {
-                'L' -> direction = correct(direction - 1)
-                'R' -> direction = correct(direction + 1)
+                // 입력받은 방향
+                'L' -> direction = correct(direction - 1) // 반시계방향으로 회전
+                'R' -> direction = correct(direction + 1) // 시계방향으로 회전
             }
-            i = (i + dy[direction] + grid.size) % grid.size
-            j = (j + dx[direction] + grid[0].length) % grid[0].length
+            i = (i + dy[direction] + grid.size) % grid.size // 다음 도착하는 y좌표
+            j = (j + dx[direction] + grid[0].length) % grid[0].length // 다음 도착하는 x좌표
         }
         return count
     }
     fun correct(direction: Int) : Int {
+        // 0보다 작거나 3보다 크면 계산
         return if (direction < 0) 3 else direction % 4
     }
 
