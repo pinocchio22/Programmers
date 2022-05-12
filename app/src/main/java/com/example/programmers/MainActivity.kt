@@ -1,9 +1,10 @@
 package com.example.programmers
 
 import android.os.Bundle
-import android.util.Log
 import androidx.appcompat.app.AppCompatActivity
 import java.util.*
+import java.util.Arrays.stream
+import java.util.stream.StreamSupport.stream
 
 @Suppress(
     "NAME_SHADOWING", "TYPE_INFERENCE_ONLY_INPUT_TYPES_WARNING", "CAST_NEVER_SUCCEEDS",
@@ -16,7 +17,15 @@ class MainActivity : AppCompatActivity() {
         setContentView(R.layout.activity_main)
 
         // "Prodo님이 들어왔습니다.", "Ryan님이 들어왔습니다.", "Prodo님이 나갔습니다.", "Prodo님이 들어왔습니다."
-        solution(arrayOf("Enter uid1234 Muzi", "Enter uid4567 Prodo","Leave uid1234","Enter uid1234 Prodo","Change uid4567 Ryan"))
+        solution(
+            arrayOf(
+                "Enter uid1234 Muzi",
+                "Enter uid4567 Prodo",
+                "Leave uid1234",
+                "Enter uid1234 Prodo",
+                "Change uid4567 Ryan"
+            )
+        )
     }
 
     // 오픈채팅방
@@ -32,14 +41,14 @@ class MainActivity : AppCompatActivity() {
                 "Enter" -> {
                     // uid님이 들어왔습니다.
                     data[uid] = it.split(' ')[2]
-                    answer += "$uid" + "님이 들어왔습니다."
+                    answer += "${data[uid]}" + "님이 들어왔습니다."
                 }
                 "Leave" -> {
                     // uid님이 나갔습니다.
                     if (it.split(' ').size == 3) {
                         data[uid] = it.split(' ')[2]
                     }
-                    answer += "$uid" + "님이 나갔습니다."
+                    answer += "${data[uid]}" + "님이 나갔습니다."
                 }
                 "Change" -> {
                     // uid에 따라서 name 변경
@@ -47,7 +56,20 @@ class MainActivity : AppCompatActivity() {
                 }
             }
         }
+        println(data)
+        // {uid1234=Prodo, uid4567=Ryan}
         println(answer.contentToString())
+        // [uid1234님이 들어왔습니다., uid4567님이 들어왔습니다., uid1234님이 나갔습니다., uid1234님이 들어왔습니다.]
+        // [Muzi님이 들어왔습니다., Prodo님이 들어왔습니다., Muzi님이 나갔습니다., Prodo님이 들어왔습니다.]
+
+        // uid를 name으로 변경
+//        answer.forEach {
+//            for (i in 0..data.size) {
+//                if (it.contains(data.getOrDefault()))
+//            }
+//        }
+//        data.getOrDefault(1,"")
+
 
         return answer
     }
