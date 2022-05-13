@@ -31,46 +31,39 @@ class MainActivity : AppCompatActivity() {
     // 오픈채팅방
     fun solution(record: Array<String>): Array<String> {
         var answer = arrayOf<String>()
-        var data = mutableMapOf<String, String>()
+        val data = mutableMapOf<String, String>()
 
         record.forEach {
-            var delimeter = it.split(' ')[0]
-            var uid = it.split(' ')[1]
+            val delimeter = it.split(' ')[0]
+            val uid = it.split(' ')[1]
 
             when(delimeter) {
                 "Enter" -> {
-                    // uid님이 들어왔습니다.
+                    // Enter일때 id,name
                     data[uid] = it.split(' ')[2]
-                    answer += "${data[uid]}" + "님이 들어왔습니다."
-                }
-                "Leave" -> {
-                    // uid님이 나갔습니다.
-                    if (it.split(' ').size == 3) {
-                        data[uid] = it.split(' ')[2]
-                    }
-                    answer += "${data[uid]}" + "님이 나갔습니다."
                 }
                 "Change" -> {
-                    // uid에 따라서 name 변경
+                    // Change일때 id,name
                     data[uid] = it.split(' ')[2]
                 }
             }
         }
-        println(data)
-        // {uid1234=Prodo, uid4567=Ryan}
-        println(answer.contentToString())
-        // [uid1234님이 들어왔습니다., uid4567님이 들어왔습니다., uid1234님이 나갔습니다., uid1234님이 들어왔습니다.]
-        // [Muzi님이 들어왔습니다., Prodo님이 들어왔습니다., Muzi님이 나갔습니다., Prodo님이 들어왔습니다.]
 
-        // uid를 name으로 변경
-//        answer.forEach {
-//            for (i in 0..data.size) {
-//                if (it.contains(data.getOrDefault()))
-//            }
-//        }
-//        data.getOrDefault(1,"")
+        record.forEach {
+            val delimeter = it.split(' ')[0]
+            val uid = it.split(' ')[1]
 
-
+            when(delimeter) {
+                "Enter" -> {
+                    // uid님이 들어왔습니다.
+                    answer += "${data[uid]}" + "님이 들어왔습니다."
+                }
+                "Leave" -> {
+                    // uid님이 나갔습니다.
+                    answer += "${data[uid]}" + "님이 나갔습니다."
+                }
+            }
+        }
         return answer
     }
 
