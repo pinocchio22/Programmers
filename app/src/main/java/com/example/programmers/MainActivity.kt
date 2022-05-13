@@ -38,30 +38,17 @@ class MainActivity : AppCompatActivity() {
             val uid = it.split(' ')[1]
 
             when(delimeter) {
-                "Enter" -> {
-                    // Enter일때 id,name
-                    data[uid] = it.split(' ')[2]
-                }
-                "Change" -> {
-                    // Change일때 id,name
-                    data[uid] = it.split(' ')[2]
-                }
+                "Enter" -> data[uid] = it.split(' ')[2]
+                "Change" -> data[uid] = it.split(' ')[2]
             }
         }
 
         record.forEach {
             val delimeter = it.split(' ')[0]
             val uid = it.split(' ')[1]
-
             when(delimeter) {
-                "Enter" -> {
-                    // uid님이 들어왔습니다.
-                    answer += "${data[uid]}" + "님이 들어왔습니다."
-                }
-                "Leave" -> {
-                    // uid님이 나갔습니다.
-                    answer += "${data[uid]}" + "님이 나갔습니다."
-                }
+                "Enter" -> answer += "${data[uid]}" + "님이 들어왔습니다."
+                "Leave" -> answer += "${data[uid]}" + "님이 나갔습니다."
             }
         }
         return answer
