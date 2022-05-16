@@ -27,10 +27,7 @@ class MainActivity : AppCompatActivity() {
         var arr = arrayOf<String>()
 
         arr += s.substring(2..s.length-3).split("},{")
-        //[{2}, {2, 1}, {2, 1, 3}, {2, 1, 3, 4}]
-
         arr.sortBy { it.length }
-        //[2, 2,1, 1,2,3, 1,2,4,3]
 
         val max = mutableSetOf<String>()
         arr.forEach {
@@ -38,7 +35,6 @@ class MainActivity : AppCompatActivity() {
                 max.add(it)
             }
         }
-
         max.forEach {
             answer += it.toInt()
         }
