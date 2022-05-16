@@ -5,6 +5,7 @@ import androidx.appcompat.app.AppCompatActivity
 import java.util.*
 import java.util.Arrays.stream
 import java.util.stream.StreamSupport.stream
+import kotlin.math.max
 
 @Suppress(
     "NAME_SHADOWING", "TYPE_INFERENCE_ONLY_INPUT_TYPES_WARNING", "CAST_NEVER_SUCCEEDS",
@@ -16,43 +17,59 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
-        // "Prodo님이 들어왔습니다.", "Ryan님이 들어왔습니다.", "Prodo님이 나갔습니다.", "Prodo님이 들어왔습니다."
-        solution(
-            arrayOf(
-                "Enter uid1234 Muzi",
-                "Enter uid4567 Prodo",
-                "Leave uid1234",
-                "Enter uid1234 Prodo",
-                "Change uid4567 Ryan"
-            )
-        )
+        // [2, 1, 3, 4]
+        solution("{{1,2,3},{2,1},{1,2,4,3},{2}}")
     }
 
-    // 오픈채팅방
-    fun solution(record: Array<String>): Array<String> {
-        var answer = arrayOf<String>()
-        val data = mutableMapOf<String, String>()
+    // 튜플
+    fun solution(s: String): IntArray {
+        var answer = intArrayOf()
+        var arr = arrayOf<String>()
 
-        record.forEach {
-            val delimeter = it.split(' ')[0]
-            val uid = it.split(' ')[1]
+        arr += s.substring(2..s.length-3).split("},{")
+        //[{2}, {2, 1}, {2, 1, 3}, {2, 1, 3, 4}]
 
-            when(delimeter) {
-                "Enter" -> data[uid] = it.split(' ')[2]
-                "Change" -> data[uid] = it.split(' ')[2]
+        arr.sortBy { it.length }
+        //[2, 2,1, 1,2,3, 1,2,4,3]
+
+        val max = mutableSetOf<String>()
+        arr.forEach {
+            it.split(",").forEach {
+                max.add(it)
             }
         }
 
-        record.forEach {
-            val delimeter = it.split(' ')[0]
-            val uid = it.split(' ')[1]
-            when(delimeter) {
-                "Enter" -> answer += "${data[uid]}" + "님이 들어왔습니다."
-                "Leave" -> answer += "${data[uid]}" + "님이 나갔습니다."
-            }
+        max.forEach {
+            answer += it.toInt()
         }
         return answer
     }
+
+//    // 오픈채팅방
+//    fun solution(record: Array<String>): Array<String> {
+//        var answer = arrayOf<String>()
+//        val data = mutableMapOf<String, String>()
+//
+//        record.forEach {
+//            val delimeter = it.split(' ')[0]
+//            val uid = it.split(' ')[1]
+//
+//            when(delimeter) {
+//                "Enter" -> data[uid] = it.split(' ')[2]
+//                "Change" -> data[uid] = it.split(' ')[2]
+//            }
+//        }
+//
+//        record.forEach {
+//            val delimeter = it.split(' ')[0]
+//            val uid = it.split(' ')[1]
+//            when(delimeter) {
+//                "Enter" -> answer += "${data[uid]}" + "님이 들어왔습니다."
+//                "Leave" -> answer += "${data[uid]}" + "님이 나갔습니다."
+//            }
+//        }
+//        return answer
+//    }
 
 //    // 빛의 경로 사이클
 //    val x = intArrayOf(0, 1, 0, -1)
