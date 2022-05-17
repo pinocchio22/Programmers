@@ -16,30 +16,36 @@ class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
-
-        // [2, 1, 3, 4]
-        solution("{{1,2,3},{2,1},{1,2,4,3},{2}}")
+    
+        // 2
+        solution(arrayOf(arrayOf("100","ryan","music","2"),arrayOf("200","apeach","math","2"),arrayOf("300","tube","computer","3"),arrayOf("400","con","computer","4"),arrayOf("500","muzi","music","3"), arrayOf("600","apeach","music","2")))
     }
 
-    // 튜플
-    fun solution(s: String): IntArray {
-        var answer = intArrayOf()
-        var arr = arrayOf<String>()
-
-        arr += s.substring(2..s.length-3).split("},{")
-        arr.sortBy { it.length }
-
-        val max = mutableSetOf<String>()
-        arr.forEach {
-            it.split(",").forEach {
-                max.add(it)
-            }
-        }
-        max.forEach {
-            answer += it.toInt()
-        }
+    // 후보키
+    fun solution(relation: Array<Array<String>>): Int {
+        var answer = 0
         return answer
     }
+
+//    // 튜플
+//    fun solution(s: String): IntArray {
+//        var answer = intArrayOf()
+//        var arr = arrayOf<String>()
+//
+//        arr += s.substring(2..s.length-3).split("},{")
+//        arr.sortBy { it.length }
+//
+//        val max = mutableSetOf<String>()
+//        arr.forEach {
+//            it.split(",").forEach {
+//                max.add(it)
+//            }
+//        }
+//        max.forEach {
+//            answer += it.toInt()
+//        }
+//        return answer
+//    }
 
 //    // 오픈채팅방
 //    fun solution(record: Array<String>): Array<String> {
