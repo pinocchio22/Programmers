@@ -24,6 +24,15 @@ class MainActivity : AppCompatActivity() {
     // 후보키
     fun solution(relation: Array<Array<String>>): Int {
         var answer = 0
+
+        // 배열의 각 원소별로 중복값 찾기
+        // 중복없으면 count++
+
+        // 중복이 있을때 중복배열 따로저장
+
+        // 중복배열에서 중복되지않은 원소의 개수 추출
+
+        // 그 개수로 나올수있는조합 구해서 그 수만큼 count++
         return answer
     }
 
