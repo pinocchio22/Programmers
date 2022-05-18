@@ -26,6 +26,19 @@ class MainActivity : AppCompatActivity() {
         var answer = 0
 
         // 배열의 각 원소별로 중복값 찾기
+        for (i in relation[0].indices) {
+            var temp = arrayOf<String>()
+            relation.forEach {
+                temp += it[i]
+            }
+            println(temp.contentToString())
+            temp.forEach {
+                if (temp.indexOf(it) != temp.lastIndexOf(it)) {
+
+                }
+            }
+        }
+
         // 중복없으면 count++
 
         // 중복이 있을때 중복배열 따로저장
