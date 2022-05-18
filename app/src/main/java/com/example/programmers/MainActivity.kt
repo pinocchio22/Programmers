@@ -3,9 +3,6 @@ package com.example.programmers
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import java.util.*
-import java.util.Arrays.stream
-import java.util.stream.StreamSupport.stream
-import kotlin.math.max
 
 @Suppress(
     "NAME_SHADOWING", "TYPE_INFERENCE_ONLY_INPUT_TYPES_WARNING", "CAST_NEVER_SUCCEEDS",
@@ -18,7 +15,26 @@ class MainActivity : AppCompatActivity() {
         setContentView(R.layout.activity_main)
     
         // 2
-        solution(arrayOf(arrayOf("100","ryan","music","2"),arrayOf("200","apeach","math","2"),arrayOf("300","tube","computer","3"),arrayOf("400","con","computer","4"),arrayOf("500","muzi","music","3"), arrayOf("600","apeach","music","2")))
+        solution(
+            arrayOf(
+                arrayOf("100", "ryan", "music", "2"),
+                arrayOf("200", "apeach", "math", "2"),
+                arrayOf(
+                    "300",
+                    "tube",
+                    "computer",
+                    "3"
+                ),
+                arrayOf("400", "con", "computer", "4"),
+                arrayOf("500", "muzi", "music", "3"),
+                arrayOf(
+                    "600",
+                    "apeach",
+                    "music",
+                    "2"
+                )
+            )
+        )
     }
 
     // 후보키
@@ -32,11 +48,25 @@ class MainActivity : AppCompatActivity() {
                 temp += it[i]
             }
             println(temp.contentToString())
-            temp.forEach {
-                if (temp.indexOf(it) != temp.lastIndexOf(it)) {
+            // [100, 200, 300, 400, 500, 600]
+            // [ryan, apeach, tube, con, muzi, apeach]
+            // [music, math, computer, computer, music, music]
+            // [2, 2, 3, 4, 3, 2]
 
+            for (i in temp.indices) {
+                var flag = false
+                for (j in temp.indices) {
+                    if (temp[i] === temp[j]) {
+                        flag = true
+                        println(relation[i])
+                    }
+                }
+                // 중복이 배제된 값이 저장.
+                if (!flag) {
+                    println(1)
                 }
             }
+
         }
 
         // 중복없으면 count++
