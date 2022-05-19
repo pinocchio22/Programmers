@@ -44,6 +44,7 @@ class MainActivity : AppCompatActivity() {
         // 배열의 각 원소별로 중복값 찾기
         for (i in relation[0].indices) {
             var temp = arrayOf<String>()
+            var new = arrayOf<String>()
             relation.forEach {
                 temp += it[i]
             }
@@ -54,19 +55,17 @@ class MainActivity : AppCompatActivity() {
             // [2, 2, 3, 4, 3, 2]
 
             for (i in temp.indices) {
-                var flag = false
-                for (j in temp.indices) {
-                    if (temp[i] === temp[j]) {
-                        flag = true
-                        println(relation[i])
-                    }
-                }
-                // 중복이 배제된 값이 저장.
-                if (!flag) {
-                    println(1)
+                if (!new.contains(temp[i])) {
+                    // 중복이없음
+                    new += temp[i]
+                }else {
+                    // 중복이 있음
+                    println(relation[i].contentToString())
                 }
             }
-
+            if (new.size == temp.size) {
+                answer++
+            }
         }
 
         // 중복없으면 count++
@@ -76,6 +75,7 @@ class MainActivity : AppCompatActivity() {
         // 중복배열에서 중복되지않은 원소의 개수 추출
 
         // 그 개수로 나올수있는조합 구해서 그 수만큼 count++
+        println(answer)
         return answer
     }
 
