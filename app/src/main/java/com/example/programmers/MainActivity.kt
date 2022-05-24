@@ -93,6 +93,7 @@ class MainActivity : AppCompatActivity() {
 
         // 1. 인덱스의 부분집합을 구해 후보키인지 확인
         for (i in 1 until (1 shl colSize)) { // 1 shl colSize = 16
+            println("i + $i")
             if (!Minimal(i, temp)) continue
             if (!Unique(i, relation, rowSize, colSize)) continue
             temp.add(i)
