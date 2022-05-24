@@ -38,45 +38,103 @@ class MainActivity : AppCompatActivity() {
     }
 
     // 후보키
-    fun solution(relation: Array<Array<String>>): Int {
+//    fun solution(relation: Array<Array<String>>): Int {
+//        var answer = 0
+//
+//        // 배열의 각 원소별로 중복값 찾기
+//        for (i in relation[0].indices) {
+//            var temp = arrayOf<String>()
+//            var new = arrayOf<String>()
+//            relation.forEach {
+//                temp += it[i]
+//            }
+//            println(temp.contentToString())
+//            // [100, 200, 300, 400, 500, 600]
+//            // [ryan, apeach, tube, con, muzi, apeach]
+//            // [music, math, computer, computer, music, music]
+//            // [2, 2, 3, 4, 3, 2]
+//
+//            for (i in temp.indices) {
+//                if (!new.contains(temp[i])) {
+//                    // 중복이없음
+//                    new += temp[i]
+//                }else {
+//                    // 중복이 있음
+//                    println(relation[i].contentToString())
+//                }
+//            }
+//            if (new.size == temp.size) {
+//                answer++
+//            }
+//        }
+//        fun check(set: Int, list: ArrayList<Integer>) {
+//            list.forEach {
+//            if ((set & it) == it) return false // 중복 되어 있으면 false
+//        }
+//            return true
+//        }
+//
+//        // 중복없으면 count++
+//
+//        // 중복이 있을때 중복배열 따로저장
+//
+//        // 중복배열에서 중복되지않은 원소의 개수 추출
+//
+//        // 그 개수로 나올수있는조합 구해서 그 수만큼 count++
+//        println(answer)
+//        return answer
+//    }
+
+    fun solution(relation: Array<Array<String?>>): Int {
         var answer = 0
+        val rowSize = relation.size //6
+        val colSize: Int = relation[0].size //4
+        val temp = ArrayList<Int>()
 
-        // 배열의 각 원소별로 중복값 찾기
-        for (i in relation[0].indices) {
-            var temp = arrayOf<String>()
-            var new = arrayOf<String>()
-            relation.forEach {
-                temp += it[i]
-            }
-            println(temp.contentToString())
-            // [100, 200, 300, 400, 500, 600]
-            // [ryan, apeach, tube, con, muzi, apeach]
-            // [music, math, computer, computer, music, music]
-            // [2, 2, 3, 4, 3, 2]
+        // 1. 인덱스의 부분집합을 구해 후보키인지 확인
+        for (i in 1 until (1 shl colSize)) { // 1 shl colSize = 16
+            if (!Minimal(i, temp)) continue
+            if (!Unique(i, relation, rowSize, colSize)) continue
+            temp.add(i)
+        }
+        answer += temp.size
+        println(temp)
+        //[1,6] = [0001,0110]
+        return answer
+    }
 
-            for (i in temp.indices) {
-                if (!new.contains(temp[i])) {
-                    // 중복이없음
-                    new += temp[i]
-                }else {
-                    // 중복이 있음
-                    println(relation[i].contentToString())
-                }
-            }
-            if (new.size == temp.size) {
-                answer++
+    // 2. 결과 리스트에 이미 들어간 키가 현재 부분집합에 포함되어 있는지 최소성 검사
+    fun Minimal(i: Int, temp: ArrayList<Int>): Boolean {
+        for (key in temp) {
+            if (i and key == key) {
+                println("true $key")
+                return false
             }
         }
+        println("false $temp")
+        // 중복이면 false
+        return true
+    }
 
-        // 중복없으면 count++
+    // 3, 부분 집합에 포함된 인덱스들이 후보키가 될 수 있는지 유일성 검사
+    fun Unique(arr: Int, relation: Array<Array<String?>>, rowSize: Int, colSize: Int): Boolean {
+        val s = convertToIdx(arr, colSize)
+        val set: HashSet<String> = HashSet()
+        for (i in 0 until rowSize) {
+            val sb = StringBuilder()
+            for (j in s) sb.append(relation[i][j])
+            println("sb + $sb")
+            set.add(sb.toString())
+        }
+        return set.size === rowSize
+    }
 
-        // 중복이 있을때 중복배열 따로저장
-
-        // 중복배열에서 중복되지않은 원소의 개수 추출
-
-        // 그 개수로 나올수있는조합 구해서 그 수만큼 count++
-        println(answer)
-        return answer
+    // 이진수를 인덱스로 바꿔주는 함수
+    fun convertToIdx(arr: Int, colSize: Int): ArrayList<Int> {
+        val list = ArrayList<Int>()
+        for (i in 0 until colSize) if (arr shr i and 1 == 1) list.add(i)
+        println("인덱스 $list")
+        return list
     }
 
 //    // 튜플
