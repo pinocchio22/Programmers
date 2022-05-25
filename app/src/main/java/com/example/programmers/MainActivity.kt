@@ -85,7 +85,7 @@ class MainActivity : AppCompatActivity() {
 //        return answer
 //    }
 
-    fun solution(relation: Array<Array<String?>>): Int {
+    fun solution(relation: Array<Array<String>>): Int {
         var answer = 0
         val row = relation.size //6
         val col = relation[0].size //4
@@ -93,7 +93,6 @@ class MainActivity : AppCompatActivity() {
 
         // 1. 인덱스의 부분집합을 구해 후보키인지 확인
         for (i in 1 until (1 shl col)) { // 1 shl colSize = 16
-            println("i + $i")
             if (!Minimal(i, temp)) continue // 최소성검사
             if (!Unique(i, relation, row, col)) continue // 유일성검사
             temp.add(i) // 후보키의 인덱스
@@ -109,7 +108,7 @@ class MainActivity : AppCompatActivity() {
     }
 
     // 3, 부분 집합에 포함된 인덱스들이 후보키가 될 수 있는지 유일성 검사
-    fun Unique(arr: Int, relation: Array<Array<String?>>, row: Int, col: Int): Boolean {
+    fun Unique(arr: Int, relation: Array<Array<String>>, row: Int, col: Int): Boolean {
         val set: HashSet<String> = HashSet()
         for (i in 0 until row) {
             val sb = StringBuilder()
