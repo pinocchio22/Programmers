@@ -3,6 +3,7 @@ package com.example.programmers
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import java.util.*
+import kotlin.math.max
 
 @Suppress(
     "NAME_SHADOWING", "TYPE_INFERENCE_ONLY_INPUT_TYPES_WARNING", "CAST_NEVER_SUCCEEDS",
@@ -23,11 +24,32 @@ class MainActivity : AppCompatActivity() {
         var answer: Long = 0
 
         // 최대공약수를 구한다.
+        gcd(w,h)
         // 최대공약수로 w,h를 나눈다.
-        // 나눴을때의 w,h를 w',h'로 놓는다.
+        // 나눴을때의 w,h를 GCDw,GCDh로 놓는다.
+        var GCDw = w/gcd(w,h)
+        var GCDh = h/gcd(w,h)
         // ((w'-1) + (h'-1) + 1) * 최대공약수를 계산한다.
-
+        ((GCDw-1) + (GCDh-1) + 1) * gcd(w,h)
+        // 전체 사각형에서 계산값을 뺀다.
+        answer += w*h-((GCDw-1) + (GCDh-1) + 1) * gcd(w,h)
         return answer
+    }
+
+    fun gcd(w: Int, h: Int) : Int {
+        var w = w
+        var h = h
+        var num = 0
+
+        for (i in max(w,h) downTo 1) {
+            if (w%i == 0 && h%i == 0) {
+                num += i
+                w /= i
+                h /= i
+                break
+            }
+        }
+        return num
     }
 
 //    // 후보키
