@@ -14,65 +14,58 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
     
-        // 2
-        solution(
-            arrayOf(
-                arrayOf("100", "ryan", "music", "2"),
-                arrayOf("200", "apeach", "math", "2"),
-                arrayOf(
-                    "300",
-                    "tube",
-                    "computer",
-                    "3"
-                ),
-                arrayOf("400", "con", "computer", "4"),
-                arrayOf("500", "muzi", "music", "3"),
-                arrayOf(
-                    "600",
-                    "apeach",
-                    "music",
-                    "2"
-                )
-            )
-        )
+        // 80
+        solution(8,12)
     }
 
-    // 후보키
-    fun solution(relation: Array<Array<String>>): Int {
-        var answer = 0
-        val row = relation.size //6
-        val col = relation[0].size //4
-        val temp = ArrayList<Int>()
+    // 멀쩡한 사각형
+    fun solution(w: Int, h: Int): Long {
+        var answer: Long = 0
 
-        for (i in 1 until (1 shl col)) {
-            if (!Minimal(i, temp)) continue
-            if (!Unique(i, relation, row, col)) continue
-            temp.add(i)
-        }
-        answer += temp.size
+        // 최대공약수를 구한다.
+        // 최대공약수로 w,h를 나눈다.
+        // 나눴을때의 w,h를 w',h'로 놓는다.
+        // ((w'-1) + (h'-1) + 1) * 최대공약수를 계산한다.
+
         return answer
     }
 
-    fun Minimal(i: Int, temp: ArrayList<Int>): Boolean {
-        for (item in temp) if (i and item == item) return false
-        return true
-    }
-
-    fun Unique(arr: Int, relation: Array<Array<String>>, row: Int, col: Int): Boolean {
-        val set: HashSet<String> = HashSet()
-        for (i in 0 until row) {
-            val sb = StringBuilder()
-            for (j in binary(arr, col)) sb.append(relation[i][j])
-            set.add(sb.toString())
-        }
-        return set.size === row
-    }
-
-    fun binary(arr: Int, col: Int): ArrayList<Int> {
-        val list = ArrayList<Int>()
-        for (i in 0 until col) if (arr shr i and 1 == 1) list.add(i)
-        return list
-    }
+//    // 후보키
+//    fun solution(relation: Array<Array<String>>): Int {
+//        var answer = 0
+//        val row = relation.size //6
+//        val col = relation[0].size //4
+//        val temp = ArrayList<Int>()
+//
+//        for (i in 1 until (1 shl col)) {
+//            if (!Minimal(i, temp)) continue
+//            if (!Unique(i, relation, row, col)) continue
+//            temp.add(i)
+//        }
+//        answer += temp.size
+//        return answer
+//    }
+//
+//    fun Minimal(i: Int, temp: ArrayList<Int>): Boolean {
+//        for (item in temp) if (i and item == item) return false
+//        return true
+//    }
+//
+//    fun Unique(arr: Int, relation: Array<Array<String>>, row: Int, col: Int): Boolean {
+//        val set: HashSet<String> = HashSet()
+//        for (i in 0 until row) {
+//            val sb = StringBuilder()
+//            for (j in binary(arr, col)) sb.append(relation[i][j])
+//            set.add(sb.toString())
+//        }
+//        return set.size === row
+//    }
+//
+//    fun binary(arr: Int, col: Int): ArrayList<Int> {
+//        val list = ArrayList<Int>()
+//        for (i in 0 until col) if (arr shr i and 1 == 1) list.add(i)
+//        return list
+//    }
 
 //    // 튜플
 //    fun solution(s: String): IntArray {
