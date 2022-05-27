@@ -24,18 +24,16 @@ class MainActivity : AppCompatActivity() {
         var answer: Long = 0
         val GCDw = w/gcd(w,h)
         val GCDh = h/gcd(w,h)
-        answer += w.toLong()*h.toLong()-((GCDw-1) + (GCDh-1) + 1) * gcd(w,h)
+        answer += w.toLong()*h.toLong()-(GCDw+GCDh-1) * gcd(w,h)
+        println(answer)
         return answer
     }
 
     fun gcd(w: Int, h: Int) : Int {
-        val w = w
-        val h = h
         var num = 0
-
         for (i in max(w,h) downTo 1) {
             if (w%i == 0 && h%i == 0) {
-                num += i
+                num = i
                 break
             }
         }
