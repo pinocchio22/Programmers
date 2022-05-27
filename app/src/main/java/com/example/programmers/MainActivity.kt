@@ -24,7 +24,7 @@ class MainActivity : AppCompatActivity() {
         var answer: Long = 0
         val GCDw = w/gcd(w,h)
         val GCDh = h/gcd(w,h)
-        answer += w*h-((GCDw-1) + (GCDh-1) + 1) * gcd(w,h)
+        answer += w.toLong()*h.toLong()-((GCDw-1) + (GCDh-1) + 1) * gcd(w,h)
         return answer
     }
 
