@@ -22,30 +22,20 @@ class MainActivity : AppCompatActivity() {
     // 멀쩡한 사각형
     fun solution(w: Int, h: Int): Long {
         var answer: Long = 0
-
-        // 최대공약수를 구한다.
-        gcd(w,h)
-        // 최대공약수로 w,h를 나눈다.
-        // 나눴을때의 w,h를 GCDw,GCDh로 놓는다.
-        var GCDw = w/gcd(w,h)
-        var GCDh = h/gcd(w,h)
-        // ((w'-1) + (h'-1) + 1) * 최대공약수를 계산한다.
-        ((GCDw-1) + (GCDh-1) + 1) * gcd(w,h)
-        // 전체 사각형에서 계산값을 뺀다.
+        val GCDw = w/gcd(w,h)
+        val GCDh = h/gcd(w,h)
         answer += w*h-((GCDw-1) + (GCDh-1) + 1) * gcd(w,h)
         return answer
     }
 
     fun gcd(w: Int, h: Int) : Int {
-        var w = w
-        var h = h
+        val w = w
+        val h = h
         var num = 0
 
         for (i in max(w,h) downTo 1) {
             if (w%i == 0 && h%i == 0) {
                 num += i
-                w /= i
-                h /= i
                 break
             }
         }
