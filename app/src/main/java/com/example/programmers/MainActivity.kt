@@ -15,30 +15,47 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
     
-        // 80
-        solution(8,12)
+        // [ [1,2], [1,3], [2,3] ]
+        solution(2)
     }
 
-    // 멀쩡한 사각형
-    fun solution(w: Int, h: Int): Long {
-        var answer: Long = 0
-        val GCDw = w/gcd(w,h)
-        val GCDh = h/gcd(w,h)
-        answer += w.toLong()*h.toLong()-(GCDw+GCDh-1) * gcd(w,h)
-        println(answer)
+    // 하노이의 탑
+    fun solution(n: Int): Array<IntArray> {
+        var answer = arrayOf<IntArray>()
+        var first = 0
+        var second = 0
+        var last = 0
+
+        // n에따라 달라지는 규칙 찾기
+
+        hanoi(n)
+
         return answer
     }
-
-    fun gcd(w: Int, h: Int) : Int {
-        var num = 0
-        for (i in max(w,h) downTo 1) {
-            if (w%i == 0 && h%i == 0) {
-                num = i
-                break
-            }
-        }
-        return num
+    fun hanoi(num : Int) {
+        return
     }
+
+//    // 멀쩡한 사각형
+//    fun solution(w: Int, h: Int): Long {
+//        var answer: Long = 0
+//        val GCDw = w/gcd(w,h)
+//        val GCDh = h/gcd(w,h)
+//        answer += w.toLong()*h.toLong()-(GCDw+GCDh-1) * gcd(w,h)
+//        println(answer)
+//        return answer
+//    }
+//
+//    fun gcd(w: Int, h: Int) : Int {
+//        var num = 0
+//        for (i in max(w,h) downTo 1) {
+//            if (w%i == 0 && h%i == 0) {
+//                num = i
+//                break
+//            }
+//        }
+//        return num
+//    }
 
 //    // 후보키
 //    fun solution(relation: Array<Array<String>>): Int {
