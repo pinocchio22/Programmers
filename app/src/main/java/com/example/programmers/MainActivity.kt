@@ -11,9 +11,13 @@ import kotlin.math.max
     "NULLABILITY_MISMATCH_BASED_ON_JAVA_ANNOTATIONS", "DEPRECATED_IDENTITY_EQUALS"
 )
 class MainActivity : AppCompatActivity() {
+
+    var move = arrayOf<IntArray>()
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
+
     
         // [ [1,2], [1,3], [2,3] ]
         solution(2)
@@ -22,18 +26,20 @@ class MainActivity : AppCompatActivity() {
     // 하노이의 탑
     fun solution(n: Int): Array<IntArray> {
         var answer = arrayOf<IntArray>()
-        var first = 0
-        var second = 0
-        var last = 0
 
-        // n에따라 달라지는 규칙 찾기
-
-        hanoi(n)
+        hanoi(n,1,2,3)
+        answer = move
 
         return answer
     }
-    fun hanoi(num : Int) {
-        return
+    fun hanoi(num : Int, first : Int, second : Int, last : Int) {
+        println("$num + $first + $second + $last")
+        if (num == 0) return
+        hanoi (num - 1, first, last, second) // N - 1 개 원반을 시작점 -> sub
+        move = move.plus(intArrayOf(first, last)) // n번 째 원반 -> 목표 기둥
+        hanoi(num - 1, second, first, last) // N-1 개 원반 sub -> to
+        println("dd")
+
     }
 
 //    // 멀쩡한 사각형
