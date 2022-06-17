@@ -15,25 +15,42 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
-        // 5
+        // 2
         solution(4)
     }
 
-    // 멀리 뛰기
-    fun solution(n: Int): Long {
-        var answer: Long = 0
-        var first = 1
-        var second = 2
-        var fibo : Int
-        if (n == 1) return 1 else if (n == 2) return 2
-        for(i in 3..n) {
-            fibo = (first+second)%1234567
-            first = second
-            second = fibo
-            if (i == n) answer += fibo
-        }
+    // N-Queen
+    fun solution(n: Int): Int {
+        var answer = 0
+
+        // n의 크기만큼의 2차원 배열을 만든다
+        // 1,1에 q위치
+        // 가로,세로,기울기 같은 원소는 제거
+        // 최대한 가까운 칸에 q위치
+        // 반복
+        // q가 n개가 되면 count +1
+        // 맨 마지막 q를 지우고 다른칸에 q위치
+        // 반복
+        // 재귀함수?
+
         return answer
     }
+
+//    // 멀리 뛰기
+//    fun solution(n: Int): Long {
+//        var answer: Long = 0
+//        var first = 1
+//        var second = 2
+//        var fibo : Int
+//        if (n == 1) return 1 else if (n == 2) return 2
+//        for(i in 3..n) {
+//            fibo = (first+second)%1234567
+//            first = second
+//            second = fibo
+//            if (i == n) answer += fibo
+//        }
+//        return answer
+//    }
 
 //    // 하노이의 탑
 //    fun solution(n: Int): Array<IntArray> {
