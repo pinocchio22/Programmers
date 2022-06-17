@@ -32,7 +32,7 @@ class MainActivity : AppCompatActivity() {
             second = fibo
             if (i == n) answer += fibo
         }
-        return answer
+        return answer%1234567
     }
 
 //    // 하노이의 탑
