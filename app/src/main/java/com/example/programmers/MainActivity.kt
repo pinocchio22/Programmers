@@ -11,30 +11,43 @@ import kotlin.math.max
     "NULLABILITY_MISMATCH_BASED_ON_JAVA_ANNOTATIONS", "DEPRECATED_IDENTITY_EQUALS"
 )
 class MainActivity : AppCompatActivity() {
-
-    var move = arrayOf<IntArray>()
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
-        // [ [1,2], [1,3], [2,3] ]
-        solution(2)
+        // 5
+        solution(4)
     }
 
-    // 하노이의 탑
-    fun solution(n: Int): Array<IntArray> {
-        var answer = arrayOf<IntArray>()
-        hanoi(n,1,2,3)
-        answer = move
+    // 멀리 뛰기
+    fun solution(n: Int): Long {
+        var answer: Long = 0
+        var first = 1
+        var second = 2
+        var fibo : Int
+        if (n == 1) return 1 else if (n == 2) return 2
+        for(i in 3..n) {
+            fibo = first+second
+            first = second
+            second = fibo
+            if (i == n) answer += fibo
+        }
         return answer
     }
-    fun hanoi(num : Int, first : Int, second : Int, last : Int) {
-        if (num == 0) return
-        hanoi (num - 1, first, last, second)
-        move = move.plus(intArrayOf(first, last))
-        hanoi(num - 1, second, first, last)
-    }
+
+//    // 하노이의 탑
+//    fun solution(n: Int): Array<IntArray> {
+//        var answer = arrayOf<IntArray>()
+//        hanoi(n,1,2,3)
+//        answer = move
+//        return answer
+//    }
+//    fun hanoi(num : Int, first : Int, second : Int, last : Int) {
+//        if (num == 0) return
+//        hanoi (num - 1, first, last, second)
+//        move = move.plus(intArrayOf(first, last))
+//        hanoi(num - 1, second, first, last)
+//    }
 
 //    // 멀쩡한 사각형
 //    fun solution(w: Int, h: Int): Long {
