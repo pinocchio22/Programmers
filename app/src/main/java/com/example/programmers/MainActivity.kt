@@ -27,12 +27,12 @@ class MainActivity : AppCompatActivity() {
         var fibo : Int
         if (n == 1) return 1 else if (n == 2) return 2
         for(i in 3..n) {
-            fibo = first+second
+            fibo = (first+second)%1234567
             first = second
             second = fibo
             if (i == n) answer += fibo
         }
-        return answer%1234567
+        return answer
     }
 
 //    // 하노이의 탑
