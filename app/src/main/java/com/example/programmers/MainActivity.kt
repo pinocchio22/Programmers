@@ -12,8 +12,6 @@ import kotlin.math.max
     "NULLABILITY_MISMATCH_BASED_ON_JAVA_ANNOTATIONS", "DEPRECATED_IDENTITY_EQUALS"
 )
 class MainActivity : AppCompatActivity() {
-
-    var answer = 0
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
@@ -23,41 +21,37 @@ class MainActivity : AppCompatActivity() {
     }
 
     // N-Queen
-    fun solution(n: Int): Int {
-        var answer = 0
-        var arr : Array<Int> = Array(n){0}
-        var sum = 0
+    var answer = 0
+    lateinit var arr: IntArray
 
-        // n의 크기만큼의 1차원 배열을 만든다
-        // 1,1에 q위치
-        // 가로,세로,기울기 같은 원소는 제거
-        // 최대한 가까운 칸에 q위치
-        // 반복
-        // q가 n개가 되면 count +1
-        // 맨 마지막 q를 지우고 다른칸에 q위치
-        // 반복
-        // 재귀함수?
-        queen(arr, sum, n, 0)
-//        println(answer)
+    fun solution(n: Int): Int {
+        arr = IntArray(n){-1}
+        queen(0, n)
 
         return answer
     }
 
-    fun queen(arr : Array<Int> ,sum : Int, n : Int, Q : Int) {
-        if (sum == n) {
-            answer+1
+    fun queen(sum : Int, n : Int) {
+        if(sum==n){
+            answer++
             return
         }
-        for (i in 0 until n) {
-            for (j in 0 until sum) {
-                if (arr[j] != i || abs(arr[j]-i) != abs(j-sum)) {
-                    arr[j] = i
-                    println(arr[j])
-                    queen(arr, sum+1, n, Q)
-                    println("sum + $sum")
-                }
+        for(i in 0 until n){
+            if(check(sum,i)){
+                arr[sum] = i
+                queen(sum+1,n)
+                arr[sum] = -1
             }
         }
+    }
+
+    fun check(sum: Int, i : Int) : Boolean {
+        for (j in 0 until sum){
+            if (arr[j] == i || abs(arr[j]-i) == abs(j-sum)) {
+                return false
+            }
+        }
+        return true
     }
 
 
