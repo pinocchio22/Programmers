@@ -25,22 +25,21 @@ class MainActivity : AppCompatActivity() {
     lateinit var arr: IntArray
 
     fun solution(n: Int): Int {
-        arr = IntArray(n){-1}
+        arr = IntArray(n){12}
         queen(0, n)
-
         return answer
     }
 
-    fun queen(sum : Int, n : Int) {
-        if(sum==n){
+    fun queen(count : Int, n : Int) {
+        if(count==n){
             answer++
             return
         }
         for(i in 0 until n){
-            if(check(sum,i)){
-                arr[sum] = i
-                queen(sum+1,n)
-                arr[sum] = -1
+            if(check(count,i)){
+                arr[count] = i
+                queen(count+1,n)
+                arr[count] = 12
             }
         }
     }
