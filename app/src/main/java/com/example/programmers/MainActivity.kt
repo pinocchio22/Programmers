@@ -3,6 +3,7 @@ package com.example.programmers
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import java.util.*
+import kotlin.math.abs
 import kotlin.math.max
 
 @Suppress(
@@ -11,6 +12,8 @@ import kotlin.math.max
     "NULLABILITY_MISMATCH_BASED_ON_JAVA_ANNOTATIONS", "DEPRECATED_IDENTITY_EQUALS"
 )
 class MainActivity : AppCompatActivity() {
+
+    var answer = 0
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
@@ -22,8 +25,10 @@ class MainActivity : AppCompatActivity() {
     // N-Queen
     fun solution(n: Int): Int {
         var answer = 0
+        var arr : Array<Int> = Array(n){0}
+        var sum = 0
 
-        // n의 크기만큼의 2차원 배열을 만든다
+        // n의 크기만큼의 1차원 배열을 만든다
         // 1,1에 q위치
         // 가로,세로,기울기 같은 원소는 제거
         // 최대한 가까운 칸에 q위치
@@ -32,9 +37,29 @@ class MainActivity : AppCompatActivity() {
         // 맨 마지막 q를 지우고 다른칸에 q위치
         // 반복
         // 재귀함수?
+        queen(arr, sum, n, 0)
+//        println(answer)
 
         return answer
     }
+
+    fun queen(arr : Array<Int> ,sum : Int, n : Int, Q : Int) {
+        if (sum == n) {
+            answer+1
+            return
+        }
+        for (i in 0 until n) {
+            for (j in 0 until sum) {
+                if (arr[j] != i || abs(arr[j]-i) != abs(j-sum)) {
+                    arr[j] = i
+                    println(arr[j])
+                    queen(arr, sum+1, n, Q)
+                    println("sum + $sum")
+                }
+            }
+        }
+    }
+
 
 //    // 멀리 뛰기
 //    fun solution(n: Int): Long {
