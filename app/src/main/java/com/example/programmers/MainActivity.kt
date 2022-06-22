@@ -17,7 +17,39 @@ class MainActivity : AppCompatActivity() {
         setContentView(R.layout.activity_main)
 
         // 2
-        solution(4)
+        solution(5, arrayOf(intArrayOf(1,2,1), intArrayOf(2,3,3), intArrayOf(5,2,2), intArrayOf(1,4,2), intArrayOf(5,3,1), intArrayOf(5,4,2)), 3)
+    }
+
+    // 배달
+    fun solution(N: Int, road: Array<IntArray>, k: Int): Int {
+        var answer = 0
+//        var new = Array(N){ Array(50) { Array<Int>(2) } }
+
+
+//        road.forEach {
+//            new[it[0]-1][0] = new[it[0]-1][0].plus(it[1])
+//            new[it[0]-1][1] = new[it[0]-1][1].plus(it[2])
+//        }
+//
+//        new.forEach {
+//            println(it.contentDeepToString())
+//        }
+        var a = arrayOf<Array<Int>>()
+        road.forEach {
+            var temp1 = arrayOf<Int>()
+            var temp2 = arrayOf<Int>()
+
+            temp1 = temp1.plus(it[1])
+            temp2 = temp2.plus(it[2])
+
+            for(i in 0 until N) {
+                a[1] += temp1
+                a[2] += temp2
+            }
+        }
+        println(a.contentDeepToString())
+
+        return answer
     }
 
     // N-Queen
