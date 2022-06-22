@@ -2,6 +2,7 @@ package com.example.programmers
 
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
+import org.w3c.dom.Node
 import java.util.*
 import kotlin.math.abs
 import kotlin.math.max
@@ -21,15 +22,17 @@ class MainActivity : AppCompatActivity() {
     }
 
     // 배달
+    data class Node(val idx: Int, val distance: Int):Comparable<Node>{
+        override fun compareTo(other: Node): Int {
+            //거리로 Node 끼리 비교해줍니다.
+            return this.distance.compareTo(other.distance)
+        }
+    }
     fun solution(N: Int, road: Array<IntArray>, k: Int): Int {
         var answer = 0
-
-        data class Node(val idx: Int, val distance: Int):Comparable<Node>{
-            override fun compareTo(other: Node): Int {
-                //거리로 Node 끼리 비교해줍니다.
-                return this.distance.compareTo(other.distance)
-            }
-        }
+        //마을들의 초기값을 INF로 설정하고 첫 번째 마을의 값을 0으로 정해줬습니다.
+        val town = IntArray(N+1){ 500001 }.apply { this[1] = 0 }
+        val pq = PriorityQueue<Node>().apply { offer(Node(1,0)) }
 
         return answer
     }
