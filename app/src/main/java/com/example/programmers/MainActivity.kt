@@ -23,31 +23,13 @@ class MainActivity : AppCompatActivity() {
     // 배달
     fun solution(N: Int, road: Array<IntArray>, k: Int): Int {
         var answer = 0
-//        var new = Array(N){ Array(50) { Array<Int>(2) } }
 
-
-//        road.forEach {
-//            new[it[0]-1][0] = new[it[0]-1][0].plus(it[1])
-//            new[it[0]-1][1] = new[it[0]-1][1].plus(it[2])
-//        }
-//
-//        new.forEach {
-//            println(it.contentDeepToString())
-//        }
-        var a = arrayOf<Array<Int>>()
-        road.forEach {
-            var temp1 = arrayOf<Int>()
-            var temp2 = arrayOf<Int>()
-
-            temp1 = temp1.plus(it[1])
-            temp2 = temp2.plus(it[2])
-
-            for(i in 0 until N) {
-                a[1] += temp1
-                a[2] += temp2
+        data class Node(val idx: Int, val distance: Int):Comparable<Node>{
+            override fun compareTo(other: Node): Int {
+                //거리로 Node 끼리 비교해줍니다.
+                return this.distance.compareTo(other.distance)
             }
         }
-        println(a.contentDeepToString())
 
         return answer
     }
