@@ -17,47 +17,35 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
-        // 2
+        // 4
         solution(5, arrayOf(intArrayOf(1,2,1), intArrayOf(2,3,3), intArrayOf(5,2,2), intArrayOf(1,4,2), intArrayOf(5,3,1), intArrayOf(5,4,2)), 3)
     }
 
     // 배달
     data class Node(val idx: Int, val distance: Int):Comparable<Node>{
         override fun compareTo(other: Node): Int {
-            //거리로 Node 끼리 비교해줍니다.
             return this.distance.compareTo(other.distance)
         }
     }
     fun solution(N: Int, road: Array<IntArray>, k: Int): Int {
-        var answer = 0
-        //마을들의 초기값을 INF로 설정하고 첫 번째 마을의 값을 0으로 정해줬습니다.
-        val town = IntArray(N+1){ 500001 }.apply { this[1] = 0 } // [500001, 0, 500001, 500001, 500001, 500001]
-        val pq = PriorityQueue<Node>().apply { offer(Node(1,0)) } // [Node(idx=1, distance=0)]
+        val town = IntArray(N+1){ 500001 }.apply { this[1] = 0 }
+        val pq = PriorityQueue<Node>().apply { offer(Node(1,0)) }
 
-        while (pq.isEmpty()) {
+        while (pq.isNotEmpty()) {
             val now = pq.poll()
-
-            if (now.distance > town[now.distance]) continue
+            if (now.distance > town[now.idx]) continue
             for (i in road.indices) {
-                // 현재위치가 road[i][0]와 일치할 경우
                 if (road[i][0] == now.idx) {
-                    // 다음 위치로 가는 비용 계산
                     val cost = now.distance + road[i][2]
-                    // 다음 인덱스 저장
                     val idx = road[i][1]
-                    // 다음위치로 가는 비용이 저장된 값보다 작을경우 town을 작은 값으로 초기화 후 우선순위 큐에 다음 노드 삽입
                     if(cost < town[idx]){
                         town[idx] = cost
                         pq.offer(Node(idx, cost))
                     }
                 }
-                // 현재위치가 road[i][1]와 일치할 경우
                 else if (road[i][1] == now.idx){
-                    // 다음 위치로 가는 비용 계산
                     val cost = now.distance + road[i][2]
-                    // 다음 인덱스 저장
                     val idx = road[i][0]
-                    // 다음위치로 가는 비용이 저장된 값보다 작을경우 town을 작은 값으로 초기화 후 우선순위 큐에 다음 노드 삽입
                     if(cost < town[idx]){
                         town[idx] = cost
                         pq.offer(Node(idx, cost))
@@ -65,42 +53,41 @@ class MainActivity : AppCompatActivity() {
                 }
             }
         }
-        // town에서 k보다 작거나 같은 값의 개수를 반환
         return town.count{ it <= k }
     }
 
-    // N-Queen
-    var answer = 0
-    lateinit var arr: IntArray
-
-    fun solution(n: Int): Int {
-        arr = IntArray(n){12}
-        queen(0, n)
-        return answer
-    }
-
-    fun queen(count : Int, n : Int) {
-        if(count==n){
-            answer++
-            return
-        }
-        for(i in 0 until n){
-            if(check(count,i)){
-                arr[count] = i
-                queen(count+1,n)
-                arr[count] = 12
-            }
-        }
-    }
-
-    fun check(sum: Int, i : Int) : Boolean {
-        for (j in 0 until sum){
-            if (arr[j] == i || abs(arr[j]-i) == abs(j-sum)) {
-                return false
-            }
-        }
-        return true
-    }
+//    // N-Queen
+//    var answer = 0
+//    lateinit var arr: IntArray
+//
+//    fun solution(n: Int): Int {
+//        arr = IntArray(n){12}
+//        queen(0, n)
+//        return answer
+//    }
+//
+//    fun queen(count : Int, n : Int) {
+//        if(count==n){
+//            answer++
+//            return
+//        }
+//        for(i in 0 until n){
+//            if(check(count,i)){
+//                arr[count] = i
+//                queen(count+1,n)
+//                arr[count] = 12
+//            }
+//        }
+//    }
+//
+//    fun check(sum: Int, i : Int) : Boolean {
+//        for (j in 0 until sum){
+//            if (arr[j] == i || abs(arr[j]-i) == abs(j-sum)) {
+//                return false
+//            }
+//        }
+//        return true
+//    }
 
 
 //    // 멀리 뛰기
