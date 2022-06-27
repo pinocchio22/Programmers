@@ -28,24 +28,24 @@ class MainActivity : AppCompatActivity() {
         }
     }
     fun solution(N: Int, road: Array<IntArray>, k: Int): Int {
-        val town = IntArray(N+1){ 500001 }.apply { this[1] = 0 }
-        val pq = PriorityQueue<Node>().apply { offer(Node(1,0)) }
+        val town = IntArray(N){ 500001 }.apply { this[0] = 0 }
+        val pq = PriorityQueue<Node>().apply { offer(Node(0,0)) }
 
         while (pq.isNotEmpty()) {
             val now = pq.poll()
             if (now.distance > town[now.idx]) continue
             for (i in road.indices) {
-                if (road[i][0] == now.idx) {
+                if (road[i][0] == now.idx+1) {
                     val cost = now.distance + road[i][2]
-                    val idx = road[i][1]
+                    val idx = road[i][1]-1
                     if(cost < town[idx]){
                         town[idx] = cost
                         pq.offer(Node(idx, cost))
                     }
                 }
-                else if (road[i][1] == now.idx){
+                else if (road[i][1] == now.idx+1){
                     val cost = now.distance + road[i][2]
-                    val idx = road[i][0]
+                    val idx = road[i][0]-1
                     if(cost < town[idx]){
                         town[idx] = cost
                         pq.offer(Node(idx, cost))
@@ -53,6 +53,7 @@ class MainActivity : AppCompatActivity() {
                 }
             }
         }
+        println(town.contentToString())
         return town.count{ it <= k }
     }
 
