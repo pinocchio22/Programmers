@@ -37,6 +37,25 @@ class MainActivity : AppCompatActivity() {
             4-4. u의 첫 번째와 마지막 문자를 제거하고, 나머지 문자열의 괄호 방향을 뒤집어서 뒤에 붙입니다.
             4-5. 생성된 문자열을 반환합니다.
         **/
+
+        // 4
+        fun correct(u : String, v : String) : String {
+            // 4-1
+            var temp = "("
+            // 4-2
+            temp += v
+            // 4-3
+            temp += ")"
+            // 4-4
+            var new = u.drop(1)
+            new.dropLast(1).forEach {
+                temp += if (it == '(') ')' else if (it == ')') '(' else it
+            }
+            // 4-5
+            return temp
+        }
+        println(correct("))((", "()"))
+
         var three = ""
         fun cycle(p : String) : String {
             // 1
