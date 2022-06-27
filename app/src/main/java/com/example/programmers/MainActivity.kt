@@ -17,45 +17,93 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
-        // 4
-        solution(5, arrayOf(intArrayOf(1,2,1), intArrayOf(2,3,3), intArrayOf(5,2,2), intArrayOf(1,4,2), intArrayOf(5,3,1), intArrayOf(5,4,2)), 3)
+        // "())"
+        solution("()(())))")
     }
 
-    // 배달
-    data class Node(val idx: Int, val distance: Int):Comparable<Node>{
-        override fun compareTo(other: Node): Int {
-            return this.distance.compareTo(other.distance)
-        }
-    }
-    fun solution(N: Int, road: Array<IntArray>, k: Int): Int {
-        val town = IntArray(N){ 500001 }.apply { this[0] = 0 }
-        val pq = PriorityQueue<Node>().apply { offer(Node(0,0)) }
+    // 괄호 변환
+    fun solution(p: String): String {
+        var answer = ""
 
-        while (pq.isNotEmpty()) {
-            val now = pq.poll()
-            if (now.distance > town[now.idx]) continue
-            for (i in road.indices) {
-                if (road[i][0] == now.idx+1) {
-                    val cost = now.distance + road[i][2]
-                    val idx = road[i][1]-1
-                    if(cost < town[idx]){
-                        town[idx] = cost
-                        pq.offer(Node(idx, cost))
-                    }
-                }
-                else if (road[i][1] == now.idx+1){
-                    val cost = now.distance + road[i][2]
-                    val idx = road[i][0]-1
-                    if(cost < town[idx]){
-                        town[idx] = cost
-                        pq.offer(Node(idx, cost))
-                    }
+        /**
+        1. 입력이 빈 문자열인 경우, 빈 문자열을 반환합니다.
+        2. 문자열 w를 두 "균형잡힌 괄호 문자열" u, v로 분리합니다. 단, u는 "균형잡힌 괄호 문자열"로 더 이상 분리할 수 없어야 하며, v는 빈 문자열이 될 수 있습니다.
+        3. 문자열 u가 "올바른 괄호 자열" 이라면 문자열 v에 대해 1단계부터 다시 수행합니다.
+            3-1. 수행한 결과 문자열을 u에 이어 붙인 후 반환합니다.
+        4. 문자열 u가 "올바른 괄호 문자열"이 아니라면 아래 과정을 수행합니다.
+            4-1. 빈 문자열에 첫 번째 문자로 '('를 붙입니다.
+            4-2. 문자열 v에 대해 1단계부터 재귀적으로 수행한 결과 문자열을 이어 붙입니다.
+            4-3. ')'를 다시 붙입니다.
+            4-4. u의 첫 번째와 마지막 문자를 제거하고, 나머지 문자열의 괄호 방향을 뒤집어서 뒤에 붙입니다.
+            4-5. 생성된 문자열을 반환합니다.
+        **/
+        var three = ""
+        fun cycle(p : String) : String {
+            // 1
+            if (p.isBlank()) return ""
+
+            // 2
+            val stack = Stack<Char>()
+            var u : String
+            var v = ""
+            p.forEach {
+                if (stack.isEmpty()) stack.push(it)
+                else {
+                    if (stack.peek() == ')' && it == '(') stack.pop()
+                    else if (stack.peek() == '(' && it == ')') stack.pop()
+                    else stack.push(it)
                 }
             }
+            stack.forEach { v += it }
+            u = p.dropLast(v.length)
+            three += u
+            return if (u.isNotBlank()) u else cycle(v)
         }
-        println(town.contentToString())
-        return town.count{ it <= k }
+        // 3
+        cycle(p)
+
+        // 3-1
+        println(three)
+
+        return answer
     }
+
+
+
+//    // 배달
+//    data class Node(val idx: Int, val distance: Int):Comparable<Node>{
+//        override fun compareTo(other: Node): Int {
+//            return this.distance.compareTo(other.distance)
+//        }
+//    }
+//    fun solution(N: Int, road: Array<IntArray>, k: Int): Int {
+//        val town = IntArray(N){ 500001 }.apply { this[0] = 0 }
+//        val pq = PriorityQueue<Node>().apply { offer(Node(0,0)) }
+//
+//        while (pq.isNotEmpty()) {
+//            val now = pq.poll()
+//            if (now.distance > town[now.idx]) continue
+//            for (i in road.indices) {
+//                if (road[i][0] == now.idx+1) {
+//                    val cost = now.distance + road[i][2]
+//                    val idx = road[i][1]-1
+//                    if(cost < town[idx]){
+//                        town[idx] = cost
+//                        pq.offer(Node(idx, cost))
+//                    }
+//                }
+//                else if (road[i][1] == now.idx+1){
+//                    val cost = now.distance + road[i][2]
+//                    val idx = road[i][0]-1
+//                    if(cost < town[idx]){
+//                        town[idx] = cost
+//                        pq.offer(Node(idx, cost))
+//                    }
+//                }
+//            }
+//        }
+//        return town.count{ it <= k }
+//    }
 
 //    // N-Queen
 //    var answer = 0
