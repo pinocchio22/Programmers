@@ -17,16 +17,16 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
-        // "())"
-        solution(")(")
+        // "(()())()"
+        solution("()))((()")
     }
 
     // 괄호 변환
     var answer = ""
     fun solution(p: String): String {
 
-        cycle(p)
-        println(answer)
+        answer += cycle(p)
+        println("answer : : : : $answer"K)
         return answer
     }
 
@@ -38,23 +38,30 @@ class MainActivity : AppCompatActivity() {
         // 1
         if (p.isBlank()) return ""
         // 2
-        p.forEach {
-            u += it
-            if (it == '(') {
+        for (i in p.indices) {
+            u += p[i]
+            if (p[i] == '(') {
                 RCnt++
-            } else if (it == ')') {
+            } else if (p[i] == ')') {
                 LCnt++
             }
             if (RCnt == LCnt) {
                 v += p.drop(u.length)
-                return@forEach
+                break
             }
         }
+        println("u $u")
+        println("v $v")
+        println("isCorrect : ${isCorrect(u)}")
         if (isCorrect(u)) {
             answer += u
+            println("answer : $answer")
             return cycle(v)
+        } else {
+            answer += new(u,v)
+            println("answer ::: $answer ")
+            return new(u,v)
         }
-        return new(u,v)
     }
 
     fun new(u : String, v : String) : String {
@@ -70,19 +77,21 @@ class MainActivity : AppCompatActivity() {
             temp += if (it == '(') ')' else if (it == ')') '(' else it
         }
         // 4-5
+        println("temp : $temp")
         return temp
     }
 
     fun isCorrect(u : String) : Boolean {
         val stack = Stack<Char>()
-        u.forEach {
-            if (stack.empty()) {
-                stack.push(it)
-            }
-            when {
-                stack.peek() == '(' && it == ')' -> stack.pop()
+        stack.push(u[0])
+        for (i in 1 until u.length) {
+            if (stack.peek() == '(' && u[i] == ')') {
+                stack.pop()
+            }else {
+                stack.push(u[i])
             }
         }
+        println("stack : $stack")
         return stack.isEmpty()
     }
 
