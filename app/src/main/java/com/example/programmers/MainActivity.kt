@@ -17,8 +17,8 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
-        // "(()())()"
-        solution("()))((()")
+        // 	"(()())()"
+        solution(	"(()())()")
     }
 
     // 괄호 변환
@@ -26,7 +26,7 @@ class MainActivity : AppCompatActivity() {
     fun solution(p: String): String {
 
         answer += cycle(p)
-        println("answer : : : : $answer"K)
+        println("answer : : : : $answer")
         return answer
     }
 
@@ -55,13 +55,13 @@ class MainActivity : AppCompatActivity() {
         println("isCorrect : ${isCorrect(u)}")
         if (isCorrect(u)) {
             answer += u
-            println("answer : $answer")
-            return cycle(v)
+//            println("answer : $answer")
+            answer += cycle(u)
         } else {
+//            println("answer ::: $answer ")
             answer += new(u,v)
-            println("answer ::: $answer ")
-            return new(u,v)
         }
+        return answer
     }
 
     fun new(u : String, v : String) : String {
