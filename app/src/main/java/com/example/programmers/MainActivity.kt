@@ -22,8 +22,9 @@ class MainActivity : AppCompatActivity() {
     }
 
     // 괄호 변환
+    var answer = ""
     fun solution(p: String): String {
-        var answer = ""
+
 
         /**
         1. 입력이 빈 문자열인 경우, 빈 문자열을 반환합니다.
@@ -37,57 +38,61 @@ class MainActivity : AppCompatActivity() {
             4-4. u의 첫 번째와 마지막 문자를 제거하고, 나머지 문자열의 괄호 방향을 뒤집어서 뒤에 붙입니다.
             4-5. 생성된 문자열을 반환합니다.
         **/
-
-        var a = ""
-        var b = ""
-        fun cycle(p : String) : String {
-            // 1
-            if (p.isBlank()) return ""
-
-            // 2
-            val stack = Stack<Char>()
-            var u : String
-            var v = ""
-            p.forEach {
-                if (stack.isEmpty()) stack.push(it)
-                else {
-                    if (stack.peek() == ')' && it == '(') stack.pop()
-                    else if (stack.peek() == '(' && it == ')') stack.pop()
-                    else stack.push(it)
-                }
-            }
-            stack.forEach { v += it }
-            u = p.dropLast(v.length)
-            a += u
-            b += v
-            return if (u.isNotBlank()) u else cycle(v)
-        }
         // 3
         cycle(p)
 
         // 3-1
-        println("a $a")
-        println("b $b")
 
         // 4
-        fun correct(u : String, v : String) : String {
-            // 4-1
-            var temp = "("
-            // 4-2
-            temp += v
-            // 4-3
-            temp += ")"
-            // 4-4
-            var new = u.drop(1)
-            new.dropLast(1).forEach {
-                temp += if (it == '(') ')' else if (it == ')') '(' else it
-            }
-            // 4-5
-            return temp
-        }
-        answer += if (b.isBlank()) a else correct(a,b)
+
 
         return answer
+    }
+    fun cycle(p : String) : String {
+        var u = ""
+        var v = ""
+        var RCnt = 0
+        var LCnt = 0
+        // 1
+        if (p.isBlank()) return ""
+        // 2
+        p.forEach {
+            u += it
+            if (it == '(') {
+                RCnt++
+            } else if (it == ')') {
+                LCnt++
+            }
+            if (RCnt == LCnt) {
+                v += p.drop(u.length)
+                return@forEach
+            }
+        }
+        if (isCorrect(u)) {
+            answer += u
+            return cycle(v)
+        }
+        return new(u,v)
+    }
+
+    fun new(u : String, v : String) : String {
+        // 4-1
+        var temp = "("
+        // 4-2
+        temp += v
+        // 4-3
+        temp += ")"
+        // 4-4
+        var new = u.drop(1)
+        new.dropLast(1).forEach {
+            temp += if (it == '(') ')' else if (it == ')') '(' else it
+        }
+        // 4-5
+        return temp
+    }
+
+    fun isCorrect(u : String) : Boolean {
+
     }
 
 
