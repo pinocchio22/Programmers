@@ -18,7 +18,7 @@ class MainActivity : AppCompatActivity() {
         setContentView(R.layout.activity_main)
 
         // "())"
-        solution("()(())))")
+        solution(")(")
     }
 
     // 괄호 변환
@@ -38,25 +38,8 @@ class MainActivity : AppCompatActivity() {
             4-5. 생성된 문자열을 반환합니다.
         **/
 
-        // 4
-        fun correct(u : String, v : String) : String {
-            // 4-1
-            var temp = "("
-            // 4-2
-            temp += v
-            // 4-3
-            temp += ")"
-            // 4-4
-            var new = u.drop(1)
-            new.dropLast(1).forEach {
-                temp += if (it == '(') ')' else if (it == ')') '(' else it
-            }
-            // 4-5
-            return temp
-        }
-        println(correct("))((", "()"))
-
-        var three = ""
+        var a = ""
+        var b = ""
         fun cycle(p : String) : String {
             // 1
             if (p.isBlank()) return ""
@@ -75,14 +58,34 @@ class MainActivity : AppCompatActivity() {
             }
             stack.forEach { v += it }
             u = p.dropLast(v.length)
-            three += u
+            a += u
+            b += v
             return if (u.isNotBlank()) u else cycle(v)
         }
         // 3
         cycle(p)
 
         // 3-1
-        println(three)
+        println("a $a")
+        println("b $b")
+
+        // 4
+        fun correct(u : String, v : String) : String {
+            // 4-1
+            var temp = "("
+            // 4-2
+            temp += v
+            // 4-3
+            temp += ")"
+            // 4-4
+            var new = u.drop(1)
+            new.dropLast(1).forEach {
+                temp += if (it == '(') ')' else if (it == ')') '(' else it
+            }
+            // 4-5
+            return temp
+        }
+        answer += if (b.isBlank()) a else correct(a,b)
 
         return answer
     }
