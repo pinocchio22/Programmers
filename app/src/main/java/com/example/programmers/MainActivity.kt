@@ -16,25 +16,15 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
-        // 	 "2abcabc2dedede"  14
-        solution("abcabcabcabcdededededede")
+        // 7
+        solution("abcabca")
     }
     // 문자열 압축
     fun solution(s: String): Int {
         var answer = 0
-
-        /**
-        문자열을 2개 단위로 자르면 "abcabcabcabc6de" 가 됩니다.
-        문자열을 3개 단위로 자르면 "4abcdededededede" 가 됩니다.
-        문자열을 4개 단위로 자르면 "abcabcabcabc3dede" 가 됩니다.
-        문자열을 6개 단위로 자를 경우 "2abcabc2dedede"가 되며, 이때의 길이가 14로 가장 짧습니다.
-         **/
-        println(s.chunked(2))
-//        println(s.chunked(3))
-//        println(s.chunked(4))
-//        println(s.chunked(6))
         var length = arrayOf<Int>()
-        for (num in 2..s.length) {
+
+        for (num in 1..s.length/2) {
             var str = ""
             var cnt = 0
             for (i in 0 until s.chunked(num).size) {
@@ -47,14 +37,12 @@ class MainActivity : AppCompatActivity() {
                     } else {
                         str += s.chunked(num)[i]
                     }
-
                 }
                 if ((s.chunked(num)+1)[i] == 1) break
             }
-            println(str)
             length += str.length
         }
-        println(length.min())
+        answer += length.minOrNull()!!
         return answer
     }
 
