@@ -2,7 +2,6 @@ package com.example.programmers
 
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
-import org.w3c.dom.Node
 import java.util.*
 import kotlin.math.abs
 import kotlin.math.max
@@ -26,7 +25,6 @@ class MainActivity : AppCompatActivity() {
     fun solution(p: String): String {
         var answer = ""
         answer += cycle(p)
-        println("answer : $answer")
         return answer
     }
 
@@ -36,16 +34,11 @@ class MainActivity : AppCompatActivity() {
         var v = ""
         var RCnt = 0
         var LCnt = 0
-        // 1
+
         if (p.isBlank()) return ""
-        // 2
         for (i in p.indices) {
             u += p[i]
-            if (p[i] == '(') {
-                RCnt++
-            } else if (p[i] == ')') {
-                LCnt++
-            }
+            if (p[i] == '(') RCnt++ else if (p[i] == ')') LCnt++
             if (RCnt == LCnt) {
                 v += p.drop(u.length)
                 break
@@ -55,7 +48,7 @@ class MainActivity : AppCompatActivity() {
             str += u
             str += cycle(v)
         } else {
-            var temp = "($v)"
+            var temp = "(${cycle(v)})"
             var new = u.drop(1)
             new.dropLast(1).forEach {
                 temp += if (it == '(') ')' else '('
