@@ -17,20 +17,21 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
-        // 	"(()())()"
-        solution(	"(()())()")
+        // 	"()(())()"
+        solution("()))((()")
     }
 
     // 괄호 변환
-    var answer = ""
-    fun solution(p: String): String {
 
+    fun solution(p: String): String {
+        var answer = ""
         answer += cycle(p)
-        println("answer : : : : $answer")
+        println("answer : $answer")
         return answer
     }
 
     fun cycle(p : String) : String {
+        var str = ""
         var u = ""
         var v = ""
         var RCnt = 0
@@ -50,35 +51,18 @@ class MainActivity : AppCompatActivity() {
                 break
             }
         }
-        println("u $u")
-        println("v $v")
-        println("isCorrect : ${isCorrect(u)}")
         if (isCorrect(u)) {
-            answer += u
-//            println("answer : $answer")
-            answer += cycle(u)
+            str += u
+            str += cycle(v)
         } else {
-//            println("answer ::: $answer ")
-            answer += new(u,v)
+            var temp = "($v)"
+            var new = u.drop(1)
+            new.dropLast(1).forEach {
+                temp += if (it == '(') ')' else '('
+            }
+            str += temp
         }
-        return answer
-    }
-
-    fun new(u : String, v : String) : String {
-        // 4-1
-        var temp = "("
-        // 4-2
-        temp += v
-        // 4-3
-        temp += ")"
-        // 4-4
-        var new = u.drop(1)
-        new.dropLast(1).forEach {
-            temp += if (it == '(') ')' else if (it == ')') '(' else it
-        }
-        // 4-5
-        println("temp : $temp")
-        return temp
+        return str
     }
 
     fun isCorrect(u : String) : Boolean {
@@ -91,7 +75,6 @@ class MainActivity : AppCompatActivity() {
                 stack.push(u[i])
             }
         }
-        println("stack : $stack")
         return stack.isEmpty()
     }
 
