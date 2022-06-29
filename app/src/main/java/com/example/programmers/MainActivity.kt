@@ -17,13 +17,13 @@ class MainActivity : AppCompatActivity() {
         setContentView(R.layout.activity_main)
 
         // 7
-        solution("abcabca")
+        solution("a")
     }
     // 문자열 압축
     fun solution(s: String): Int {
         var answer = 0
         var length = arrayOf<Int>()
-
+        if (s.length == 1) return 1
         for (num in 1..s.length/2) {
             var str = ""
             var cnt = 0
