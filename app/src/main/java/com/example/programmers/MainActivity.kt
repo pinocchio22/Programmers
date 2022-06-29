@@ -16,62 +16,97 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
-        // 	"()(())()"
-        solution("()))((()")
+        // 	 "2abcabc2dedede"  14
+        solution("abcabcabcabcdededededede")
     }
+    // 문자열 압축
+    fun solution(s: String): Int {
+        var answer = 0
 
-    // 괄호 변환
+        /**
+        문자열을 2개 단위로 자르면 "abcabcabcabc6de" 가 됩니다.
+        문자열을 3개 단위로 자르면 "4abcdededededede" 가 됩니다.
+        문자열을 4개 단위로 자르면 "abcabcabcabc3dede" 가 됩니다.
+        문자열을 6개 단위로 자를 경우 "2abcabc2dedede"가 되며, 이때의 길이가 14로 가장 짧습니다.
+         **/
+        println(s.chunked(2))
+//        println(s.chunked(3))
+//        println(s.chunked(4))
+//        println(s.chunked(6))
+        var length = arrayOf<Int>()
+        for (num in 2..s.length) {
+            var str = ""
+            var cnt = 0
+            for (i in 0 until s.chunked(num).size) {
+                if ((s.chunked(num)+1)[i] == (s.chunked(num)+1)[i+1]) {
+                    cnt++
+                } else {
+                    if (cnt != 0) {
+                        str += (cnt+1).toString()+s.chunked(num)[i]
+                        cnt = 0
+                    } else {
+                        str += s.chunked(num)[i]
+                    }
 
-    fun solution(p: String): String {
-        var answer = ""
-        answer += cycle(p)
+                }
+                if ((s.chunked(num)+1)[i] == 1) break
+            }
+            println(str)
+            length += str.length
+        }
+        println(length.min())
         return answer
     }
 
-    fun cycle(p : String) : String {
-        var str = ""
-        var u = ""
-        var v = ""
-        var RCnt = 0
-        var LCnt = 0
-
-        if (p.isBlank()) return ""
-        for (i in p.indices) {
-            u += p[i]
-            if (p[i] == '(') RCnt++ else if (p[i] == ')') LCnt++
-            if (RCnt == LCnt) {
-                v += p.drop(u.length)
-                break
-            }
-        }
-        if (isCorrect(u)) {
-            str += u
-            str += cycle(v)
-        } else {
-            var temp = "(${cycle(v)})"
-            var new = u.drop(1)
-            new.dropLast(1).forEach {
-                temp += if (it == '(') ')' else '('
-            }
-            str += temp
-        }
-        return str
-    }
-
-    fun isCorrect(u : String) : Boolean {
-        val stack = Stack<Char>()
-        stack.push(u[0])
-        for (i in 1 until u.length) {
-            if (stack.peek() == '(' && u[i] == ')') {
-                stack.pop()
-            }else {
-                stack.push(u[i])
-            }
-        }
-        return stack.isEmpty()
-    }
-
-
+//    // 괄호 변환
+//    fun solution(p: String): String {
+//        var answer = ""
+//        answer += cycle(p)
+//        return answer
+//    }
+//
+//    fun cycle(p : String) : String {
+//        var str = ""
+//        var u = ""
+//        var v = ""
+//        var RCnt = 0
+//        var LCnt = 0
+//
+//        if (p.isBlank()) return ""
+//        for (i in p.indices) {
+//            u += p[i]
+//            if (p[i] == '(') RCnt++ else if (p[i] == ')') LCnt++
+//            if (RCnt == LCnt) {
+//                v += p.drop(u.length)
+//                break
+//            }
+//        }
+//        if (isCorrect(u)) {
+//            str += u
+//            str += cycle(v)
+//        } else {
+//            var temp = "(${cycle(v)})"
+//            var new = u.drop(1)
+//            new.dropLast(1).forEach {
+//                temp += if (it == '(') ')' else '('
+//            }
+//            str += temp
+//        }
+//        return str
+//    }
+//
+//    fun isCorrect(u : String) : Boolean {
+//        val stack = Stack<Char>()
+//        stack.push(u[0])
+//        for (i in 1 until u.length) {
+//            if (stack.peek() == '(' && u[i] == ')') {
+//                stack.pop()
+//            }else {
+//                stack.push(u[i])
+//            }
+//        }
+//        return stack.isEmpty()
+//    }
 
 //    // 배달
 //    data class Node(val idx: Int, val distance: Int):Comparable<Node>{
