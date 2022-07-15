@@ -37,8 +37,18 @@ class MainActivity : AppCompatActivity() {
             food += it.split(" ")[3]
             score += it.split(" ")[4]
         }
-        println(language.contentToString())
-        println(score.contentToString())
+
+        query.forEach { it ->
+            var new = info
+            var temp = arrayOf<String>()
+            new.forEach { it2 ->
+                if (it.split(" and ")[0] == it2.split(" ")[0]) {
+                    temp += it2
+                }
+                new = temp
+            }
+        }
+
 
         return answer
     }
