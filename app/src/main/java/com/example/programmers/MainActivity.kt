@@ -24,29 +24,32 @@ class MainActivity : AppCompatActivity() {
     fun solution(info: Array<String>, query: Array<String>): IntArray {
         var answer: IntArray = intArrayOf()
 
-        var language = arrayOf<String>()
-        var kind = arrayOf<String>()
-        var career = arrayOf<String>()
-        var food = arrayOf<String>()
-        var score = arrayOf<String>()
-
-        info.forEach {
-            language += it.split(" ")[0]
-            kind += it.split(" ")[1]
-            career += it.split(" ")[2]
-            food += it.split(" ")[3]
-            score += it.split(" ")[4]
-        }
-
-        query.forEach { it ->
+        /**
+         1. query의 문장을 하나씩 꺼냄
+         2. 문장을 split으로 나눔
+         3. info의 문장을 하나씩 꺼냄
+         4. 문장을 split으로 나눔
+         5. 두 단어를 비교해서 같으면 새로운 배열에 저장
+         6. 그 배열을 가지고 2의 다음단계 진행
+         **/
+        query.forEach { it1 ->
             var new = info
-            var temp = arrayOf<String>()
-            new.forEach { it2 ->
-                if (it.split(" and ")[0] == it2.split(" ")[0]) {
-                    temp += it2
+            var i =  0
+            while (i<4) {
+                if (it1.replace("[0-9]".toRegex(), "").split(" and ")[i].contains("-")) {
+                    i++
+                } else {
+                    var temp = arrayOf<String>()
+                    new.forEach { it2 ->
+                        if (it1.replace("[0-9]".toRegex(), "").split(" and ")[i].contains(it2.replace("[0-9]".toRegex(), "").split(" ")[i])) {
+                            temp += it2
+                        }
+                    }
+                    new = temp
+                    i++
                 }
-                new = temp
             }
+            println(new.contentToString())
         }
 
 
