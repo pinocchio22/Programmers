@@ -35,6 +35,7 @@ class MainActivity : AppCompatActivity() {
         query.forEach { it1 ->
             var new = info
             var i =  0
+            var count = 0
             while (i<4) {
                 if (it1.replace("[0-9]".toRegex(), "").split(" and ")[i].contains("-")) {
                     i++
@@ -50,8 +51,17 @@ class MainActivity : AppCompatActivity() {
                 }
             }
             println(new.contentToString())
+            new.forEach {
+                if(it.replace("[^0-9]".toRegex(), "") >= it1.replace("[^0-9]".toRegex(), "")) {
+                    println(it.replace("[^0-9]".toRegex(), ""))
+                    println(it1.replace("[^0-9]".toRegex(), ""))
+                    count++
+                    println(count)
+                }
+            }
+            answer += count
         }
-
+        println(answer.contentToString())
 
         return answer
     }
