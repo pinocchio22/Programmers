@@ -17,34 +17,58 @@ class MainActivity : AppCompatActivity() {
         setContentView(R.layout.activity_main)
 
         // 7
-        solution("a")
+        solution(arrayOf("java backend junior pizza 150","python frontend senior chicken 210","python frontend senior chicken 150","cpp backend senior pizza 260","java backend junior chicken 80","python backend senior chicken 50"),
+        arrayOf("java and backend and junior and pizza 100","python and frontend and senior and chicken 200","cpp and - and senior and pizza 250","- and backend and senior and - 150","- and - and - and chicken 100","- and - and - and - 150"))
     }
-    // 문자열 압축
-    fun solution(s: String): Int {
-        var answer = 0
-        var length = arrayOf<Int>()
-        if (s.length == 1) return 1
-        for (num in 1..s.length/2) {
-            var str = ""
-            var cnt = 0
-            for (i in 0 until s.chunked(num).size) {
-                if ((s.chunked(num)+1)[i] == (s.chunked(num)+1)[i+1]) {
-                    cnt++
-                } else {
-                    if (cnt != 0) {
-                        str += (cnt+1).toString()+s.chunked(num)[i]
-                        cnt = 0
-                    } else {
-                        str += s.chunked(num)[i]
-                    }
-                }
-                if ((s.chunked(num)+1)[i] == 1) break
-            }
-            length += str.length
+    // 순위 검색
+    fun solution(info: Array<String>, query: Array<String>): IntArray {
+        var answer: IntArray = intArrayOf()
+
+        var language = arrayOf<String>()
+        var kind = arrayOf<String>()
+        var career = arrayOf<String>()
+        var food = arrayOf<String>()
+        var score = arrayOf<String>()
+
+        info.forEach {
+            language += it.split(" ")[0]
+            kind += it.split(" ")[1]
+            career += it.split(" ")[2]
+            food += it.split(" ")[3]
+            score += it.split(" ")[4]
         }
-        answer += length.minOrNull()!!
+        println(language.contentToString())
+        println(score.contentToString())
+
         return answer
     }
+
+//    // 문자열 압축
+//    fun solution(s: String): Int {
+//        var answer = 0
+//        var length = arrayOf<Int>()
+//        if (s.length == 1) return 1
+//        for (num in 1..s.length/2) {
+//            var str = ""
+//            var cnt = 0
+//            for (i in 0 until s.chunked(num).size) {
+//                if ((s.chunked(num)+1)[i] == (s.chunked(num)+1)[i+1]) {
+//                    cnt++
+//                } else {
+//                    if (cnt != 0) {
+//                        str += (cnt+1).toString()+s.chunked(num)[i]
+//                        cnt = 0
+//                    } else {
+//                        str += s.chunked(num)[i]
+//                    }
+//                }
+//                if ((s.chunked(num)+1)[i] == 1) break
+//            }
+//            length += str.length
+//        }
+//        answer += length.minOrNull()!!
+//        return answer
+//    }
 
 //    // 괄호 변환
 //    fun solution(p: String): String {
