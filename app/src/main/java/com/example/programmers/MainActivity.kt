@@ -33,9 +33,13 @@ class MainActivity : AppCompatActivity() {
          6. 그 배열을 가지고 2의 다음단계 진행
          **/
         query.forEach { it1 ->
-            var new = info
+            var new = arrayOf<String>()
+            info.forEach {
+                if (it.split(" ").last().toInt() >= it1.split(" ").last().toInt()) {
+                    new += it
+                }
+            }
             var i =  0
-            var count = 0
             while (i<4) {
                 if (it1.replace("[0-9]".toRegex(), "").split(" and ")[i].contains("-")) {
                     i++
@@ -50,14 +54,8 @@ class MainActivity : AppCompatActivity() {
                     i++
                 }
             }
-            new.forEach {
-                if(it.replace("[^0-9]".toRegex(), "").toInt() >= it1.replace("[^0-9]".toRegex(), "").toInt()) {
-                    count++
-                }
-            }
-            answer += count
+            answer += new.count()
         }
-
         return answer
     }
 
