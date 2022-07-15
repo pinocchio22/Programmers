@@ -50,18 +50,13 @@ class MainActivity : AppCompatActivity() {
                     i++
                 }
             }
-            println(new.contentToString())
             new.forEach {
-                if(it.replace("[^0-9]".toRegex(), "") >= it1.replace("[^0-9]".toRegex(), "")) {
-                    println(it.replace("[^0-9]".toRegex(), ""))
-                    println(it1.replace("[^0-9]".toRegex(), ""))
+                if(it.replace("[^0-9]".toRegex(), "").toInt() >= it1.replace("[^0-9]".toRegex(), "").toInt()) {
                     count++
-                    println(count)
                 }
             }
             answer += count
         }
-        println(answer.contentToString())
 
         return answer
     }
