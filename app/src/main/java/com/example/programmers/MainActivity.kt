@@ -3,8 +3,6 @@ package com.example.programmers
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import java.util.*
-import kotlin.math.abs
-import kotlin.math.max
 
 @Suppress(
     "NAME_SHADOWING", "TYPE_INFERENCE_ONLY_INPUT_TYPES_WARNING", "CAST_NEVER_SUCCEEDS",
@@ -23,54 +21,63 @@ class MainActivity : AppCompatActivity() {
     // 순위 검색
     fun solution(info: Array<String>, query: Array<String>): IntArray {
         var answer: IntArray = intArrayOf()
-
-        /**
-         1. query의 문장을 하나씩 꺼냄
-         2. 문장을 split으로 나눔
-         3. info의 문장을 하나씩 꺼냄
-         4. 문장을 split으로 나눔
-         5. 두 단어를 비교해서 같으면 새로운 배열에 저장
-         6. 그 배열을 가지고 2의 다음단계 진행
-         **/
+        var str = arrayOf<Array<String>>()
+        info.forEach {
+            str += arrayOf(it.split(" ")[0] +" "+ it.split(" ")[1] +" "+ it.split(" ")[2] +" "+ it.split(" ")[3],(it.split(" ")[4]))
+        }
+        val newstr = str.sortedByDescending { it[1].toInt() }
+        newstr.forEach {
+            println(it.contentToString())
+        }
         query.forEach { it1 ->
-            var new = arrayOf<String>()
-            info.forEach {
-                if (it.split(" ").last().toInt() >= it1.split(" ").last().toInt()) {
-                    new += it
+//            var new = arrayOf<String>()
+            var new2 = arrayOf<String>()
+//            info.forEach {
+//                if (it.split(" ").last().toInt() >= it1.split(" ").last().toInt()) {
+//                    new += it.replace("[0-9]".toRegex(), "")
+//                }
+//            }
+            for (i in newstr.indices) {
+                if (newstr[i][1].toInt() < it1.split(" ").last().toInt()) {
+                    break
                 }
+                new2 += newstr[i][0]
             }
             var i =  0
             while (i<4) {
                 if (i == 3) {
                     if (it1.replace("[0-9]".toRegex(), "").split(" and ")[i].contains("-")) {
                         i++
+                        continue
                     } else {
                         var temp = arrayOf<String>()
-                        new.forEach { it2 ->
-                            if (it1.replace("[0-9]".toRegex(), "").split(" and ")[i].contains(it2.replace("[0-9]".toRegex(), "").split(" ")[i])) {
+                        new2.forEach { it2 ->
+                            if (it1.replace("[0-9]".toRegex(), "").split(" and ")[i].contains(it2.split(" ")[i])) {
                                 temp += it2
                             }
                         }
-                        new = temp
+                        new2 = temp
                         i++
                     }
                 } else {
                     if (it1.split(" and ")[i].contains("-")) {
                         i++
+                        continue
                     } else {
                         var temp = arrayOf<String>()
-                        new.forEach { it2 ->
+                        new2.forEach { it2 ->
                             if (it1.split(" and ")[i].contains(it2.split(" ")[i])) {
                                 temp += it2
                             }
                         }
-                        new = temp
+                        new2 = temp
                         i++
                     }
                 }
             }
-            answer += new.count()
+            answer += new2.count()
         }
+        println(answer.contentToString())
         return answer
     }
 
