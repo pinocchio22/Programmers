@@ -41,17 +41,32 @@ class MainActivity : AppCompatActivity() {
             }
             var i =  0
             while (i<4) {
-                if (it1.replace("[0-9]".toRegex(), "").split(" and ")[i].contains("-")) {
-                    i++
-                } else {
-                    var temp = arrayOf<String>()
-                    new.forEach { it2 ->
-                        if (it1.replace("[0-9]".toRegex(), "").split(" and ")[i].contains(it2.replace("[0-9]".toRegex(), "").split(" ")[i])) {
-                            temp += it2
+                if (i == 3) {
+                    if (it1.replace("[0-9]".toRegex(), "").split(" and ")[i].contains("-")) {
+                        i++
+                    } else {
+                        var temp = arrayOf<String>()
+                        new.forEach { it2 ->
+                            if (it1.replace("[0-9]".toRegex(), "").split(" and ")[i].contains(it2.replace("[0-9]".toRegex(), "").split(" ")[i])) {
+                                temp += it2
+                            }
                         }
+                        new = temp
+                        i++
                     }
-                    new = temp
-                    i++
+                } else {
+                    if (it1.split(" and ")[i].contains("-")) {
+                        i++
+                    } else {
+                        var temp = arrayOf<String>()
+                        new.forEach { it2 ->
+                            if (it1.split(" and ")[i].contains(it2.split(" ")[i])) {
+                                temp += it2
+                            }
+                        }
+                        new = temp
+                        i++
+                    }
                 }
             }
             answer += new.count()
