@@ -75,20 +75,23 @@ class MainActivity : AppCompatActivity() {
         var str = arrayOf<String>()
         info.forEach {
             var temp = ""
-            it.split(" ").forEach {
-                temp += mapkind[it]
+            for (i in 0..3) {
+                temp += mapkind[SplitInfo(it, " ".toRegex())[i]]
             }
             str += temp.substring(0,4)
         }
 
+        var str2 = arrayOf<String>()
         query.forEach {
+            var temp2 = ""
             for (i in 0..3) {
-                mapkind[SplitInfo(it, "( and )|( )".toRegex())[i]]  // java 2
-
+                temp2 += mapkind[SplitInfo(it, "( and )|( )".toRegex())[i]]  // java 2
             }
+            str2 += temp2.substring(0,4)
         }
 
         println(str.contentToString())
+        println(str2.contentToString())
         return answer
     }
 
