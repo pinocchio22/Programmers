@@ -68,36 +68,81 @@ class MainActivity : AppCompatActivity() {
 //    }
 
     // 순위 검색2
-    fun solution(info: Array<String>, query: Array<String>): IntArray {
-        var answer: IntArray = intArrayOf()
-        var mapkind = mapOf("cpp" to "1", "java" to "2", "python" to "3", "backend" to "1", "frontend" to "2", "junior" to "1", "senior" to "2", "chicken" to "1", "pizza" to "2", "-" to "0")
+    fun solution(info:Array<String>, query:Array<String>):IntArray {
+        var answer = IntArray(query.size) { 0 }
+        var wordMap:MutableMap<String, Int> = SettingWordMap()
+        var scoreList:MutableList<MutableList<Int>> = MutableList(4*3*3*3) { mutableListOf() }
+        val infoRegex = " ".toRegex()
+        val queryRegex = "( and )|( )".toRegex()
 
-        var str = arrayOf<String>()
         info.forEach {
-            var temp = ""
-            for (i in 0..3) {
-                temp += mapkind[SplitInfo(it, " ".toRegex())[i]]
+            val (infoList, score) = SplitInfo(it, infoRegex)
+            val arr:IntArray = intArrayOf(
+                wordMap[infoList[0]]!! * 3 * 3 * 3,
+                wordMap[infoList[1]]!! * 3 * 3,
+                wordMap[infoList[2]]!! * 3,
+                wordMap[infoList[3]]!!)
+
+            for(i in  0 until (1 shl 4)) {
+                var index = 0
+                for(j in 0 until 4) {
+                    if(i and (1 shl j) != 0) {
+                        index += arr[j]
+                    }
+                }
+                scoreList[index].add(score)
             }
-            str += temp.substring(0,4)
         }
 
-        var str2 = arrayOf<String>()
-        query.forEach {
-            var temp2 = ""
-            for (i in 0..3) {
-                temp2 += mapkind[SplitInfo(it, "( and )|( )".toRegex())[i]]  // java 2
-            }
-            str2 += temp2.substring(0,4)
+        scoreList.forEach {
+            it.sort()
         }
 
-        println(str.contentToString())
-        println(str2.contentToString())
+        for(i in query.indices) {
+            val(queryInfo, score) = SplitInfo(query[i], queryRegex)
+            val index:Int =
+                wordMap[queryInfo[0]]!! * 3 * 3 * 3 +
+                        wordMap[queryInfo[1]]!! * 3 * 3 +
+                        wordMap[queryInfo[2]]!! * 3 +
+                        wordMap[queryInfo[3]]!!
+
+            var ret:Int = scoreList[index].binarySearch(score)
+            if (ret < 0) {
+                ret = (ret + 1) * -1
+            } else if(ret > 0) {
+                for(j in ret downTo 0) {
+                    if(scoreList[index][j] == score) {
+                        ret = j
+                    } else {
+                        break
+                    }
+                }
+            }
+            answer[i] += (scoreList[index].size - ret)
+        }
         return answer
     }
 
-    fun SplitInfo(info:String, regex:Regex) : List<String> {
-        var infoList = info.split(regex)
-        return infoList
+    fun SettingWordMap():MutableMap<String, Int> {
+        var wordMap:MutableMap<String, Int> = HashMap<String, Int>()
+        wordMap["-"] = 0
+        wordMap["cpp"] = 1
+        wordMap["java"] = 2
+        wordMap["python"] = 3
+        wordMap["backend"] = 1
+        wordMap["frontend"] = 2
+        wordMap["junior"] = 1
+        wordMap["senior"] = 2
+        wordMap["chicken"] = 1
+        wordMap["pizza"] = 2
+
+        return wordMap
+    }
+
+    fun SplitInfo(info:String, regex:Regex):Pair<List<String>, Int> {
+        var infoList:List<String> = info.split(regex)
+        val score = infoList[4].toInt()
+        return Pair(infoList.subList(0, 4), score)
     }
 
 //    // 문자열 압축
