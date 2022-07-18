@@ -3,6 +3,8 @@ package com.example.programmers
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import java.util.*
+import kotlin.math.abs
+import kotlin.math.max
 
 @Suppress(
     "NAME_SHADOWING", "TYPE_INFERENCE_ONLY_INPUT_TYPES_WARNING", "CAST_NEVER_SUCCEEDS",
@@ -19,66 +21,80 @@ class MainActivity : AppCompatActivity() {
         arrayOf("java and backend and junior and pizza 100","python and frontend and senior and chicken 200","cpp and - and senior and pizza 250","- and backend and senior and - 150","- and - and - and chicken 100","- and - and - and - 150"))
     }
     // 순위 검색
-    fun solution(info: Array<String>, query: Array<String>): IntArray {
-        var answer: IntArray = intArrayOf()
-        var str = arrayOf<Array<String>>()
-        info.forEach {
-            str += arrayOf(it.split(" ")[0] +" "+ it.split(" ")[1] +" "+ it.split(" ")[2] +" "+ it.split(" ")[3],(it.split(" ")[4]))
-        }
-        val newstr = str.sortedByDescending { it[1].toInt() }
-        newstr.forEach {
-            println(it.contentToString())
-        }
-        query.forEach { it1 ->
+//    fun solution(info: Array<String>, query: Array<String>): IntArray {
+//        var answer: IntArray = intArrayOf()
+//        query.forEach { it1 ->
 //            var new = arrayOf<String>()
-            var new2 = arrayOf<String>()
 //            info.forEach {
 //                if (it.split(" ").last().toInt() >= it1.split(" ").last().toInt()) {
 //                    new += it.replace("[0-9]".toRegex(), "")
 //                }
 //            }
-            for (i in newstr.indices) {
-                if (newstr[i][1].toInt() < it1.split(" ").last().toInt()) {
-                    break
-                }
-                new2 += newstr[i][0]
+//            var i =  0
+//            while (i<4) {
+//                if (i == 3) {
+//                    if (it1.replace("[0-9]".toRegex(), "").split(" and ")[i].contains("-")) {
+//                        i++
+//                        continue
+//                    } else {
+//                        var temp = arrayOf<String>()
+//                        new.forEach { it2 ->
+//                            if (it1.replace("[0-9]".toRegex(), "").split(" and ")[i].contains(it2.split(" ")[i])) {
+//                                temp += it2
+//                            }
+//                        }
+//                        new = temp
+//                        i++
+//                    }
+//                } else {
+//                    if (it1.split(" and ")[i].contains("-")) {
+//                        i++
+//                        continue
+//                    } else {
+//                        var temp = arrayOf<String>()
+//                        new.forEach { it2 ->
+//                            if (it1.split(" and ")[i].contains(it2.split(" ")[i])) {
+//                                temp += it2
+//                            }
+//                        }
+//                        new = temp
+//                        i++
+//                    }
+//                }
+//            }
+//            answer += new.count()
+//        }
+//        return answer
+//    }
+
+    // 순위 검색2
+    fun solution(info: Array<String>, query: Array<String>): IntArray {
+        var answer: IntArray = intArrayOf()
+        var mapkind = mapOf("cpp" to "1", "java" to "2", "python" to "3", "backend" to "1", "frontend" to "2", "junior" to "1", "senior" to "2", "chicken" to "1", "pizza" to "2", "-" to "0")
+
+        var str = arrayOf<String>()
+        info.forEach {
+            var temp = ""
+            it.split(" ").forEach {
+                temp += mapkind[it]
             }
-            var i =  0
-            while (i<4) {
-                if (i == 3) {
-                    if (it1.replace("[0-9]".toRegex(), "").split(" and ")[i].contains("-")) {
-                        i++
-                        continue
-                    } else {
-                        var temp = arrayOf<String>()
-                        new2.forEach { it2 ->
-                            if (it1.replace("[0-9]".toRegex(), "").split(" and ")[i].contains(it2.split(" ")[i])) {
-                                temp += it2
-                            }
-                        }
-                        new2 = temp
-                        i++
-                    }
-                } else {
-                    if (it1.split(" and ")[i].contains("-")) {
-                        i++
-                        continue
-                    } else {
-                        var temp = arrayOf<String>()
-                        new2.forEach { it2 ->
-                            if (it1.split(" and ")[i].contains(it2.split(" ")[i])) {
-                                temp += it2
-                            }
-                        }
-                        new2 = temp
-                        i++
-                    }
-                }
-            }
-            answer += new2.count()
+            str += temp.substring(0,4)
         }
-        println(answer.contentToString())
+
+        query.forEach {
+            for (i in 0..3) {
+                mapkind[SplitInfo(it, "( and )|( )".toRegex())[i]]  // java 2
+
+            }
+        }
+
+        println(str.contentToString())
         return answer
+    }
+
+    fun SplitInfo(info:String, regex:Regex) : List<String> {
+        var infoList = info.split(regex)
+        return infoList
     }
 
 //    // 문자열 압축
