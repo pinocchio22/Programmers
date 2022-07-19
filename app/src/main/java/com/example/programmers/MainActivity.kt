@@ -26,54 +26,8 @@ class MainActivity : AppCompatActivity() {
             "python backend senior chicken 50"),
         arrayOf("java and backend and junior and pizza 100","python and frontend and senior and chicken 200","cpp and - and senior and pizza 250","- and backend and senior and - 150","- and - and - and chicken 100","- and - and - and - 150"))
     }
-    // 순위 검색
-//    fun solution(info: Array<String>, query: Array<String>): IntArray {
-//        var answer: IntArray = intArrayOf()
-//        query.forEach { it1 ->
-//            var new = arrayOf<String>()
-//            info.forEach {
-//                if (it.split(" ").last().toInt() >= it1.split(" ").last().toInt()) {
-//                    new += it.replace("[0-9]".toRegex(), "")
-//                }
-//            }
-//            var i =  0
-//            while (i<4) {
-//                if (i == 3) {
-//                    if (it1.replace("[0-9]".toRegex(), "").split(" and ")[i].contains("-")) {
-//                        i++
-//                        continue
-//                    } else {
-//                        var temp = arrayOf<String>()
-//                        new.forEach { it2 ->
-//                            if (it1.replace("[0-9]".toRegex(), "").split(" and ")[i].contains(it2.split(" ")[i])) {
-//                                temp += it2
-//                            }
-//                        }
-//                        new = temp
-//                        i++
-//                    }
-//                } else {
-//                    if (it1.split(" and ")[i].contains("-")) {
-//                        i++
-//                        continue
-//                    } else {
-//                        var temp = arrayOf<String>()
-//                        new.forEach { it2 ->
-//                            if (it1.split(" and ")[i].contains(it2.split(" ")[i])) {
-//                                temp += it2
-//                            }
-//                        }
-//                        new = temp
-//                        i++
-//                    }
-//                }
-//            }
-//            answer += new.count()
-//        }
-//        return answer
-//    }
 
-    // 순위 검색2
+    // 순위 검색
     fun solution(info:Array<String>, query:Array<String>):IntArray {
         var answer = IntArray(query.size) { 0 }
         var wordMap:MutableMap<String, Int> = SettingWordMap()
@@ -82,35 +36,27 @@ class MainActivity : AppCompatActivity() {
         val queryRegex = "( and )|( )".toRegex()
 
         info.forEach {
-            println("it + " + it)
             val (infoList, score) = SplitInfo(it, infoRegex)
-            println(infoList)
-            println(score)
             val arr:IntArray = intArrayOf(
                 wordMap[infoList[0]]!! * 3 * 3 * 3,
                 wordMap[infoList[1]]!! * 3 * 3,
                 wordMap[infoList[2]]!! * 3,
                 wordMap[infoList[3]]!!)
-            println("arr" + arr.contentToString())
             for(i in  0 until (1 shl 4)) {
                 var index = 0
                 for(j in 0 until 4) {
                     if(i and (1 shl j) != 0) {
-                        println("i" + i)
-                        println("j" + j)
                         index += arr[j]
                     }
                 }
                 scoreList[index].add(score)
             }
-            println("score" + score)
-            println("scoreList" + scoreList)
-            println("arr" + arr.contentToString())
         }
 
         scoreList.forEach {
             it.sort()
         }
+        println(scoreList)
 
         for(i in query.indices) {
             val(queryInfo, score) = SplitInfo(query[i], queryRegex)
@@ -121,6 +67,10 @@ class MainActivity : AppCompatActivity() {
                         wordMap[queryInfo[3]]!!
 
             var ret:Int = scoreList[index].binarySearch(score)
+            println("index" + index)
+            println("scoreList" + scoreList[index])
+            println("score" + score)
+            println("ret" + ret)
             if (ret < 0) {
                 ret = (ret + 1) * -1
             } else if(ret > 0) {
@@ -132,7 +82,9 @@ class MainActivity : AppCompatActivity() {
                     }
                 }
             }
+            println("answer" + answer.contentToString())
             answer[i] += (scoreList[index].size - ret)
+            println("newanswer" + answer.contentToString())
         }
         return answer
     }
