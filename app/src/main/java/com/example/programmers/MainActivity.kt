@@ -17,7 +17,13 @@ class MainActivity : AppCompatActivity() {
         setContentView(R.layout.activity_main)
 
         // 7
-        solution(arrayOf("java backend junior pizza 150","python frontend senior chicken 210","python frontend senior chicken 150","cpp backend senior pizza 260","java backend junior chicken 80","python backend senior chicken 50"),
+        solution(arrayOf(
+            "java backend junior pizza 150",
+            "python frontend senior chicken 210",
+            "python frontend senior chicken 150",
+            "cpp backend senior pizza 260",
+            "java backend junior chicken 80",
+            "python backend senior chicken 50"),
         arrayOf("java and backend and junior and pizza 100","python and frontend and senior and chicken 200","cpp and - and senior and pizza 250","- and backend and senior and - 150","- and - and - and chicken 100","- and - and - and - 150"))
     }
     // 순위 검색
@@ -76,22 +82,30 @@ class MainActivity : AppCompatActivity() {
         val queryRegex = "( and )|( )".toRegex()
 
         info.forEach {
+            println("it + " + it)
             val (infoList, score) = SplitInfo(it, infoRegex)
+            println(infoList)
+            println(score)
             val arr:IntArray = intArrayOf(
                 wordMap[infoList[0]]!! * 3 * 3 * 3,
                 wordMap[infoList[1]]!! * 3 * 3,
                 wordMap[infoList[2]]!! * 3,
                 wordMap[infoList[3]]!!)
-
+            println("arr" + arr.contentToString())
             for(i in  0 until (1 shl 4)) {
                 var index = 0
                 for(j in 0 until 4) {
                     if(i and (1 shl j) != 0) {
+                        println("i" + i)
+                        println("j" + j)
                         index += arr[j]
                     }
                 }
                 scoreList[index].add(score)
             }
+            println("score" + score)
+            println("scoreList" + scoreList)
+            println("arr" + arr.contentToString())
         }
 
         scoreList.forEach {
