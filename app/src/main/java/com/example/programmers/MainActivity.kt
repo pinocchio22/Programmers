@@ -29,19 +29,15 @@ class MainActivity : AppCompatActivity() {
 
     // 순위 검색
     fun solution(info:Array<String>, query:Array<String>):IntArray {
-        var answer = IntArray(query.size) { 0 }
-        var wordMap:MutableMap<String, Int> = SettingWordMap()
-        var scoreList:MutableList<MutableList<Int>> = MutableList(4*3*3*3) { mutableListOf() }
+        val answer = IntArray(query.size) { 0 }
+        val wordMap:MutableMap<String, Int> = SettingWordMap()
+        val scoreList:MutableList<MutableList<Int>> = MutableList(4*3*3*3) { mutableListOf() }
         val infoRegex = " ".toRegex()
         val queryRegex = "( and )|( )".toRegex()
 
         info.forEach {
             val (infoList, score) = SplitInfo(it, infoRegex)
-            val arr:IntArray = intArrayOf(
-                wordMap[infoList[0]]!! * 3 * 3 * 3,
-                wordMap[infoList[1]]!! * 3 * 3,
-                wordMap[infoList[2]]!! * 3,
-                wordMap[infoList[3]]!!)
+            val arr:IntArray = intArrayOf(wordMap[infoList[0]]!! * 3 * 3 * 3, wordMap[infoList[1]]!! * 3 * 3, wordMap[infoList[2]]!! * 3, wordMap[infoList[3]]!!)
             for(i in  0 until (1 shl 4)) {
                 var index = 0
                 for(j in 0 until 4) {
@@ -52,25 +48,13 @@ class MainActivity : AppCompatActivity() {
                 scoreList[index].add(score)
             }
         }
-
         scoreList.forEach {
             it.sort()
         }
-        println(scoreList)
-
         for(i in query.indices) {
             val(queryInfo, score) = SplitInfo(query[i], queryRegex)
-            val index:Int =
-                wordMap[queryInfo[0]]!! * 3 * 3 * 3 +
-                        wordMap[queryInfo[1]]!! * 3 * 3 +
-                        wordMap[queryInfo[2]]!! * 3 +
-                        wordMap[queryInfo[3]]!!
-
+            val index:Int = wordMap[queryInfo[0]]!! * 3 * 3 * 3 + wordMap[queryInfo[1]]!! * 3 * 3 + wordMap[queryInfo[2]]!! * 3 + wordMap[queryInfo[3]]!!
             var ret:Int = scoreList[index].binarySearch(score)
-            println("index" + index)
-            println("scoreList" + scoreList[index])
-            println("score" + score)
-            println("ret" + ret)
             if (ret < 0) {
                 ret = (ret + 1) * -1
             } else if(ret > 0) {
@@ -82,15 +66,13 @@ class MainActivity : AppCompatActivity() {
                     }
                 }
             }
-            println("answer" + answer.contentToString())
             answer[i] += (scoreList[index].size - ret)
-            println("newanswer" + answer.contentToString())
         }
         return answer
     }
 
     fun SettingWordMap():MutableMap<String, Int> {
-        var wordMap:MutableMap<String, Int> = HashMap<String, Int>()
+        val wordMap:MutableMap<String, Int> = HashMap<String, Int>()
         wordMap["-"] = 0
         wordMap["cpp"] = 1
         wordMap["java"] = 2
@@ -106,7 +88,7 @@ class MainActivity : AppCompatActivity() {
     }
 
     fun SplitInfo(info:String, regex:Regex):Pair<List<String>, Int> {
-        var infoList:List<String> = info.split(regex)
+        val infoList:List<String> = info.split(regex)
         val score = infoList[4].toInt()
         return Pair(infoList.subList(0, 4), score)
     }
