@@ -28,14 +28,10 @@ class MainActivity : AppCompatActivity() {
             when {
                 choices[i] < 4 -> {
                     // 왼쪽
-                    println(map[survey[i][0]])
-                    println(choices[i])
                     map += survey[i][0] to 4 - choices[i]
                 }
                 choices[i] > 4 -> {
                     // 오른쪽
-                    println(map[survey[i][1]])
-                    println(choices[i]-4)
                     map += survey[i][1] to choices[i]-4
                 }
                 else -> {
@@ -43,9 +39,13 @@ class MainActivity : AppCompatActivity() {
                     continue
                 }
             }
-            println(map)
         }
+        answer += maxOf(map['R']!!.toInt(), map['T']!!.toInt()).toString()
+        answer += maxOf(map['C']!!.toInt(), map['F']!!.toInt()).toString()
+        answer += maxOf(map['J']!!.toInt(), map['M']!!.toInt()).toString()
+        answer += maxOf(map['A']!!.toInt(), map['N']!!.toInt()).toString()
 
+        println(answer)
         return answer
     }
 
