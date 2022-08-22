@@ -17,7 +17,7 @@ class MainActivity : AppCompatActivity() {
         setContentView(R.layout.activity_main)
 
         // "TCMA"
-        solution(arrayOf("AN", "CF", "MJ", "RT", "NA"), intArrayOf(5, 3, 2, 7, 5))
+        solution(arrayOf("TR", "RT", "TR"), intArrayOf(7, 1, 3))
     }
     // 성격 유형 검사하기
     fun solution(survey: Array<String>, choices: IntArray): String {
@@ -40,10 +40,10 @@ class MainActivity : AppCompatActivity() {
                 }
             }
         }
-        answer += maxOf(map['R']!!.toInt(), map['T']!!.toInt()).toString()
-        answer += maxOf(map['C']!!.toInt(), map['F']!!.toInt()).toString()
-        answer += maxOf(map['J']!!.toInt(), map['M']!!.toInt()).toString()
-        answer += maxOf(map['A']!!.toInt(), map['N']!!.toInt()).toString()
+        answer += if (map['R']!!.toInt() - map['T']!!.toInt() >= 0) "R" else "T"
+        answer += if (map['C']!!.toInt() - map['F']!!.toInt() >= 0)"C" else "F"
+        answer += if (map['J']!!.toInt() - map['M']!!.toInt() >= 0) "J" else "M"
+        answer += if (map['A']!!.toInt() - map['N']!!.toInt() >= 0) "A" else "N"
 
         println(answer)
         return answer
