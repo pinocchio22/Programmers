@@ -25,29 +25,13 @@ class MainActivity : AppCompatActivity() {
         val map =  mutableMapOf('R' to 0, 'T' to 0, 'C' to 0, 'F' to 0, 'J' to 0, 'M' to 0, 'A' to 0, 'N' to 0)
 
         for (i in survey.indices) {
-            when {
-                choices[i] < 4 -> {
-                    // 왼쪽
-//                    map += survey[i][0] to 4 - choices[i]
-                     map.replace(survey[i][0], map[survey[i][0]]!! + 4 - choices[i])
-                }
-                choices[i] > 4 -> {
-                    // 오른쪽
-//                    map += survey[i][1] to choices[i]-4
-                    map.replace(survey[i][1], map[survey[i][1]]!! + choices[i] - 4)
-                }
-                else -> {
-                    // 0
-                    continue
-                }
-            }
+            if (choices[i] < 4) map.replace(survey[i][0], map[survey[i][0]]!! + 4 - choices[i]) else map.replace(survey[i][1], map[survey[i][1]]!! + choices[i] - 4)
         }
         answer += if (map['R']!!.toInt() - map['T']!!.toInt() >= 0) "R" else "T"
-        answer += if (map['C']!!.toInt() - map['F']!!.toInt() >= 0)"C" else "F"
+        answer += if (map['C']!!.toInt() - map['F']!!.toInt() >= 0) "C" else "F"
         answer += if (map['J']!!.toInt() - map['M']!!.toInt() >= 0) "J" else "M"
         answer += if (map['A']!!.toInt() - map['N']!!.toInt() >= 0) "A" else "N"
 
-        println(answer)
         return answer
     }
 
