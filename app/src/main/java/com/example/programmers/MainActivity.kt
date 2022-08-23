@@ -17,7 +17,7 @@ class MainActivity : AppCompatActivity() {
         setContentView(R.layout.activity_main)
 
         // "TCMA"
-        solution(arrayOf("TR", "RT", "TR"), intArrayOf(7, 1, 3))
+        solution(arrayOf("AN", "CF", "MJ", "RT", "NA"), intArrayOf(5, 3, 2, 7, 5))
     }
     // 성격 유형 검사하기
     fun solution(survey: Array<String>, choices: IntArray): String {
@@ -28,11 +28,13 @@ class MainActivity : AppCompatActivity() {
             when {
                 choices[i] < 4 -> {
                     // 왼쪽
-                    map += survey[i][0] to 4 - choices[i]
+//                    map += survey[i][0] to 4 - choices[i]
+                     map.replace(survey[i][0], map[survey[i][0]]!! + 4 - choices[i])
                 }
                 choices[i] > 4 -> {
                     // 오른쪽
-                    map += survey[i][1] to choices[i]-4
+//                    map += survey[i][1] to choices[i]-4
+                    map.replace(survey[i][1], map[survey[i][1]]!! + choices[i] - 4)
                 }
                 else -> {
                     // 0
