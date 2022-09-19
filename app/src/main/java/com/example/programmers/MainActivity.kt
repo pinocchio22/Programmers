@@ -27,6 +27,7 @@ class MainActivity : AppCompatActivity() {
         for (i in survey.indices) {
             if (choices[i] < 4) map.replace(survey[i][0], map[survey[i][0]]!! + 4 - choices[i]) else map.replace(survey[i][1], map[survey[i][1]]!! + choices[i] - 4)
         }
+
         answer += if (map['R']!!.toInt() - map['T']!!.toInt() >= 0) "R" else "T"
         answer += if (map['C']!!.toInt() - map['F']!!.toInt() >= 0) "C" else "F"
         answer += if (map['J']!!.toInt() - map['M']!!.toInt() >= 0) "J" else "M"
