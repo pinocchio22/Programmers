@@ -29,8 +29,7 @@ class MainActivity : AppCompatActivity() {
 
         notation(n,k).split('0').map { if (it.isNotEmpty())  arr += it }
         arr.forEach {
-            if (isPrime(it.toInt(k))) {
-                println(it.toInt(k))
+            if (isPrime(it.toLong())) {
                 answer ++
             }
         }
@@ -45,13 +44,13 @@ class MainActivity : AppCompatActivity() {
             trans += (num%k).toString()
             num /= k
         }
-        return trans + num.toString()
+        return (trans + num.toString()).reversed()
     }
 
-    fun isPrime(n: Int) : Boolean {
+    fun isPrime(n: Long) : Boolean {
         val num = n
         if (num <= 1) return false
-        return (2..sqrt(num.toDouble()).toInt()).none { num % it == 0 }
+        return (2..sqrt(num.toDouble()).toInt()).none { num % it == 0L }
     }
 
 
