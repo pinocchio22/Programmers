@@ -5,6 +5,7 @@ import androidx.appcompat.app.AppCompatActivity
 import java.util.*
 import kotlin.math.abs
 import kotlin.math.max
+import kotlin.math.sqrt
 
 @Suppress(
     "NAME_SHADOWING", "TYPE_INFERENCE_ONLY_INPUT_TYPES_WARNING", "CAST_NEVER_SUCCEEDS",
@@ -16,25 +17,60 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
-        // "TCMA"
-        solution(arrayOf("AN", "CF", "MJ", "RT", "NA"), intArrayOf(5, 3, 2, 7, 5))
+        // 3
+        solution(437674,3)
+//        solution(17,2)
     }
-    // 성격 유형 검사하기
-    fun solution(survey: Array<String>, choices: IntArray): String {
-        var answer: String = ""
-        val map =  mutableMapOf('R' to 0, 'T' to 0, 'C' to 0, 'F' to 0, 'J' to 0, 'M' to 0, 'A' to 0, 'N' to 0)
 
-        for (i in survey.indices) {
-            if (choices[i] < 4) map.replace(survey[i][0], map[survey[i][0]]!! + 4 - choices[i]) else map.replace(survey[i][1], map[survey[i][1]]!! + choices[i] - 4)
+    // k진수에서 소수 개수 구하기
+    fun solution(n: Int, k: Int): Int {
+        var answer: Int = -1
+        var arr = arrayOf<String>()
+
+        notation(n,k).split('0').map { if (it.isNotEmpty())  arr += it }
+        arr.forEach {
+            if (isPrime(it.toInt(k))) {
+                println(it.toInt(k))
+                answer ++
+            }
         }
-
-        answer += if (map['R']!!.toInt() - map['T']!!.toInt() >= 0) "R" else "T"
-        answer += if (map['C']!!.toInt() - map['F']!!.toInt() >= 0) "C" else "F"
-        answer += if (map['J']!!.toInt() - map['M']!!.toInt() >= 0) "J" else "M"
-        answer += if (map['A']!!.toInt() - map['N']!!.toInt() >= 0) "A" else "N"
-
-        return answer
+        return answer + 1
     }
+
+    fun notation(n: Int, k: Int) : String {
+        var num = n
+        var trans = ""
+
+        while (num > k-1) {
+            trans += (num%k).toString()
+            num /= k
+        }
+        return trans + num.toString()
+    }
+
+    fun isPrime(n: Int) : Boolean {
+        val num = n
+        if (num <= 1) return false
+        return (2..sqrt(num.toDouble()).toInt()).none { num % it == 0 }
+    }
+
+
+//    // 성격 유형 검사하기
+//    fun solution(survey: Array<String>, choices: IntArray): String {
+//        var answer: String = ""
+//        val map =  mutableMapOf('R' to 0, 'T' to 0, 'C' to 0, 'F' to 0, 'J' to 0, 'M' to 0, 'A' to 0, 'N' to 0)
+//
+//        for (i in survey.indices) {
+//            if (choices[i] < 4) map.replace(survey[i][0], map[survey[i][0]]!! + 4 - choices[i]) else map.replace(survey[i][1], map[survey[i][1]]!! + choices[i] - 4)
+//        }
+//
+//        answer += if (map['R']!!.toInt() - map['T']!!.toInt() >= 0) "R" else "T"
+//        answer += if (map['C']!!.toInt() - map['F']!!.toInt() >= 0) "C" else "F"
+//        answer += if (map['J']!!.toInt() - map['M']!!.toInt() >= 0) "J" else "M"
+//        answer += if (map['A']!!.toInt() - map['N']!!.toInt() >= 0) "A" else "N"
+//
+//        return answer
+//    }
 
 //    // 순위 검색
 //    fun solution(info:Array<String>, query:Array<String>):IntArray {
