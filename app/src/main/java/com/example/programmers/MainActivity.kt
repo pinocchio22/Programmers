@@ -4,6 +4,7 @@ import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import java.util.*
 import kotlin.math.abs
+import kotlin.math.exp
 import kotlin.math.max
 import kotlin.math.sqrt
 
@@ -17,42 +18,79 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
-        // 3
-        solution(437674,3)
-//        solution(17,2)
+        // 60420
+        solution("100-200*300-500+20")
     }
 
-    // k진수에서 소수 개수 구하기
-    fun solution(n: Int, k: Int): Int {
-        var answer: Int = -1
-        var arr = arrayOf<String>()
+    // [카카오 인턴] 수식 최대화
+    fun solution(expression: String): Long {
+        var answer: Long = 0
+        var num_arr = arrayOf<String>()
+        var sign_arr = arrayOf<String>()
 
-        notation(n,k).split('0').map { if (it.isNotEmpty())  arr += it }
-        arr.forEach {
-            if (isPrime(it.toLong())) {
-                answer ++
+        expression.split("*","-","+").forEach {
+            num_arr += it
+        }
+        "[-+*]".toRegex().findAll(expression).forEach {
+            sign_arr += it.value
+        }
+        println(num_arr.contentToString())
+        println(sign_arr.contentToString())
+
+        var new = 0
+        var temp = listOf<String>()
+        sign_arr.forEach {
+            num_arr.drop(1)
+            when(it) {
+                "-" -> {
+                    new -= num_arr[0].toInt()
+                    temp = temp.drop(1)
+                }
+                "+" -> {
+                    new += num_arr[0].toInt()
+                    temp.drop(1)
+                }
+                "*" -> {
+                    new *= num_arr[0].toInt()
+                    temp.drop(1)
+                }
             }
+            println(temp)
+            println(new)
         }
-        return answer + 1
+        return answer
     }
 
-    fun notation(n: Int, k: Int) : String {
-        var num = n
-        var trans = ""
-
-        while (num > k-1) {
-            trans += (num%k).toString()
-            num /= k
-        }
-        return (trans + num.toString()).reversed()
-    }
-
-    fun isPrime(n: Long) : Boolean {
-        val num = n
-        if (num <= 1) return false
-        return (2..sqrt(num.toDouble()).toInt()).none { num % it == 0L }
-    }
-
+//    // k진수에서 소수 개수 구하기
+//    fun solution(n: Int, k: Int): Int {
+//        var answer: Int = -1
+//        var arr = arrayOf<String>()
+//
+//        notation(n,k).split('0').map { if (it.isNotEmpty())  arr += it }
+//        arr.forEach {
+//            if (isPrime(it.toLong())) {
+//                answer ++
+//            }
+//        }
+//        return answer + 1
+//    }
+//
+//    fun notation(n: Int, k: Int) : String {
+//        var num = n
+//        var trans = ""
+//
+//        while (num > k-1) {
+//            trans += (num%k).toString()
+//            num /= k
+//        }
+//        return (trans + num.toString()).reversed()
+//    }
+//
+//    fun isPrime(n: Long) : Boolean {
+//        val num = n
+//        if (num <= 1) return false
+//        return (2..sqrt(num.toDouble()).toInt()).none { num % it == 0L }
+//    }
 
 //    // 성격 유형 검사하기
 //    fun solution(survey: Array<String>, choices: IntArray): String {
