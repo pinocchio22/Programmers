@@ -25,8 +25,10 @@ class MainActivity : AppCompatActivity() {
     // [카카오 인턴] 수식 최대화
     fun solution(expression: String): Long {
         var answer: Long = 0
+        val op = arrayOf("*+-","*-+","+*-","+-*","-*+","-+*")
         var num_arr = arrayOf<String>()
         var sign_arr = arrayOf<String>()
+        var max = 0
 
         expression.split("*","-","+").forEach {
             num_arr += it
@@ -34,11 +36,26 @@ class MainActivity : AppCompatActivity() {
         "[-+*]".toRegex().findAll(expression).forEach {
             sign_arr += it.value
         }
+
         println(num_arr.contentToString())
         println(sign_arr.contentToString())
 
+        op.forEach {
+            it.forEach { it1 ->
+                sign_arr.forEach { it2 ->
+                    if (it1.toString() == it2) {
+                        // 우선순위로 연산실행
+
+                        // 연산이 끝난 수식은 제거
+                    }
+                }
+            }
+            // 경우의수 하나당 max값 저장
+        }
+
         var new = 0
         var temp = listOf<String>()
+
         sign_arr.forEach {
             num_arr.drop(1)
             when(it) {
