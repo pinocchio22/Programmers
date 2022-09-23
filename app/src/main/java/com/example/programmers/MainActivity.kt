@@ -19,48 +19,47 @@ class MainActivity : AppCompatActivity() {
         setContentView(R.layout.activity_main)
 
         // 60420
-        solution("100-200*300-500+20")
+        solution("50*6-3*2")
     }
 
     // [카카오 인턴] 수식 최대화
     fun solution(expression: String): Long {
         var answer: Long = 0
         val op = arrayOf("*+-","*-+","+*-","+-*","-*+","-+*")
-        val numlist = mutableListOf<Int>()
-        val signlist = mutableListOf<String>()
         var max = 0
 
-        expression.split("*","-","+").forEach {
-            numlist.add(it.toInt())
-        }
-        "[-+*]".toRegex().findAll(expression).forEach {
-            signlist.add(it.value)
-        }
-
         op.forEach {
-            val newlist = numlist
+            val numlist = mutableListOf<Int>()
+            expression.split("*","-","+").forEach {
+                numlist.add(it.toInt())
+            }
+            val signlist = mutableListOf<String>()
+            "[-+*]".toRegex().findAll(expression).forEach {
+                signlist.add(it.value)
+            }
 
             for (i in it.indices) {
                 var index = 0
                 while (signlist.contains(it[i].toString())) {
-                        if (it[i].toString() == signlist[index]) {
-                            // 우선순위로 연산실행
-                            when(signlist[index]) {
-                                "-" -> newlist[index] = newlist[index] - newlist[index+1]
-                                "+" -> newlist[index] = newlist[index] + newlist[index+1]
-                                "*" -> newlist[index] = newlist[index] * newlist[index+1]
-                            }
-                            // 연산이 끝난 수식은 제거
-                            numlist.removeAt(index+1)
-                            signlist.removeAt(index)
-                        } else {
-                            index++
+                    if (it[i].toString() == signlist[index]) {
+                        // 우선순위로 연산실행
+                        when(signlist[index]) {
+                            "-" -> numlist[index] = numlist[index] - numlist[index+1]
+                            "+" -> numlist[index] = numlist[index] + numlist[index+1]
+                            "*" -> numlist[index] = numlist[index] * numlist[index+1]
                         }
+                        // 연산이 끝난 수식은 제거
+                        numlist.removeAt(index+1)
+                        signlist.removeAt(index)
+                    } else {
+                        index++
+                    }
                 }
             }
             // 경우의수 하나당 max값 저장
             max = max(max, abs(numlist[0]))
         }
+        answer = max.toLong()
         return answer
     }
 
