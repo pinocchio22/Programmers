@@ -26,54 +26,40 @@ class MainActivity : AppCompatActivity() {
     fun solution(expression: String): Long {
         var answer: Long = 0
         val op = arrayOf("*+-","*-+","+*-","+-*","-*+","-+*")
-        var num_arr = arrayOf<String>()
-        var sign_arr = arrayOf<String>()
+        val numlist = mutableListOf<Int>()
+        val signlist = mutableListOf<String>()
         var max = 0
 
         expression.split("*","-","+").forEach {
-            num_arr += it
+            numlist.add(it.toInt())
         }
         "[-+*]".toRegex().findAll(expression).forEach {
-            sign_arr += it.value
+            signlist.add(it.value)
         }
 
-        println(num_arr.contentToString())
-        println(sign_arr.contentToString())
-
         op.forEach {
-            it.forEach { it1 ->
-                sign_arr.forEach { it2 ->
-                    if (it1.toString() == it2) {
-                        // 우선순위로 연산실행
+            val newlist = numlist
 
-                        // 연산이 끝난 수식은 제거
-                    }
+            for (i in it.indices) {
+                var index = 0
+                while (signlist.contains(it[i].toString())) {
+                        if (it[i].toString() == signlist[index]) {
+                            // 우선순위로 연산실행
+                            when(signlist[index]) {
+                                "-" -> newlist[index] = newlist[index] - newlist[index+1]
+                                "+" -> newlist[index] = newlist[index] + newlist[index+1]
+                                "*" -> newlist[index] = newlist[index] * newlist[index+1]
+                            }
+                            // 연산이 끝난 수식은 제거
+                            numlist.removeAt(index+1)
+                            signlist.removeAt(index)
+                        } else {
+                            index++
+                        }
                 }
             }
             // 경우의수 하나당 max값 저장
-        }
-
-        var new = 0
-        var temp = listOf<String>()
-
-        sign_arr.forEach {
-            num_arr.drop(1)
-            when(it) {
-                "-" -> {
-                    new -= num_arr[0].toInt()
-                    temp = temp.drop(1)
-                }
-                "+" -> {
-                    new += num_arr[0].toInt()
-                    temp.drop(1)
-                }
-                "*" -> {
-                    new *= num_arr[0].toInt()
-                    temp.drop(1)
-                }
-            }
-            println(temp)
-            println(new)
+            max = max(max, abs(numlist[0]))
         }
         return answer
     }
