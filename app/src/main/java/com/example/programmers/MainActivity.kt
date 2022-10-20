@@ -18,22 +18,37 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
-        // true
-        solution(10)
+        // 2
+        solution(intArrayOf(-2, 3, 0, 2, -5))
     }
 
-    // 하샤드 수
-    fun solution(x: Int): Boolean {
-        var answer = true
-        var num = 0
-        var temp = x
-
-        while (temp != 0) {
-            num += temp%10
-            temp /= 10
+    // 삼총사
+    fun solution(number: IntArray): Int {
+        var answer: Int = 0
+        for (x in number.indices) {
+            for (y in x+1 until number.size) {
+                for (z in y+1 until number.size) {
+                    if (number[x]+number[y]+number[z] == 0) {
+                        answer++
+                    }
+                }
+            }
         }
-        return x%num == 0
+        return answer
     }
+
+//    // 하샤드 수
+//    fun solution(x: Int): Boolean {
+//        var answer = true
+//        var num = 0
+//        var temp = x
+//
+//        while (temp != 0) {
+//            num += temp%10
+//            temp /= 10
+//        }
+//        return x%num == 0
+//    }
 
 //    // [카카오 인턴] 수식 최대화
 //    fun solution(expression: String): Long {
