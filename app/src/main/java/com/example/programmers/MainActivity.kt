@@ -18,47 +18,60 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
-        // 1248000
-        solution("200-300-500-600*40+500+500")
+        // true
+        solution(10)
     }
 
-    // [카카오 인턴] 수식 최대화
-    fun solution(expression: String): Long {
-        var answer: Long = 0
-        val op = arrayOf("*+-","*-+","+*-","+-*","-*+","-+*")
-        var max = 0L
+    // 하샤드 수
+    fun solution(x: Int): Boolean {
+        var answer = true
+        var num = 0
+        var temp = x
 
-        op.forEach {
-            val numlist = mutableListOf<Long>()
-            expression.split("*","-","+").forEach {
-                numlist.add(it.toLong())
-            }
-            val signlist = mutableListOf<String>()
-            "[-+*]".toRegex().findAll(expression).forEach {
-                signlist.add(it.value)
-            }
-
-            for (i in it.indices) {
-                var index = 0
-                while (signlist.contains(it[i].toString())) {
-                    if (it[i].toString() == signlist[index]) {
-                        when(signlist[index]) {
-                            "-" -> numlist[index] = numlist[index] - numlist[index+1]
-                            "+" -> numlist[index] = numlist[index] + numlist[index+1]
-                            "*" -> numlist[index] = numlist[index] * numlist[index+1]
-                        }
-                        numlist.removeAt(index+1)
-                        signlist.removeAt(index)
-                    } else {
-                        index++
-                    }
-                }
-            }
-            max = max(max, abs(numlist[0]))
+        while (temp != 0) {
+            num += temp%10
+            temp /= 10
         }
-        answer += max
-        return answer
+        return x%num == 0
     }
+
+//    // [카카오 인턴] 수식 최대화
+//    fun solution(expression: String): Long {
+//        var answer: Long = 0
+//        val op = arrayOf("*+-","*-+","+*-","+-*","-*+","-+*")
+//        var max = 0L
+//
+//        op.forEach {
+//            val numlist = mutableListOf<Long>()
+//            expression.split("*","-","+").forEach {
+//                numlist.add(it.toLong())
+//            }
+//            val signlist = mutableListOf<String>()
+//            "[-+*]".toRegex().findAll(expression).forEach {
+//                signlist.add(it.value)
+//            }
+//
+//            for (i in it.indices) {
+//                var index = 0
+//                while (signlist.contains(it[i].toString())) {
+//                    if (it[i].toString() == signlist[index]) {
+//                        when(signlist[index]) {
+//                            "-" -> numlist[index] = numlist[index] - numlist[index+1]
+//                            "+" -> numlist[index] = numlist[index] + numlist[index+1]
+//                            "*" -> numlist[index] = numlist[index] * numlist[index+1]
+//                        }
+//                        numlist.removeAt(index+1)
+//                        signlist.removeAt(index)
+//                    } else {
+//                        index++
+//                    }
+//                }
+//            }
+//            max = max(max, abs(numlist[0]))
+//        }
+//        answer += max
+//        return answer
+//    }
 
 //    // k진수에서 소수 개수 구하기
 //    fun solution(n: Int, k: Int): Int {
