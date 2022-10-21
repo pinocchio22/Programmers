@@ -18,24 +18,41 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
-        // 2
-        solution(intArrayOf(-2, 3, 0, 2, -5))
+        // 3,1,20   9
+        // 2, 1, 20 19
+        solution(2, 1, 20)
     }
 
-    // 삼총사
-    fun solution(number: IntArray): Int {
+    // 콜라 문제
+    fun solution(a: Int, b: Int, n: Int): Int {
         var answer: Int = 0
-        for (x in number.indices) {
-            for (y in x+1 until number.size) {
-                for (z in y+1 until number.size) {
-                    if (number[x]+number[y]+number[z] == 0) {
-                        answer++
-                    }
-                }
-            }
+        var result = 0
+        result = n
+        while (true) {
+            var temp = 0
+
+            temp += (result/a)*b + result%a
+            answer += (result/a)*b
+            if (temp < a) break
+            result = temp
         }
         return answer
     }
+
+//    // 삼총사
+//    fun solution(number: IntArray): Int {
+//        var answer: Int = 0
+//        for (x in number.indices) {
+//            for (y in x+1 until number.size) {
+//                for (z in y+1 until number.size) {
+//                    if (number[x]+number[y]+number[z] == 0) {
+//                        answer++
+//                    }
+//                }
+//            }
+//        }
+//        return answer
+//    }
 
 //    // 하샤드 수
 //    fun solution(x: Int): Boolean {
