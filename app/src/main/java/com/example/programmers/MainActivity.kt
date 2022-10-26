@@ -2,6 +2,7 @@ package com.example.programmers
 
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
+import java.lang.Integer.min
 import java.util.*
 import kotlin.math.abs
 import kotlin.math.exp
@@ -18,26 +19,36 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
-        // 3,1,20   9
-        // 2, 1, 20 19
-        solution(2, 1, 20)
+        solution("5525","1255")
     }
 
-    // 콜라 문제
-    fun solution(a: Int, b: Int, n: Int): Int {
-        var answer: Int = 0
-        var result = 0
-        result = n
-        while (true) {
-            var temp = 0
-
-            temp += (result/a)*b + result%a
-            answer += (result/a)*b
-            if (temp < a) break
-            result = temp
+    // 숫자 짝꿍
+    fun solution(X: String, Y: String): String {
+        var answer: String = ""
+        for (i in '9' downTo '0') {
+            if (X.contains(i) && Y.contains(i)) {
+                answer += i.toString().repeat(min((X.count { it == i }), (Y.count { it == i })))
+            }
         }
+        if (answer.isBlank()) return "-1" else if (answer.all { it == '0' }) return "0"
         return answer
     }
+
+//    // 콜라 문제
+//    fun solution(a: Int, b: Int, n: Int): Int {
+//        var answer: Int = 0
+//        var result = 0
+//        result = n
+//        while (true) {
+//            var temp = 0
+//
+//            temp += (result/a)*b + result%a
+//            answer += (result/a)*b
+//            if (temp < a) break
+//            result = temp
+//        }
+//        return answer
+//    }
 
 //    // 삼총사
 //    fun solution(number: IntArray): Int {
