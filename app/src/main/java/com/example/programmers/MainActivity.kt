@@ -19,20 +19,65 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
-        solution("5525","1255")
+        // 18
+        solution(intArrayOf(7,9,1,1,4))
     }
 
-    // 숫자 짝꿍
-    fun solution(X: String, Y: String): String {
-        var answer: String = ""
-        for (i in '9' downTo '0') {
-            if (X.contains(i) && Y.contains(i)) {
-                answer += i.toString().repeat(min((X.count { it == i }), (Y.count { it == i })))
-            }
+    // 연속 부분 수열 합의 개수
+    fun solution(elements: IntArray): Int {
+        var answer: Int = 0
+
+        //1
+//        val set = mutableSetOf<Int>()
+//
+//        for(i in 1 .. elements.size) {
+//            val result = mutableListOf<List<Int>>()
+//            combination(result, elements.toList(), Array<Boolean>(elements.size) { false }, 0,  i)
+//            result.forEach {
+//                set += it.sum()
+//            }
+//        }
+//        println(set)
+
+        //2
+        for (i in elements.indices) {
+            println("1 : ${elements[i]}")
         }
-        if (answer.isBlank()) return "-1" else if (answer.all { it == '0' }) return "0"
+
+        for (i in 0..elements.size-2) {
+            println("2 : ${elements[i] + elements[i+2]}")
+        }
+
+        for (i in 0..elements.size-3) {
+            println("3 : ${elements[i] + elements[i+2] + elements[i+3]}")
+        }
+
         return answer
     }
+//    fun <T> combination(answer: MutableList<List<T>>, el: List<T>, ck: Array<Boolean>, start: Int, target: Int) {
+//        if(target == 0) {
+//            answer.addAll( listOf(el.filterIndexed { index, t -> ck[index] }) )
+//        } else {
+//            for(i in start until el.size) {
+//                ck[i] = true
+//                combination(answer, el, ck, i + 1, target - 1)
+//                ck[i] = false
+//            }
+//        }
+//    }
+
+
+//    // 숫자 짝꿍
+//    fun solution(X: String, Y: String): String {
+//        var answer: String = ""
+//        for (i in '9' downTo '0') {
+//            if (X.contains(i) && Y.contains(i)) {
+//                answer += i.toString().repeat(min((X.count { it == i }), (Y.count { it == i })))
+//            }
+//        }
+//        if (answer.isBlank()) return "-1" else if (answer.all { it == '0' }) return "0"
+//        return answer
+//    }
 
 //    // 콜라 문제
 //    fun solution(a: Int, b: Int, n: Int): Int {
