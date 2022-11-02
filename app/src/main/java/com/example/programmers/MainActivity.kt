@@ -19,25 +19,43 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
-        // 18
-        solution(intArrayOf(7,9,1,1,4))
+        // 3
+        solution(arrayOf("banana", "apple", "rice", "pork", "pot"), intArrayOf(3, 2, 2, 2, 1), arrayOf("chicken", "apple", "apple", "banana", "rice", "apple", "pork", "banana", "pork", "rice", "pot", "banana", "apple", "banana"))
     }
 
-    // 연속 부분 수열 합의 개수
-    fun solution(elements: IntArray): Int {
+    // 할인 행사
+    fun solution(want: Array<String>, number: IntArray, discount: Array<String>): Int {
         var answer: Int = 0
-        val new = elements + elements
-        val set = mutableSetOf<Int>()
-        for (x in elements.indices) {
-            for (y in 0..new.size-(x+1)) {
-                println(new.slice(y..y+x))
-                set += new.slice(y..y+x).sum()
+
+        for (x in 0 until discount.size-9) {
+            val map = mutableMapOf<String, Int>()
+            for (i in want.indices) {
+                map[want[i]] = number[i]
             }
+            for (y in x..9+x) {
+                if (map.contains(discount[y])) {
+                    map.replace(discount[y], map[discount[y]]!!-1)
+                }
+            }
+            if(map.all { it.value == 0 }) answer++
         }
-        answer += set.size
         return answer
     }
 
+//    // 연속 부분 수열 합의 개수
+//    fun solution(elements: IntArray): Int {
+//        var answer: Int = 0
+//        val new = elements + elements
+//        val set = mutableSetOf<Int>()
+//        for (x in elements.indices) {
+//            for (y in 0..new.size-(x+1)) {
+//                println(new.slice(y..y+x))
+//                set += new.slice(y..y+x).sum()
+//            }
+//        }
+//        answer += set.size
+//        return answer
+//    }
 
 //    // 숫자 짝꿍
 //    fun solution(X: String, Y: String): String {
