@@ -26,66 +26,17 @@ class MainActivity : AppCompatActivity() {
     // 연속 부분 수열 합의 개수
     fun solution(elements: IntArray): Int {
         var answer: Int = 0
-        var new = elements + elements
+        val new = elements + elements
         val set = mutableSetOf<Int>()
-
-        //1
-//
-//        for(i in 1 .. elements.size) {
-//            val result = mutableListOf<List<Int>>()
-//            combination(result, elements.toList(), Array<Boolean>(elements.size) { false }, 0,  i)
-//            result.forEach {
-//                set += it.sum()
-//            }
-//        }
-//        println(set)
-
-        //2
-
-        println(new.contentToString())
-        new.slice(1..3)
-
-//        for (i in new.indices) {
-////            println("1 : ${elements[i]}")
-//            set += new[i]
-//        }
-//
-//        for (i in 0..new.size-2) {
-////            println("2 : ${elements[i] + elements[i+1]}")
-//            println(new.slice(i..i+1))
-//            set += new[i] + new[i+1]
-//        }
-//
-//        for (i in 0..new.size-3) {
-////            println("3 : ${elements[i] + elements[i+1] + elements[i+2]}")
-//            set += new[i] + new[i+1] + new[i+2]
-//        }
-////        println(set)
-
-        for (x in 1..elements.size) {
-//            println("x : $x")
+        for (x in elements.indices) {
             for (y in 0..new.size-(x+1)) {
-//                println("y : $y")
                 println(new.slice(y..y+x))
                 set += new.slice(y..y+x).sum()
-                if (set.size == )
             }
         }
-        println("set : $set")
-
+        answer += set.size
         return answer
     }
-//    fun <T> combination(answer: MutableList<List<T>>, el: List<T>, ck: Array<Boolean>, start: Int, target: Int) {
-//        if(target == 0) {
-//            answer.addAll( listOf(el.filterIndexed { index, t -> ck[index] }) )
-//        } else {
-//            for(i in start until el.size) {
-//                ck[i] = true
-//                combination(answer, el, ck, i + 1, target - 1)
-//                ck[i] = false
-//            }
-//        }
-//    }
 
 
 //    // 숫자 짝꿍
