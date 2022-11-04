@@ -21,7 +21,7 @@ class MainActivity : AppCompatActivity() {
 
         // 5
         // [5, 4, 3, 2, 1]	5
-        solution(intArrayOf(4, 3, 1, 2, 5))
+        solution(intArrayOf(1,2,3,4,5))
     }
 
     // 택배상자
@@ -37,8 +37,11 @@ class MainActivity : AppCompatActivity() {
                 println("answer1 : $answer")
                 println("stack1 : $stack")
             }
+            if (idx == order.size) {
+                println("result : $answer")
+                return answer
+            }
             for (i in idx..order.size) {
-                println("it , idx : $it $idx")
                 if (it == i) {
                     answer++
                     idx++
