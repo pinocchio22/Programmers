@@ -21,90 +21,40 @@ class MainActivity : AppCompatActivity() {
 
         // 5
         // [5, 4, 3, 2, 1]	5
-        solution(intArrayOf(5, 4, 3, 2, 1))
+        solution(intArrayOf(4, 3, 1, 2, 5))
     }
 
     // 택배상자
     fun solution(order: IntArray): Int {
         var answer: Int = 0
         val stack = Stack<Int>()
-        var idx = 0
-        var i =0
+        var idx = 1
 
-        //1
-//        while(i < order.size && idx < order.size) {
-//            println("idx : $idx")
-//            println("order[idx] : ${order[idx]}")
-//            println("stack : $stack")
-//            println("answer : $answer")
-//            println("i : $i")
-//            if (stack.isNotEmpty() && stack.peek() == order[idx]) {
-//                answer++
-//                stack.pop()
-//            } else {
-//                if (i+1 == order[idx]) {
-//                    answer++
-//                    idx++
-//                    i++
-//                } else {
-//                    stack.push(i+1)
-//                    i++
-//                }
-//            }
-//        }
+        order.forEach {
+            while (stack.isNotEmpty() && stack.peek() == it) {
+                answer++
+                stack.pop()
+                println("answer1 : $answer")
+                println("stack1 : $stack")
+            }
+            for (i in idx..order.size) {
+                println("it , idx : $it $idx")
+                if (it == i) {
+                    answer++
+                    idx++
+                    println("it : $it")
+                    println("answer2 : $answer")
+                    break
+                } else {
+                    stack.push(i)
+                    idx++
+                    println("i+1 : $i")
+                    println("stack2 : $stack")
 
-        // 2
-//        order.forEach {
-//            for (x in i..4) {
-//                while (stack.isNotEmpty() && stack.peek() == it) {
-//                    stack.pop()
-//                    answer++
-//                }
-//                if (it == i+1) {
-//                    answer++
-//                    break
-//                } else {
-//                    stack.push(i+1)
-//                    i++
-//                }
-//                println("it : $it")
-//                println("stack : $stack")
-//                println("answer : $answer")
-//                println("i+1 : ${i + 1}")
-//                println("new")
-//            }
-//        }
+                }
+            }
+        }
 
-        // 3
-//        for (y in idx until order.size) {
-//            for (x in i until order.size) {
-//                println("order : ${order[y]}")
-//                // stack.peek() == order이면 answer++, next order
-//                if (stack.isNotEmpty() && stack.peek() == order[y]) {
-//                    idx++
-//                    answer++
-//                    println("idx : $y")
-//                    println("answer1 : $answer")
-//                    break
-//                }
-//                if (order[idx] == x+1) {
-//                    // order와 같으면 answer++, next order
-//                    answer++
-//                    idx++
-//                    i++
-//                    println("i1 : $i")
-//                    println("answer2 : $answer")
-//                    println("index : $y")
-//                    break
-//                } else {
-//                    // 다르면 stack.push()하고 i++
-//                    stack.push(x+1)
-//                    i++
-//                    println("stack : $stack")
-//                    println("i2 : $i")
-//                }
-//            }
-//        }
         println("result : $answer")
         return answer
     }
