@@ -19,33 +19,38 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
-        // 5
-        // [5, 4, 3, 2, 1]	5
-        // 2
-        solution(intArrayOf(4,3,1,2,5))
+        //[1, 2, 1, 3, 1, 4, 1, 2]  2
+        solution(intArrayOf(1, 2, 1, 3, 1, 4, 1, 2))
     }
 
-    // 택배상자
-    fun solution(order: IntArray): Int {
-        var answer: Int = 0
-        val stack = Stack<Int>()
-        var index = 0
-
-        for (i in 1..order.size) {
-            if (i == order[index]) {
-                answer++
-                index++
-            } else {
-                stack.push(i)
-            }
-            while (stack.isNotEmpty() && stack.peek() == order[index]) {
-                stack.pop()
-                index++
-                answer++
-            }
-        }
+    // 롤케이크 자르기
+    fun solution(topping: IntArray): Int {
+        var answer: Int = -1
+        for (i in topping.indices) if (topping.slice(0..i).toSet().size == topping.slice(i+1 until topping.size).toSet().size) answer++
         return answer
     }
+
+//    // 택배상자
+//    fun solution(order: IntArray): Int {
+//        var answer: Int = 0
+//        val stack = Stack<Int>()
+//        var index = 0
+//
+//        for (i in 1..order.size) {
+//            if (i == order[index]) {
+//                answer++
+//                index++
+//            } else {
+//                stack.push(i)
+//            }
+//            while (stack.isNotEmpty() && stack.peek() == order[index]) {
+//                stack.pop()
+//                index++
+//                answer++
+//            }
+//        }
+//        return answer
+//    }
 
 //    // 할인 행사
 //    fun solution(want: Array<String>, number: IntArray, discount: Array<String>): Int {
