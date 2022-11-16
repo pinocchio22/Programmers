@@ -21,44 +21,29 @@ class MainActivity : AppCompatActivity() {
 
         // 5
         // [5, 4, 3, 2, 1]	5
-        solution(intArrayOf(1,2,3,4,5))
+        // 2
+        solution(intArrayOf(4,3,1,2,5))
     }
 
     // 택배상자
     fun solution(order: IntArray): Int {
         var answer: Int = 0
         val stack = Stack<Int>()
-        var idx = 1
+        var index = 0
 
-        order.forEach {
-            while (stack.isNotEmpty() && stack.peek() == it) {
+        for (i in 1..order.size) {
+            if (i == order[index]) {
                 answer++
+                index++
+            } else {
+                stack.push(i)
+            }
+            while (stack.isNotEmpty() && stack.peek() == order[index]) {
                 stack.pop()
-                println("answer1 : $answer")
-                println("stack1 : $stack")
-            }
-            if (idx == order.size) {
-                println("result : $answer")
-                return answer
-            }
-            for (i in idx..order.size) {
-                if (it == i) {
-                    answer++
-                    idx++
-                    println("it : $it")
-                    println("answer2 : $answer")
-                    break
-                } else {
-                    stack.push(i)
-                    idx++
-                    println("i+1 : $i")
-                    println("stack2 : $stack")
-
-                }
+                index++
+                answer++
             }
         }
-
-        println("result : $answer")
         return answer
     }
 
