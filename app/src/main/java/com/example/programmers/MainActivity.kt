@@ -4,6 +4,7 @@ import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import java.lang.Integer.min
 import java.util.*
+import kotlin.collections.ArrayList
 import kotlin.math.abs
 import kotlin.math.exp
 import kotlin.math.max
@@ -26,7 +27,34 @@ class MainActivity : AppCompatActivity() {
     // 롤케이크 자르기
     fun solution(topping: IntArray): Int {
         var answer: Int = -1
-        for (i in topping.indices) if (topping.slice(0..i).toSet().size == topping.slice(i+1 until topping.size).toSet().size) answer++
+
+//        //1 - 시간초과
+//        for (i in topping.indices) if (topping.slice(0..i).toSet().size == topping.slice(i+1 until topping.size).toSet().size) answer++
+
+//        //2 - 시간초과
+//        var new = topping
+//        var two = intArrayOf()
+//        new.forEach {
+//            two += it
+//            new = new.drop(1).toIntArray()
+//            if (two.toSet().size == new.toSet().size) answer++
+//        }
+
+        //3
+        var one = arrayListOf<Int>()
+        topping.forEach {
+            one.plus(it)
+        }
+        val two = arrayListOf<Int>()
+        one.forEach {
+            println(it)
+            two += it
+            one.remove(1)
+            println("two : $two")
+            println("one : $one")
+//            if (two.toSet().size == new.toSet().size) answer++
+        }
+
         return answer
     }
 
