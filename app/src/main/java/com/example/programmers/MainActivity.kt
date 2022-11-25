@@ -40,15 +40,32 @@ class MainActivity : AppCompatActivity() {
 //            if (two.toSet().size == new.toSet().size) answer++
 //        }
 
-        //3 - 시간초과
-        val one = arrayListOf<Int>()
-        val two = arrayListOf<Int>()
-        topping.forEach { one.add(it) }
-        topping.forEach {
-            two += it
-            one.remove(it)
-            if (two.toSet().size == one.toSet().size) answer++
+//        //3 - 시간초과
+//        val one = arrayListOf<Int>()
+//        val two = arrayListOf<Int>()
+//        topping.forEach { one.add(it) }
+//        topping.forEach {
+//            two += it
+//            one.remove(it)
+//            if (two.toSet().size == one.toSet().size) answer++
+//        }
+
+        //4 - 시간초과(좀 적게)
+        val one = mutableMapOf<Int,Int>()
+        val two = mutableSetOf<Int>()
+        for (i in 1..topping.maxOrNull()!!) {
+            one[i] = 0
         }
+        topping.forEach {
+            one[it] = one[it]!! + 1
+        }
+
+        topping.forEach {
+            two.add(it)
+            one[it] = one[it]!! - 1
+            if (two.size == one.filter { it.value != 0 } .size) answer++
+        }
+
         return answer
     }
 
