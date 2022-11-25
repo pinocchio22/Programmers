@@ -40,21 +40,15 @@ class MainActivity : AppCompatActivity() {
 //            if (two.toSet().size == new.toSet().size) answer++
 //        }
 
-        //3
-        var one = arrayListOf<Int>()
-        topping.forEach {
-            one.plus(it)
-        }
+        //3 - 시간초과
+        val one = arrayListOf<Int>()
         val two = arrayListOf<Int>()
-        one.forEach {
-            println(it)
+        topping.forEach { one.add(it) }
+        topping.forEach {
             two += it
-            one.remove(1)
-            println("two : $two")
-            println("one : $one")
-//            if (two.toSet().size == new.toSet().size) answer++
+            one.remove(it)
+            if (two.toSet().size == one.toSet().size) answer++
         }
-
         return answer
     }
 
