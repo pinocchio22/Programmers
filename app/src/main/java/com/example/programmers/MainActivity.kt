@@ -20,54 +20,64 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
-        //[1, 2, 1, 3, 1, 4, 1, 2]  2
-        solution(intArrayOf(1, 2, 1, 3, 1, 4, 1, 2))
+        // 2
+        solution("3141592", "271")
     }
 
-    // 롤케이크 자르기
-    fun solution(topping: IntArray): Int {
-        var answer: Int = -1
-
-//        //1 - 시간초과
-//        for (i in topping.indices) if (topping.slice(0..i).toSet().size == topping.slice(i+1 until topping.size).toSet().size) answer++
-
-//        //2 - 시간초과
-//        var new = topping
-//        var two = intArrayOf()
-//        new.forEach {
-//            two += it
-//            new = new.drop(1).toIntArray()
-//            if (two.toSet().size == new.toSet().size) answer++
-//        }
-
-//        //3 - 시간초과
-//        val one = arrayListOf<Int>()
-//        val two = arrayListOf<Int>()
-//        topping.forEach { one.add(it) }
-//        topping.forEach {
-//            two += it
-//            one.remove(it)
-//            if (two.toSet().size == one.toSet().size) answer++
-//        }
-
-        //4 - 시간초과(좀 적게)
-        val one = mutableMapOf<Int,Int>()
-        val two = mutableSetOf<Int>()
-        for (i in 1..topping.maxOrNull()!!) {
-            one[i] = 0
-        }
-        topping.forEach {
-            one[it] = one[it]!! + 1
-        }
-
-        topping.forEach {
-            two.add(it)
-            one[it] = one[it]!! - 1
-            if (two.size == one.filter { it.value != 0 } .size) answer++
-        }
-
+    //크기가 작은 부분문자열
+    fun solution(t: String, p: String): Int {
+        var answer: Int = 0
+        for (i in 0..t.length - p.length) if (p >= t.slice(i until i+p.length)) answer++
         return answer
     }
+
+
+//        // 롤케이크 자르기
+//        fun solution(topping: IntArray): Int {
+//            var answer: Int = -1
+//
+//            //1 - 시간초과
+//            for (i in topping.indices) if (topping.slice(0..i)
+//                    .toSet().size == topping.slice(i + 1 until topping.size).toSet().size
+//            ) answer++
+//
+//            //2 - 시간초과
+//            var new = topping
+//            var two = intArrayOf()
+//            new.forEach {
+//                two += it
+//                new = new.drop(1).toIntArray()
+//                if (two.toSet().size == new.toSet().size) answer++
+//            }
+//
+//            //3 - 시간초과
+//            val one = arrayListOf<Int>()
+//            val two = arrayListOf<Int>()
+//            topping.forEach { one.add(it) }
+//            topping.forEach {
+//                two += it
+//                one.remove(it)
+//                if (two.toSet().size == one.toSet().size) answer++
+//            }
+//
+//            //4 - 시간초과(좀 적게)
+//            val one = mutableMapOf<Int, Int>()
+//            val two = mutableSetOf<Int>()
+//            for (i in 1..topping.maxOrNull()!!) {
+//                one[i] = 0
+//            }
+//            topping.forEach {
+//                one[it] = one[it]!! + 1
+//            }
+//
+//            topping.forEach {
+//                two.add(it)
+//                one[it] = one[it]!! - 1
+//                if (two.size == one.filter { it.value != 0 }.size) answer++
+//            }
+//
+//            return answer
+//        }
 
 //    // 택배상자
 //    fun solution(order: IntArray): Int {
@@ -1770,5 +1780,4 @@ class MainActivity : AppCompatActivity() {
 //        }
 //        return answer
 //    }
-
 }
